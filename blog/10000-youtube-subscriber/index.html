@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">Blog Article | @dejavi</title>
     
+    <link rel="icon" type="image/png" href="../../assets/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg" />
+    <link rel="shortcut icon" href="../../assets/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Javi Ahmad" />
+    <link rel="manifest" href="../../assets/site.webmanifest" />
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -214,12 +221,12 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="font-bold tracking-wider text-xs text-white group-hover:text-zinc-300 transition-colors">JAVI AHMAD</span>
-                    <span class="text-[8.5px] text-zinc-400 tracking-widest font-mono">dejavi.id // NEWS</span>
+                    <span class="text-[8.5px] text-zinc-400 tracking-widest font-mono">dejavi.id // BLOG</span>
                 </div>
             </a>
 
             <!-- Back to Portfolio Action Button -->
-            <a href="../../../../index.html" class="px-3 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700 font-mono text-[11px] transition-all flex items-center gap-1.5">
+            <a href="../../index.html" class="px-3 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700 font-mono text-[11px] transition-all flex items-center gap-1.5">
                 <i class="fa-solid fa-arrow-left text-[10px]"></i>
                 <span class="hidden sm:inline">Portofolio Utama</span>
                 <span class="sm:hidden">Kembali</span>
@@ -231,7 +238,7 @@
     <main class="relative z-10 pt-20 pb-12 flex-1">
         <article class="max-w-3xl mx-auto px-4 sm:px-6">
             
-            <!-- UNIFIED ALL-IN-ONE NEWS CARD CONTAINER -->
+            <!-- UNIFIED ALL-IN-ONE BLOG CARD CONTAINER -->
             <div class="bg-zinc-900/90 border border-zinc-800 rounded-2xl p-5 sm:p-8 lightning-glow relative overflow-hidden divide-y divide-zinc-800/80">
                 
                 <!-- 1. NEWS ARTICLE HEADER SECTION -->
@@ -242,7 +249,7 @@
                     <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
                         <div class="flex items-center gap-2">
                             <span id="articleCategory" class="px-2.5 py-0.5 rounded bg-white text-black font-extrabold uppercase tracking-wider text-[10px]">
-                                ⚡ BERITA
+                                ⚡ Blog
                             </span>
                             <span id="articleDate" class="text-zinc-400 flex items-center gap-1">
                                 <i class="fa-regular fa-calendar text-[10px]"></i>
@@ -257,7 +264,7 @@
 
                     <!-- News Headline Title -->
                     <h1 id="articleTitle" class="text-xl sm:text-3xl font-bold text-white font-mono tracking-tight leading-tight uppercase pt-1">
-                        Memuat Berita...
+                        Memuat Blog...
                     </h1>
 
                     <!-- Author Info & Quick Share -->
@@ -276,7 +283,7 @@
                         </div>
 
                         <!-- Quick Share Trigger -->
-                        <button onclick="shareArticle()" title="Bagikan Berita" class="px-2.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700 transition-colors text-xs flex items-center gap-1.5 font-mono">
+                        <button onclick="shareArticle()" title="Bagikan Blog" class="px-2.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700 transition-colors text-xs flex items-center gap-1.5 font-mono">
                             <i class="fa-solid fa-share-nodes"></i>
                             <span class="hidden sm:inline text-[11px]">Bagikan</span>
                         </button>
@@ -288,7 +295,7 @@
                     <!-- Loading Spinner State -->
                     <div id="loadingState" class="py-12 text-center space-y-3">
                         <div class="inline-block w-8 h-8 border-3 border-zinc-700 border-t-white rounded-full animate-spin"></div>
-                        <p class="text-[11px] font-mono text-zinc-400 uppercase tracking-widest">Membaca Berkas Berita...</p>
+                        <p class="text-[11px] font-mono text-zinc-400 uppercase tracking-widest">Membaca Berkas Blog...</p>
                     </div>
 
                     <!-- Parsed Article Output -->
@@ -300,7 +307,7 @@
                 <!-- 3. SHARE FOOTER SECTION (INTEGRATED) -->
                 <div id="articleShareFooter" class="py-5 flex flex-col sm:flex-row items-center justify-between gap-4 hidden">
                     <div class="text-center sm:text-left">
-                        <h3 class="text-xs font-bold text-white uppercase font-mono">Bagikan Berita Ini ⚡</h3>
+                        <h3 class="text-xs font-bold text-white uppercase font-mono">Bagikan Blog Ini ⚡</h3>
                         <p class="text-[11px] text-zinc-400">Sebarkan informasi atau simpan tautan ke artikel ini.</p>
                     </div>
                     <div class="flex items-center gap-2">
@@ -323,7 +330,7 @@
                 <div id="relatedArticlesSection" class="pt-6 space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="inline-flex items-center gap-2 text-zinc-400 text-[11px] font-mono uppercase tracking-wider">
-                            <i class="fa-solid fa-newspaper text-white"></i> Berita Lainnya
+                            <i class="fa-solid fa-newspaper text-white"></i> Blog Lainnya
                         </div>
                         <a href="../../index.html#blog" class="text-[11px] font-mono text-zinc-400 hover:text-white transition-colors">
                             Lihat Semua →
@@ -543,11 +550,11 @@ console.log("Terima kasih atas dukungan semuanya! ⚡");
 
             // Populate Metadata Info
             const title = metadata.title || slug.replace(/-/g, ' ').toUpperCase();
-            const category = metadata.category || 'BERITA';
+            const category = metadata.category || 'Blog';
             const date = metadata.date || 'LATEST';
             const readTime = metadata.readTime || '3 MIN READ';
 
-            document.getElementById('pageTitle').textContent = `${title} | Berita Javi ⚡`;
+            document.getElementById('pageTitle').textContent = `${title} | Blog Javi ⚡`;
             document.getElementById('articleTitle').textContent = title;
             document.getElementById('articleCategory').textContent = `⚡ ${category.toUpperCase()}`;
             document.getElementById('articleDate').innerHTML = `<i class="fa-regular fa-calendar text-[10px]"></i> <span>${date}</span>`;
@@ -621,7 +628,7 @@ console.log("Terima kasih atas dukungan semuanya! ⚡");
                         </h4>
                     </div>
                     <div class="pt-2.5 mt-2 border-t border-zinc-800/60 text-[11px] text-zinc-400 font-mono flex items-center justify-between group-hover:text-white">
-                        <span>Baca Berita</span>
+                        <span>Baca Blog</span>
                         <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
                     </div>
                 `;
@@ -639,12 +646,12 @@ console.log("Terima kasih atas dukungan semuanya! ⚡");
             tempInput.select();
             document.execCommand('copy');
             document.body.removeChild(tempInput);
-            showToast("⚡ Tautan berita disalin ke clipboard!");
+            showToast("⚡ Tautan Blog disalin ke clipboard!");
         }
 
         function shareWhatsApp() {
             const title = document.getElementById('articleTitle').textContent;
-            const waUrl = `https://wa.me/?text=${encodeURIComponent(`Baca berita "${title}" oleh Javier Ahmad: ${window.location.href}`)}`;
+            const waUrl = `https://wa.me/?text=${encodeURIComponent(`Baca Blog "${title}" oleh Javier Ahmad: ${window.location.href}`)}`;
             window.open(waUrl, '_blank');
         }
 
