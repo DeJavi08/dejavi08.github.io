@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@dejavi08 | Bio Links ⚡</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#08080a',
+                            800: '#121216',
+                            700: '#1a1a20',
+                            600: '#26262e',
+                            500: '#3f3f48'
+                        },
+                        lightning: {
+                            bright: '#ffffff',
+                            muted: '#a1a1aa',
+                            glow: 'rgba(255, 255, 255, 0.18)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts & Font Awesome CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08080a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #26262e;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #52525b;
+        }
+
+        .lightning-glow {
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.12);
+        }
+        .lightning-glow-hover:hover {
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .bg-grid-pattern {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 0.3; transform: scale(0.99); }
+            50% { opacity: 1; transform: scale(1.01); filter: drop-shadow(0 0 12px #fff); }
+        }
+        .animate-lightning {
+            animation: flash 3.5s infinite ease-in-out;
+        }
+
+        .modal {
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+        .modal-active {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-zinc-100 font-sans antialiased selection:bg-white selection:text-black min-h-screen relative overflow-x-hidden flex flex-col justify-between">
+
+    <!-- Canvas for Dynamic Lightning Spark Particles -->
+    <canvas id="bgCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
+
+    <!-- Notification Toast Container -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-zinc-800 text-white border border-zinc-600 px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3 pointer-events-none">
+        <span id="toastIcon" class="text-xl">⚡</span>
+        <span id="toastMessage" class="text-sm font-medium">Tautan berhasil disalin!</span>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-dark-900/85 backdrop-blur-md border-b border-zinc-800/80">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="https://dejavi.my.id/" class="flex items-center gap-2.5 group">
+                <div class="w-8 h-8 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center group-hover:border-white transition-colors duration-300 shadow-md">
+                    <i class="fa-solid fa-bolt text-white text-xs group-hover:scale-125 transition-transform"></i>
+                </div>
+                <span class="font-black tracking-wider text-sm text-white group-hover:text-zinc-300 transition-colors">DEJAVI.MY.ID</span>
+            </a>
+
+            <!-- Share Page Action Button -->
+            <button onclick="openShareModal()" class="px-3.5 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700 text-xs font-mono transition-all flex items-center gap-2 shadow-md">
+                <i class="fa-solid fa-share-nodes text-xs"></i>
+                <span>Bagikan</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="relative z-10 pt-24 pb-16 px-4 sm:px-6 max-w-2xl mx-auto w-full flex-1 space-y-8">
+
+        <!-- Profile Header Section -->
+        <section class="text-center space-y-5">
+            <!-- Avatar Frame -->
+            <div class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto group">
+                <div class="w-full h-full rounded-full bg-zinc-800 border-2 border-zinc-600 p-1 shadow-2xl lightning-glow group-hover:border-white transition-all duration-300">
+                    <img src="https://lh3.googleusercontent.com/d/159naiMfdihNbIN9_MKA7eHGgan7FiTFV=w1000?authuser=1" 
+                         alt="Javier Ahmad Arivery (@dejavi08)" 
+                         class="w-full h-full rounded-full object-cover filter grayscale contrast-110 group-hover:scale-105 transition-transform duration-500"
+                         onerror="this.onerror=null; this.src='https://placehold.co/300x300/18181b/ffffff?text=@dejavi08';">
+                </div>
+                <!-- Lightning Badge Overlay -->
+                <div class="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-zinc-900 border border-zinc-600 flex items-center justify-center text-amber-400 shadow-xl">
+                    <i class="fa-solid fa-bolt text-sm animate-pulse"></i>
+                </div>
+            </div>
+
+            <!-- Name & Bio Meta -->
+            <div class="space-y-2">
+                <h1 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight font-mono">
+                    Javier Ahmad Arivery
+                </h1>
+                <p class="text-xs sm:text-sm text-zinc-400 font-mono font-medium">
+                    @dejavi08
+                </p>
+            </div>
+
+            <!-- Quote Bio Box -->
+            <div class="bg-zinc-900/90 border border-zinc-800 rounded-2xl p-4 sm:p-5 text-zinc-300 text-xs sm:text-sm leading-relaxed lightning-glow relative overflow-hidden">
+                <div class="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none"></div>
+                <i class="fa-solid fa-quote-left text-zinc-600 text-base mb-2 block"></i>
+                <p class="italic text-zinc-200">
+                    "Seorang pemuda yang berjuang di era modern dengan menginvestasikan waktunya untuk belajar dunia digital"
+                </p>
+            </div>
+
+            <!-- Quick Direct Social Icons Bar -->
+            <div class="flex items-center justify-center gap-3 text-lg text-zinc-400 pt-1">
+                <a href="https://dejavi.my.id/" target="_blank" aria-label="Portfolio" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-white hover:text-white flex items-center justify-center transition-all"><i class="fa-solid fa-globe text-sm"></i></a>
+                <a href="https://www.youtube.com/@javi_gaming?si=UYZ8RWRFupMzHiOh&sub_confirmation=1" target="_blank" aria-label="YouTube" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-white hover:text-white flex items-center justify-center transition-all"><i class="fa-brands fa-youtube text-sm"></i></a>
+                <a href="https://instagram.com/dejavi08" target="_blank" aria-label="Instagram" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-white hover:text-white flex items-center justify-center transition-all"><i class="fa-brands fa-instagram text-sm"></i></a>
+                <a href="https://github.com/DeJavi08" target="_blank" aria-label="GitHub" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-white hover:text-white flex items-center justify-center transition-all"><i class="fa-brands fa-github text-sm"></i></a>
+                <a href="https://wa.me/6282246668753" target="_blank" aria-label="WhatsApp" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-white hover:text-white flex items-center justify-center transition-all"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+            </div>
+        </section>
+
+        <!-- Search & Filter Controls -->
+        <section class="space-y-3">
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 text-xs"></i>
+                <input type="text" id="searchInput" oninput="filterLinks()" placeholder="Cari profil, game, atau tautan..." class="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-900/90 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-white text-xs font-mono transition-colors">
+            </div>
+
+            <!-- Category Pills -->
+            <div class="flex flex-wrap gap-2 justify-center text-[11px] font-mono">
+                <button onclick="filterCategory('all')" class="cat-pill px-3 py-1.5 rounded-lg bg-white text-black font-bold transition-all" data-category="all">SEMUA</button>
+                <button onclick="filterCategory('featured')" class="cat-pill px-3 py-1.5 rounded-lg bg-zinc-900 text-zinc-400 border border-zinc-800 hover:text-white transition-all" data-category="featured">⚡ PORTFOLIO</button>
+                <button onclick="filterCategory('gaming')" class="cat-pill px-3 py-1.5 rounded-lg bg-zinc-900 text-zinc-400 border border-zinc-800 hover:text-white transition-all" data-category="gaming">🎮 GAMING</button>
+                <button onclick="filterCategory('fitness')" class="cat-pill px-3 py-1.5 rounded-lg bg-zinc-900 text-zinc-400 border border-zinc-800 hover:text-white transition-all" data-category="fitness">🚴 SPORTS</button>
+                <button onclick="filterCategory('media')" class="cat-pill px-3 py-1.5 rounded-lg bg-zinc-900 text-zinc-400 border border-zinc-800 hover:text-white transition-all" data-category="media">📺 MEDIA</button>
+            </div>
+        </section>
+
+        <!-- Links List Container -->
+        <section id="linksContainer" class="space-y-3.5">
+
+            <!-- Link 1: Portfolio -->
+            <div class="link-card group bg-zinc-900 border border-zinc-800 hover:border-white rounded-2xl p-4 transition-all duration-300 lightning-glow-hover flex items-center justify-between gap-4" data-category="featured" data-keywords="portfolio portofolio website karya project javier">
+                <a href="/portfolio" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 flex-1 min-w-0">
+                    <div class="w-11 h-11 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-black transition-colors shadow-md">
+                        <i class="fa-solid fa-briefcase text-base"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-sm font-bold text-white group-hover:text-zinc-200 transition-colors truncate">My Portfolio</h2>
+                            <span class="px-2 py-0.5 rounded bg-zinc-800 text-[9px] font-mono font-bold text-amber-400 border border-amber-400/30 shrink-0">FEATURED</span>
+                        </div>
+                        <p class="text-xs text-zinc-400 truncate mt-0.5">Kumpulan project dan karya terbaru</p>
+                    </div>
+                </a>
+                <div class="flex items-center gap-1 shrink-0">
+                    <button onclick="copyToClipboard('https://javiahmad.it.student.pens.ac.id/portfolio/', 'My Portfolio')" title="Salin Tautan" class="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors">
+                        <i class="fa-regular fa-copy text-xs"></i>
+                    </button>
+                    <a href="https://dejavi.my.id/" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg text-zinc-400 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Link 2: YouTube Channel -->
+            <div class="link-card group bg-zinc-900 border border-zinc-800 hover:border-white rounded-2xl p-4 transition-all duration-300 lightning-glow-hover flex items-center justify-between gap-4" data-category="media" data-keywords="youtube yt channel video tutorial gaming javi">
+                <a href="https://www.youtube.com/@javi_gaming?si=UYZ8RWRFupMzHiOh&sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 flex-1 min-w-0">
+                    <div class="w-11 h-11 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white shrink-0 group-hover:bg-red-600 group-hover:text-white group-hover:border-red-500 transition-colors shadow-md">
+                        <i class="fa-brands fa-youtube text-lg"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-sm font-bold text-white group-hover:text-zinc-200 transition-colors truncate">YouTube Channel</h2>
+                            <span class="px-2 py-0.5 rounded bg-zinc-800 text-[9px] font-mono text-zinc-400 border border-zinc-700 shrink-0">15K+ SUB</span>
+                        </div>
+                        <p class="text-xs text-zinc-400 truncate mt-0.5">Konten video dan tutorial digital</p>
+                    </div>
+                </a>
+                <div class="flex items-center gap-1 shrink-0">
+                    <button onclick="copyToClipboard('https://www.youtube.com/@javi_gaming?si=UYZ8RWRFupMzHiOh&sub_confirmation=1', 'YouTube Channel')" title="Salin Tautan" class="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors">
+                        <i class="fa-regular fa-copy text-xs"></i>
+                    </button>
+                    <a href="https://www.youtube.com/@javi_gaming?si=UYZ8RWRFupMzHiOh&sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg text-zinc-400 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Link 3: Roblox Profile -->
+            <div class="link-card group bg-zinc-900 border border-zinc-800 hover:border-white rounded-2xl p-4 transition-all duration-300 lightning-glow-hover flex items-center justify-between gap-4" data-category="gaming" data-keywords="roblox profile game gaming kreasi avatar">
+                <a href="https://www.roblox.com/users/854555934/profile" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 flex-1 min-w-0">
+                    <div class="w-11 h-11 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-black transition-colors shadow-md">
+                        <i class="fa-solid fa-gamepad text-base"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <h2 class="text-sm font-bold text-white group-hover:text-zinc-200 transition-colors truncate">Roblox Profile</h2>
+                        <p class="text-xs text-zinc-400 truncate mt-0.5">Profil dan kreasi di platform Roblox</p>
+                    </div>
+                </a>
+                <div class="flex items-center gap-1 shrink-0">
+                    <button onclick="copyToClipboard('https://www.roblox.com/users/854555934/profile', 'Roblox Profile')" title="Salin Tautan" class="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors">
+                        <i class="fa-regular fa-copy text-xs"></i>
+                    </button>
+                    <a href="https://www.roblox.com/users/854555934/profile" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg text-zinc-400 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Link 4: Minecraft Profile -->
+            <div class="link-card group bg-zinc-900 border border-zinc-800 hover:border-white rounded-2xl p-4 transition-all duration-300 lightning-glow-hover flex items-center justify-between gap-4" data-category="gaming" data-keywords="minecraft namemc javi_gaming skin profile premium">
+                <a href="https://namemc.com/profile/Javi_Gaming.4" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 flex-1 min-w-0">
+                    <div class="w-11 h-11 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors shadow-md">
+                        <i class="fa-solid fa-cubes text-base"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <h2 class="text-sm font-bold text-white group-hover:text-zinc-200 transition-colors truncate">Minecraft Profile</h2>
+                        <p class="text-xs text-zinc-400 truncate mt-0.5">Profil pengguna premium di Minecraft (NameMC)</p>
+                    </div>
+                </a>
+                <div class="flex items-center gap-1 shrink-0">
+                    <button onclick="copyToClipboard('https://namemc.com/profile/Javi_Gaming.4', 'Minecraft Profile')" title="Salin Tautan" class="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors">
+                        <i class="fa-regular fa-copy text-xs"></i>
+                    </button>
+                    <a href="https://namemc.com/profile/Javi_Gaming.4" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg text-zinc-400 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Empty Search State Placeholder -->
+            <div id="noResults" class="hidden text-center py-10 space-y-2">
+                <i class="fa-solid fa-ghost text-3xl text-zinc-600"></i>
+                <p class="text-xs font-mono text-zinc-400">Tautan tidak ditemukan.</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="border-t border-zinc-800 bg-black py-8 px-4 text-center text-xs font-mono text-zinc-500 relative z-10 space-y-3">
+        <div class="flex items-center justify-center gap-2 text-zinc-400">
+            <span>OFFICIAL BIO PAGE</span>
+            <i class="fa-solid fa-bolt text-white text-[11px]"></i>
+            <a href="https://bio.dejavi.my.id" class="text-white hover:underline">bio.dejavi.my.id</a>
+        </div>
+        <div>
+            © 2026 JAVIER AHMAD ARIVERY (@dejavi08). ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+
+    <!-- Share & QR Code Modal -->
+    <div id="shareModal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 invisible">
+        <div class="bg-zinc-900 border border-zinc-700 rounded-3xl max-w-sm w-full p-6 text-center space-y-5 shadow-2xl relative">
+            <button onclick="closeShareModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            
+            <div class="space-y-1">
+                <h3 class="text-base font-bold text-white uppercase font-mono">Bagikan Profil ⚡</h3>
+                <p class="text-xs text-zinc-400">Pindai kode QR atau salin tautan bio resmi.</p>
+            </div>
+
+            <!-- Generated QR Code Image -->
+            <div class="p-4 rounded-2xl bg-white w-48 h-48 mx-auto flex items-center justify-center shadow-inner">
+                <img id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://bio.dejavi.my.id" alt="QR Code Bio Link" class="w-full h-full object-contain">
+            </div>
+
+            <!-- Action Buttons Row -->
+            <div class="space-y-2 pt-2">
+                <button onclick="copyToClipboard('https://bio.dejavi.my.id', 'Bio Link Resmi')" class="w-full py-3 rounded-xl bg-white text-black font-extrabold text-xs uppercase tracking-wider hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 shadow-md">
+                    <i class="fa-solid fa-link text-xs"></i>
+                    <span>Salin URL Bio Resmi</span>
+                </button>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="shareWhatsAppBio()" class="py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700 text-xs font-mono transition-colors flex items-center justify-center gap-1.5">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+                    </button>
+                    <button onclick="shareTelegramBio()" class="py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700 text-xs font-mono transition-colors flex items-center justify-center gap-1.5">
+                        <i class="fa-brands fa-telegram text-sm"></i> Telegram
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // 1. Canvas Particle Background Engine
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.alpha = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        for (let i = 0; i < 40; i++) particles.push(new Particle());
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+
+        // 2. Clipboard & Toast Notifications
+        function copyToClipboard(text, label) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast(`⚡ Tautan ${label} disalin!`);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMessage');
+            toastMsg.textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+
+
+        // 3. Category & Keyword Filter Logic
+        let currentCategory = 'all';
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            const buttons = document.querySelectorAll('.cat-pill');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-category') === cat) {
+                    btn.className = "cat-pill px-3 py-1.5 rounded-lg bg-white text-black font-bold transition-all";
+                } else {
+                    btn.className = "cat-pill px-3 py-1.5 rounded-lg bg-zinc-900 text-zinc-400 border border-zinc-800 hover:text-white transition-all";
+                }
+            });
+            filterLinks();
+        }
+
+        function filterLinks() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.link-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-category');
+                const keywords = card.getAttribute('data-keywords').toLowerCase();
+                const titleText = card.querySelector('h2').textContent.toLowerCase();
+
+                const matchesCat = (currentCategory === 'all' || cardCat === currentCategory);
+                const matchesSearch = (!query || keywords.includes(query) || titleText.includes(query));
+
+                if (matchesCat && matchesSearch) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const noResults = document.getElementById('noResults');
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+
+
+        // 4. Modal Handlers
+        function openShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.classList.add('modal-active');
+        }
+
+        function closeShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.classList.remove('modal-active');
+        }
+
+        document.getElementById('shareModal').addEventListener('click', (e) => {
+            if (e.target.id === 'shareModal') closeShareModal();
+        });
+
+        function shareWhatsAppBio() {
+            const waUrl = `https://wa.me/?text=${encodeURIComponent('Kunjungi profil bio resmi Javier Ahmad Arivery (@dejavi08): https://bio.dejavi.my.id')}`;
+            window.open(waUrl, '_blank');
+        }
+
+        function shareTelegramBio() {
+            const tgUrl = `https://t.me/share/url?url=${encodeURIComponent('https://bio.dejavi.my.id')}&text=${encodeURIComponent('Profil Bio @dejavi08')}`;
+            window.open(tgUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
