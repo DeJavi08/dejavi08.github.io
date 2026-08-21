@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title & SEO -->
     <title>Javier Ahmad Arivery | Portofolio</title>
-    
+    <meta name="description" content="Portofolio resmi Javier Ahmad Arivery - Mahasiswa PENS, Web Developer, AI & Otomasi Python.">
 
-    <link rel="icon" type="image/png" href="assets/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Javi Ahmad" />
-    <link rel="manifest" href="assets/site.webmanifest" />
+    <!-- Open Graph (Nama situs & Preview) -->
+    <meta property="og:site_name" content="Portofolio Javier Ahmad">
+    <meta property="og:title" content="Javier Ahmad Arivery | Portofolio">
+    <meta property="og:description" content="Portofolio resmi karya dan proyek Javier Ahmad Arivery.">
+    <meta property="og:url" content="https://dejavi.id/">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon (Sesuaikan persis dengan folder assets/ kamu) -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/web-app-manifest-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="manifest" href="assets/site.webmanifest">
+
+    <!-- Google Site Name Schema (JSON-LD agar nama web menjadi Portofolio) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Portofolio Javier Ahmad",
+      "alternateName": ["Javier Portofolio", "Portofolio Javi"],
+      "url": "https://dejavi.id/"
+    }
+    </script>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -381,6 +399,31 @@
                     <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 border-white flex items-center justify-center text-white text-xs shadow-md">
                         <i class="fa-solid fa-bolt text-[10px]"></i>
                     </div>
+
+                    <!-- PENS (Kuliah) -->
+                <div class="relative group">
+                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 border-white flex items-center justify-center text-white text-xs shadow-md">
+                        <i class="fa-solid fa-bolt text-[10px]"></i>
+                    </div>
+                    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                            <h3 class="text-lg font-bold text-white">Politeknik Elektronika Negeri Surabaya (PENS)</h3>
+                            <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono text-xs w-fit">2026 — Sekarang</span>
+                        </div>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+                            Mahasiswa program studi <strong>D4 Teknik Informatika</strong>. Fokus pada rekayasa perangkat lunak, sains data, algoritma, serta komputasi terapan.
+                        </p>
+                        <div class="bg-zinc-800/50 p-4 rounded-xl border border-zinc-800 space-y-2">
+                            <h4 class="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">⚡ Highlights & Fokus Studi:</h4>
+                            <ul class="text-xs text-zinc-400 space-y-1.5 list-disc list-inside">
+                                <li>Pengembangan perangkat lunak berbasis web & otomasi sistem cerdas</li>
+                                <li>Eksplorasi kecerdasan buatan, algoritma, dan arsitektur data lanjutan</li>
+                                <li>Kolaborasi riset teknologi dan proyek rekayasa digital aplikatif</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                    
                     <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                             <h3 class="text-lg font-bold text-white">SMA Negeri 17 Surabaya (SMANTASS)</h3>
