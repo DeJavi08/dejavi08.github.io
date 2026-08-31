@@ -33,7 +33,7 @@
     </script>
 
     <!-- html2pdf.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
         
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -1395,360 +1395,368 @@
 
 
         // 5. Download CV
-// Fungsi Download CV Langsung ke File PDF (A4 2 Halaman)
-async function downloadCV() {
+    async function downloadCV() {
     showToast("⏳ Memproses berkas PDF CV...");
 
-    // Template HTML CV Lengkap
-    const cvHtmlString = `
-    <!DOCTYPE html>
-    <html lang="id">
-    <head>
-      <meta charset="UTF-8">
-      <script src="https://cdn.tailwindcss.com"><\/script>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-      <style>
-        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        body {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-          color: #111827;
-          background: #ffffff;
-          margin: 0;
-          padding: 0;
-        }
-        .a4-page {
-          width: 210mm;
-          min-height: 297mm;
-          height: 297mm;
-          padding: 16mm 18mm;
-          background: #ffffff;
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          overflow: hidden;
-          page-break-after: always;
-          break-after: page;
-        }
-        .a4-page:last-child {
-          page-break-after: auto;
-          break-after: auto;
-        }
-        .section-title {
-          font-size: 11pt;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.06em;
-          border-bottom: 1.5px solid #1f2937;
-          padding-bottom: 3px;
-          margin-top: 10px;
-          margin-bottom: 6px;
-          color: #0f172a;
-        }
-        .body-text { font-size: 9pt; line-height: 1.38; color: #1e293b; }
-        .meta-text { font-size: 8.6pt; color: #475569; }
-        ul.ats-list { list-style-type: disc; padding-left: 16px; margin: 3px 0; }
-        ul.ats-list li { margin-bottom: 3px; line-height: 1.34; }
-        .page-footer {
-          margin-top: auto;
-          padding-top: 8px;
-          border-top: 1px solid #e2e8f0;
-          font-size: 8pt;
-          color: #94a3b8;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-      </style>
-    </head>
-    <body class="text-gray-900">
-      <!-- HALAMAN 1 -->
-      <main class="a4-page body-text">
-        <header class="flex items-center justify-between pb-3 mb-2 border-b-2 border-slate-800 gap-4">
-          <div class="flex-1">
-            <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 mb-1">JAVIER AHMAD ARIVERY</h1>
-            <p class="text-[9.5pt] text-slate-700 font-medium leading-relaxed mb-1">
-              Surabaya, Indonesia &nbsp;|&nbsp; 
-              <a href="tel:+6281332930760" class="text-blue-700 font-semibold hover:underline">+62 813-3293-0760</a> &nbsp;|&nbsp; 
-              <a href="mailto:masjavi08@gmail.com" class="hover:underline">masjavi08@gmail.com</a>
-            </p>
-            <p class="text-[8.8pt] text-slate-600 leading-normal">
-              LinkedIn: <a href="https://linkedin.com/in/javiahmd" target="_blank" class="hover:underline font-medium text-slate-800">linkedin.com/in/javiahmd</a> &nbsp;|&nbsp; 
-              GitHub: <a href="https://github.com/DeJavi08" target="_blank" class="hover:underline font-medium text-slate-800">github.com/DeJavi08</a> &nbsp;|&nbsp; 
-              Portfolio: <a href="https://dejavi.id" target="_blank" class="hover:underline font-medium text-slate-800">dejavi.id</a>
-            </p>
-          </div>
-          <div class="flex-shrink-0">
-            <div class="w-[28mm] h-[37.3mm] border border-slate-300 rounded shadow-sm overflow-hidden bg-slate-100 flex items-center justify-center">
-              <img 
-                src="https://lh3.googleusercontent.com/d/1kdyMxTmJLWPFlI3rAwISzj_VbQkUAF6H=w1000?authuser=1" 
-                alt="Foto Profil Javier Ahmad Arivery" 
-                class="w-full h-full object-cover object-center"
-                onerror="this.onerror=null; this.src='https://placehold.co/300x400/1e293b/ffffff?text=3x4+Foto';"
-              />
-            </div>
-          </div>
-        </header>
-
-        <section>
-          <h2 class="section-title">Ringkasan Profesional</h2>
-          <p class="text-justify leading-relaxed">
-            Mahasiswa D4 Teknik Informatika di Politeknik Elektronika Negeri Surabaya (PENS). Memiliki pengalaman dalam pengembangan web modern, otomatisasi skrip Python, multimedia interaktif, dan Augmented Reality melalui berbagai proyek mandiri serta media edukasi sekolah. Aktif dalam organisasi ilmiah selama masa sekolah dan berpengalaman sebagai kreator konten digital di YouTube. Memiliki etos belajar tinggi, kemampuan adaptasi teknologi yang cepat, serta orientasi kuat pada pemecahan masalah teknis.
-          </p>
-        </section>
-
-        <section>
-          <h2 class="section-title">Pendidikan</h2>
-          <div class="mb-2">
-            <div class="flex justify-between items-baseline">
-              <h3 class="font-bold text-slate-900 text-[9.5pt]">Politeknik Elektronika Negeri Surabaya (PENS)</h3>
-              <span class="meta-text font-semibold">Surabaya | 2026 – Sekarang</span>
-            </div>
-            <div class="flex justify-between items-baseline italic text-slate-700 text-[8.8pt]">
-              <span class="font-medium">D4 Teknik Informatika</span>
-              <span>Fokus: Rekayasa Perangkat Lunak, Sains Data, Algoritma & AI</span>
-            </div>
-          </div>
-
-          <div class="mb-2">
-            <div class="flex justify-between items-baseline">
-              <h3 class="font-bold text-slate-900 text-[9.5pt]">SMA Negeri 17 Surabaya (SMANTASS)</h3>
-              <span class="meta-text font-semibold">Surabaya | 2023 – 2026</span>
-            </div>
-            <div class="flex justify-between items-baseline italic text-slate-700 text-[8.8pt] mb-1">
-              <span>MIPA (Peringkat 1 Kelas, Peringkat 6 Paralel Sekolah)</span>
-              <span>Ketua Kelompok Ilmiah Remaja (KIRTASS)</span>
-            </div>
-            <ul class="ats-list text-slate-700">
-              <li>Memimpin organisasi KIRTASS dan mengoordinasikan tim riset siswa dalam kompetisi inovasi tingkat nasional.</li>
-              <li>Pengembang media pembelajaran interaktif berbasis Articulate Storyline & Web untuk guru dan siswa kelas XI/XII.</li>
-              <li>Aktif berkontribusi sebagai pengurus OSIS bidang IT & publikasi multimedia sekolah.</li>
-            </ul>
-          </div>
-
-          <div class="mb-1.5">
-            <div class="flex justify-between items-baseline">
-              <h3 class="font-bold text-slate-900 text-[9.5pt]">SMPIT Al Uswah Surabaya</h3>
-              <span class="meta-text font-semibold">Surabaya | 2020 – 2023</span>
-            </div>
-            <div class="text-[8.8pt] text-slate-700">
-              <span>Lulusan Peringkat 1 Angkatan | Sekretaris OSIS I (Community Development) | Eksplorasi server & bot otomatisasi.</span>
-            </div>
-          </div>
-
-          <div class="mb-0.5">
-            <div class="flex justify-between items-baseline text-[8.8pt]">
-              <span class="font-semibold text-slate-900">SDIT Al Uswah Surabaya</span>
-              <span class="meta-text">Lulusan 5 Besar (2014 – 2020) | Menuntaskan Hafalan Al-Qur'an 3 Juz</span>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <h2 class="section-title">Pengalaman Proyek Unggulan</h2>
-          <div class="space-y-2">
-            <div>
-              <div class="flex justify-between items-baseline">
-                <h3 class="font-bold text-slate-900 text-[9.2pt]">Interactive Digital Literacy Learning App (GEMPITA)</h3>
-                <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">Articulate Storyline 3, JavaScript, Web & APK</span>
-              </div>
-              <p class="text-slate-700 mt-0.5">
-                Mengembangkan aplikasi media pembelajaran interaktif untuk siswa SMA tentang etika dan literasi digital. Mengimplementasikan custom script JavaScript untuk kontrol audio interaktif serta merilis versi Web dan paket Android (APK).
-              </p>
-            </div>
-
-            <div>
-              <div class="flex justify-between items-baseline">
-                <h3 class="font-bold text-slate-900 text-[9.2pt]">English Lesson Media: Narrative Text (GEMPITA Awards)</h3>
-                <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">Articulate Storyline, HTML5/JS, Android APK</span>
-              </div>
-              <p class="text-slate-700 mt-0.5">
-                Membangun aplikasi edukasi bahasa Inggris berorientasi gamifikasi materi Narrative Text di SMAN 17 Surabaya untuk ajang penghargaan tenaga pendidik tingkat Jawa Timur (Gempita Awards).
-              </p>
-            </div>
-
-            <div>
-              <div class="flex justify-between items-baseline">
-                <h3 class="font-bold text-slate-900 text-[9.2pt]">Platform Simulasi TryOut SNBT & CPNS</h3>
-                <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">React.js, Tailwind CSS, Local State Engine</span>
-              </div>
-              <p class="text-slate-700 mt-0.5">
-                Merancang platform simulasi ujian online dengan evaluasi skor real-time, timer terintegrasi, kalkulasi bobot subtes otomatis, serta review analisis kunci jawaban interaktif.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <div class="page-footer">
-          <span>Javier Ahmad Arivery — Curriculum Vitae</span>
-          <span>Halaman 1 dari 2</span>
-        </div>
-      </main>
-
-      <!-- HALAMAN 2 -->
-      <main class="a4-page body-text">
-        <section>
-          <h2 class="section-title" style="margin-top: 0;">Pengalaman Proyek Mandiri (Lanjutan)</h2>
-          <div class="space-y-2">
-            <div>
-              <div class="flex justify-between items-baseline">
-                <h3 class="font-bold text-slate-900 text-[9.2pt]">UTBK Tracker & Preparation Dashboard (PWA)</h3>
-                <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">React.js, Tailwind CSS, Recharts, Cloud Firestore, PWA</span>
-              </div>
-              <p class="text-slate-700 mt-0.5">
-                Mengembangkan platform dashboard interaktif dan PWA untuk persiapan UTBK-SNBT dengan sistem manajemen 58 topik materi di 7 subtes, to-do target harian, sinkronisasi cloud real-time, serta visualisasi analitik (grafik radar & model IRT).
-              </p>
-            </div>
-
-            <div>
-              <div class="flex justify-between items-baseline">
-                <h3 class="font-bold text-slate-900 text-[9.2pt]">Android Backup Tool via ADB Stream</h3>
-                <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">Python, ADB, Bash Scripting</span>
-              </div>
-              <p class="text-slate-700 mt-0.5">
-                Mengembangkan skrip otomasi CLI untuk transfer dan pencadangan data Android langsung (*direct-stream*) ke komputer tanpa membuat file penampung sementara di internal storage.
-              </p>
-            </div>
-
-            <div>
-              <div class="flex justify-between items-baseline">
-                <h3 class="font-bold text-slate-900 text-[9.2pt]">Aplikasi Android Augmented Reality (AR) Senam</h3>
-                <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">Unity 3D, C#, Vuforia Engine</span>
-              </div>
-              <p class="text-slate-700 mt-0.5">
-                Aplikasi edukasi kesehatan berbasis image marker AR untuk menampilkan peragaan model gerakan senam secara 3 dimensi di layar smartphone.
-              </p>
-            </div>
-
-            <div>
-              <div class="flex justify-between items-baseline">
-                <h3 class="font-bold text-slate-900 text-[9.2pt]">Portal Web KIRTASS & LBB Mashar</h3>
-                <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">HTML5, CSS3 Modern, Vanilla JavaScript</span>
-              </div>
-              <p class="text-slate-700 mt-0.5">
-                Membangun website informasi publik responsif dan katalog program edukasi untuk organisasi ilmiah sekolah serta lembaga bimbingan belajar lokal.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <h2 class="section-title">Pengalaman Kreator Konten & Multimedia</h2>
-          <div class="space-y-1.5">
-            <div>
-              <div class="flex justify-between items-baseline">
-                <h3 class="font-bold text-slate-900 text-[9.2pt]">Kreator Konten YouTube Gaming (@Javi_Gaming)</h3>
-                <span class="meta-text font-semibold">2016 – Sekarang</span>
-              </div>
-              <ul class="ats-list text-slate-700">
-                <li>Mengelola channel hingga menjangkau <strong>±14.000 subscriber</strong> dengan 225 video terpublikasi.</li>
-                <li>Memproduksi video gameplay dan tutorial teknis; tutorial utama meraih <strong>334.000+ views</strong>.</li>
-                <li>Menguasai alur produksi video: planning, recording, audio mixing, dan video editing (Premiere Pro, CapCut, Alight Motion).</li>
-              </ul>
-            </div>
-
-            <div>
-              <div class="flex justify-between items-baseline">
-                <h3 class="font-bold text-slate-900 text-[9.2pt]">Kreator Konten Edukasi & Vlogging (@javii08_)</h3>
-                <span class="meta-text font-semibold">2020 – Sekarang</span>
-              </div>
-              <ul class="ats-list text-slate-700">
-                <li>Memproduksi 69+ video seputar coding santai, troubleshooting teknologi, hardware, dan dokumentasi.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <h2 class="section-title">Prestasi & Penghargaan</h2>
-          <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[8.7pt] text-slate-800">
-            <div><strong class="text-slate-950">• Gold Medal WYIIA (2023):</strong> World Youth Invention & Innovation Award – Kategori Teknologi.</div>
-            <div><strong class="text-slate-950">• Juara 1 Taekwondo UMSIDA CUP (2022):</strong> Kategori Kyurogi Prestasi Semi Putra.</div>
-            <div><strong class="text-slate-950">• 5 Medali Emas Olimpiade (2023):</strong> POSI & OSN (Ekonomi, Sosiologi, PPKn, B.Inggris).</div>
-            <div><strong class="text-slate-950">• Pembinaan KSN SMP Tahap 1 (2021):</strong> Seleksi Kompetisi Sains Nasional IPA/Matematika.</div>
-            <div><strong class="text-slate-950">• Semifinalis Jagoan Hosting (2025):</strong> Infrastruktur Server & Cloud Computing.</div>
-            <div><strong class="text-slate-950">• Semifinalis NIPRO ICHEVO ITS (2025):</strong> Inovasi Bioplastik Ramah Lingkungan.</div>
-            <div><strong class="text-slate-950">• Pelatihan AI Puspresnas (2025):</strong> Program Bina Talenta Koding & Artificial Intelligence.</div>
-            <div><strong class="text-slate-950">• Pelatihan Game Dev GIGA Lab ITS (2025):</strong> Workshop Unity 3D, Construct 3, dan VR.</div>
-          </div>
-        </section>
-
-        <section>
-          <h2 class="section-title">Keahlian Teknis & Organisasi</h2>
-          <div class="space-y-1.5 text-[8.8pt]">
-            <div>
-              <span class="font-bold text-slate-950">Bahasa Pemrograman:</span>
-              <span class="text-slate-800">Python, JavaScript (ES6+), HTML5, CSS3, C# (Basic Unity), SQL.</span>
-            </div>
-            <div>
-              <span class="font-bold text-slate-950">Framework & Software:</span>
-              <span class="text-slate-800">React.js, Tailwind CSS, Articulate Storyline 3, Unity 3D (Vuforia), Construct 2/3.</span>
-            </div>
-            <div>
-              <span class="font-bold text-slate-950">Tools & Otomasi:</span>
-              <span class="text-slate-800">Git, GitHub, Android Debug Bridge (ADB), FFmpeg, yt-dlp, VS Code.</span>
-            </div>
-            <div>
-              <span class="font-bold text-slate-950">Multimedia & Desain:</span>
-              <span class="text-slate-800">Adobe Premiere Pro, CapCut, Alight Motion, Canva, Photoshop, PixelLab.</span>
-            </div>
-            <div>
-              <span class="font-bold text-slate-950">Kepemimpinan:</span>
-              <span class="text-slate-800">Ketua Kelompok Ilmiah Remaja SMAN 17 (2024–2026), Pengurus OSIS SMAN 17 & SMPIT Al Uswah.</span>
-            </div>
-            <div class="flex justify-between items-baseline pt-0.5 text-[8.6pt]">
-              <div>
-                <span class="font-bold text-slate-950">Kemampuan Bahasa:</span>
-                <span class="text-slate-800">Bahasa Indonesia (Native), Bahasa Inggris (Intermediate).</span>
-              </div>
-              <div>
-                <span class="font-bold text-slate-950">Tambahan:</span>
-                <span class="text-slate-800">Hafalan Al-Qur'an 3 Juz</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div class="page-footer">
-          <span>Javier Ahmad Arivery — Curriculum Vitae</span>
-          <span>Halaman 2 dari 2</span>
-        </div>
-      </main>
-    </body>
-    </html>
-    `;
-
-    // Render ke hidden container sementara untuk konversi PDF
-    const tempContainer = document.createElement("div");
-    tempContainer.style.position = "fixed";
-    tempContainer.style.top = "-99999px";
-    tempContainer.style.left = "-99999px";
-    tempContainer.style.width = "210mm";
-    tempContainer.innerHTML = cvHtmlString;
-    document.body.appendChild(tempContainer);
-
-    // Opsi konfigurasi html2pdf
-    const opt = {
-        margin:       0,
-        filename:     'CV_ATS_Javier_Ahmad_Arivery.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, logging: false },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    try {
-        await html2pdf().set(opt).from(tempContainer).save();
-        showToast("⚡ CV Javier Ahmad Arivery (PDF) berhasil diunduh!");
-    } catch (err) {
-        console.error("Gagal generate PDF:", err);
-        showToast("❌ Terjadi kesalahan saat mengunduh PDF.");
-    } finally {
-        document.body.removeChild(tempContainer);
+    const cvHtmlString = `<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"><\/script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #111827;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
     }
-}
+    .a4-page {
+      width: 210mm;
+      min-height: 297mm;
+      height: 297mm;
+      padding: 16mm 18mm;
+      background: #ffffff;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow: hidden;
+      page-break-after: always;
+      break-after: page;
+    }
+    .a4-page:last-child {
+      page-break-after: auto;
+      break-after: auto;
+    }
+    .section-title {
+      font-size: 11pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1.5px solid #1f2937;
+      padding-bottom: 3px;
+      margin-top: 10px;
+      margin-bottom: 6px;
+      color: #0f172a;
+    }
+    .body-text { font-size: 9pt; line-height: 1.38; color: #1e293b; }
+    .meta-text { font-size: 8.6pt; color: #475569; }
+    ul.ats-list { list-style-type: disc; padding-left: 16px; margin: 3px 0; }
+    ul.ats-list li { margin-bottom: 3px; line-height: 1.34; }
+    .page-footer {
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 8pt;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body class="text-gray-900 bg-white">
+  <!-- HALAMAN 1 -->
+  <main class="a4-page body-text">
+    <header class="flex items-center justify-between pb-3 mb-2 border-b-2 border-slate-800 gap-4">
+      <div class="flex-1">
+        <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 mb-1">JAVIER AHMAD ARIVERY</h1>
+        <p class="text-[9.5pt] text-slate-700 font-medium leading-relaxed mb-1">
+          Surabaya, Indonesia &nbsp;|&nbsp; 
+          <a href="tel:+6281332930760" class="text-blue-700 font-semibold hover:underline">+62 813-3293-0760</a> &nbsp;|&nbsp; 
+          <a href="mailto:masjavi08@gmail.com" class="hover:underline">masjavi08@gmail.com</a>
+        </p>
+        <p class="text-[8.8pt] text-slate-600 leading-normal">
+          LinkedIn: <a href="https://linkedin.com/in/javiahmd" target="_blank" class="hover:underline font-medium text-slate-800">linkedin.com/in/javiahmd</a> &nbsp;|&nbsp; 
+          GitHub: <a href="https://github.com/DeJavi08" target="_blank" class="hover:underline font-medium text-slate-800">github.com/DeJavi08</a> &nbsp;|&nbsp; 
+          Portfolio: <a href="https://dejavi.id" target="_blank" class="hover:underline font-medium text-slate-800">dejavi.id</a>
+        </p>
+      </div>
+      <div class="flex-shrink-0">
+        <div class="w-[28mm] h-[37.3mm] border border-slate-300 rounded shadow-sm overflow-hidden bg-slate-100 flex items-center justify-center">
+          <img 
+            src="https://lh3.googleusercontent.com/d/1kdyMxTmJLWPFlI3rAwISzj_VbQkUAF6H=w1000?authuser=1" 
+            alt="Foto Profil Javier Ahmad Arivery" 
+            class="w-full h-full object-cover object-center"
+            onerror="this.onerror=null; this.src='https://placehold.co/300x400/1e293b/ffffff?text=3x4+Foto';"
+          />
+        </div>
+      </div>
+    </header>
 
+    <section>
+      <h2 class="section-title">Ringkasan Profesional</h2>
+      <p class="text-justify leading-relaxed">
+        Mahasiswa D4 Teknik Informatika di Politeknik Elektronika Negeri Surabaya (PENS). Memiliki pengalaman dalam pengembangan web modern, otomatisasi skrip Python, multimedia interaktif, dan Augmented Reality melalui berbagai proyek mandiri serta media edukasi sekolah. Aktif dalam organisasi ilmiah selama masa sekolah dan berpengalaman sebagai kreator konten digital di YouTube. Memiliki etos belajar tinggi, kemampuan adaptasi teknologi yang cepat, serta orientasi kuat pada pemecahan masalah teknis.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="section-title">Pendidikan</h2>
+      <div class="mb-2">
+        <div class="flex justify-between items-baseline">
+          <h3 class="font-bold text-slate-900 text-[9.5pt]">Politeknik Elektronika Negeri Surabaya (PENS)</h3>
+          <span class="meta-text font-semibold">Surabaya | 2026 – Sekarang</span>
+        </div>
+        <div class="flex justify-between items-baseline italic text-slate-700 text-[8.8pt]">
+          <span class="font-medium">D4 Teknik Informatika</span>
+          <span>Fokus: Rekayasa Perangkat Lunak, Sains Data, Algoritma & AI</span>
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <div class="flex justify-between items-baseline">
+          <h3 class="font-bold text-slate-900 text-[9.5pt]">SMA Negeri 17 Surabaya (SMANTASS)</h3>
+          <span class="meta-text font-semibold">Surabaya | 2023 – 2026</span>
+        </div>
+        <div class="flex justify-between items-baseline italic text-slate-700 text-[8.8pt] mb-1">
+          <span>MIPA (Peringkat 1 Kelas, Peringkat 6 Paralel Sekolah)</span>
+          <span>Ketua Kelompok Ilmiah Remaja (KIRTASS)</span>
+        </div>
+        <ul class="ats-list text-slate-700">
+          <li>Memimpin organisasi KIRTASS dan mengoordinasikan tim riset siswa dalam kompetisi inovasi tingkat nasional.</li>
+          <li>Pengembang media pembelajaran interaktif berbasis Articulate Storyline & Web untuk guru dan siswa kelas XI/XII.</li>
+          <li>Aktif berkontribusi sebagai pengurus OSIS bidang IT & publikasi multimedia sekolah.</li>
+        </ul>
+      </div>
+
+      <div class="mb-1.5">
+        <div class="flex justify-between items-baseline">
+          <h3 class="font-bold text-slate-900 text-[9.5pt]">SMPIT Al Uswah Surabaya</h3>
+          <span class="meta-text font-semibold">Surabaya | 2020 – 2023</span>
+        </div>
+        <div class="text-[8.8pt] text-slate-700">
+          <span>Lulusan Peringkat 1 Angkatan | Sekretaris OSIS I (Community Development) | Eksplorasi server & bot otomatisasi.</span>
+        </div>
+      </div>
+
+      <div class="mb-0.5">
+        <div class="flex justify-between items-baseline text-[8.8pt]">
+          <span class="font-semibold text-slate-900">SDIT Al Uswah Surabaya</span>
+          <span class="meta-text">Lulusan 5 Besar (2014 – 2020) | Menuntaskan Hafalan Al-Qur'an 3 Juz</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Pengalaman Proyek Unggulan</h2>
+      <div class="space-y-2">
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-bold text-slate-900 text-[9.2pt]">Interactive Digital Literacy Learning App (GEMPITA)</h3>
+            <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">Articulate Storyline 3, JavaScript, Web & APK</span>
+          </div>
+          <p class="text-slate-700 mt-0.5">
+            Mengembangkan aplikasi media pembelajaran interaktif untuk siswa SMA tentang etika dan literasi digital. Mengimplementasikan custom script JavaScript untuk kontrol audio interaktif serta merilis versi Web dan paket Android (APK).
+          </p>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-bold text-slate-900 text-[9.2pt]">English Lesson Media: Narrative Text (GEMPITA Awards)</h3>
+            <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">Articulate Storyline, HTML5/JS, Android APK</span>
+          </div>
+          <p class="text-slate-700 mt-0.5">
+            Membangun aplikasi edukasi bahasa Inggris berorientasi gamifikasi materi Narrative Text di SMAN 17 Surabaya untuk ajang penghargaan tenaga pendidik tingkat Jawa Timur (Gempita Awards).
+          </p>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-bold text-slate-900 text-[9.2pt]">Platform Simulasi TryOut SNBT & CPNS</h3>
+            <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">React.js, Tailwind CSS, Local State Engine</span>
+          </div>
+          <p class="text-slate-700 mt-0.5">
+            Merancang platform simulasi ujian online dengan evaluasi skor real-time, timer terintegrasi, kalkulasi bobot subtes otomatis, serta review analisis kunci jawaban interaktif.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-footer">
+      <span>Javier Ahmad Arivery — Curriculum Vitae</span>
+      <span>Halaman 1 dari 2</span>
+    </div>
+  </main>
+
+  <!-- HALAMAN 2 -->
+  <main class="a4-page body-text">
+    <section>
+      <h2 class="section-title" style="margin-top: 0;">Pengalaman Proyek Mandiri (Lanjutan)</h2>
+      <div class="space-y-2">
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-bold text-slate-900 text-[9.2pt]">UTBK Tracker & Preparation Dashboard (PWA)</h3>
+            <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">React.js, Tailwind CSS, Recharts, Cloud Firestore, PWA</span>
+          </div>
+          <p class="text-slate-700 mt-0.5">
+            Mengembangkan platform dashboard interaktif dan PWA untuk persiapan UTBK-SNBT dengan sistem manajemen 58 topik materi di 7 subtes, to-do target harian, sinkronisasi cloud real-time, serta visualisasi analitik (grafik radar & model IRT).
+          </p>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-bold text-slate-900 text-[9.2pt]">Android Backup Tool via ADB Stream</h3>
+            <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">Python, ADB, Bash Scripting</span>
+          </div>
+          <p class="text-slate-700 mt-0.5">
+            Mengembangkan skrip otomasi CLI untuk transfer dan pencadangan data Android langsung (*direct-stream*) ke komputer tanpa membuat file penampung sementara di internal storage.
+          </p>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-bold text-slate-900 text-[9.2pt]">Aplikasi Android Augmented Reality (AR) Senam</h3>
+            <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">Unity 3D, C#, Vuforia Engine</span>
+          </div>
+          <p class="text-slate-700 mt-0.5">
+            Aplikasi edukasi kesehatan berbasis image marker AR untuk menampilkan peragaan model gerakan senam secara 3 dimensi di layar smartphone.
+          </p>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-bold text-slate-900 text-[9.2pt]">Portal Web KIRTASS & LBB Mashar</h3>
+            <span class="meta-text text-[8pt] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">HTML5, CSS3 Modern, Vanilla JavaScript</span>
+          </div>
+          <p class="text-slate-700 mt-0.5">
+            Membangun website informasi publik responsif dan katalog program edukasi untuk organisasi ilmiah sekolah serta lembaga bimbingan belajar lokal.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Pengalaman Kreator Konten & Multimedia</h2>
+      <div class="space-y-1.5">
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-bold text-slate-900 text-[9.2pt]">Kreator Konten YouTube Gaming (@Javi_Gaming)</h3>
+            <span class="meta-text font-semibold">2016 – Sekarang</span>
+          </div>
+          <ul class="ats-list text-slate-700">
+            <li>Mengelola channel hingga menjangkau <strong>±14.000 subscriber</strong> dengan 225 video terpublikasi.</li>
+            <li>Memproduksi video gameplay dan tutorial teknis; tutorial utama meraih <strong>334.000+ views</strong>.</li>
+            <li>Menguasai alur produksi video: planning, recording, audio mixing, dan video editing (Premiere Pro, CapCut, Alight Motion).</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-bold text-slate-900 text-[9.2pt]">Kreator Konten Edukasi & Vlogging (@javii08_)</h3>
+            <span class="meta-text font-semibold">2020 – Sekarang</span>
+          </div>
+          <ul class="ats-list text-slate-700">
+            <li>Memproduksi 69+ video seputar coding santai, troubleshooting teknologi, hardware, dan dokumentasi.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Prestasi & Penghargaan</h2>
+      <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[8.7pt] text-slate-800">
+        <div><strong class="text-slate-950">• Gold Medal WYIIA (2023):</strong> World Youth Invention & Innovation Award – Kategori Teknologi.</div>
+        <div><strong class="text-slate-950">• Juara 1 Taekwondo UMSIDA CUP (2022):</strong> Kategori Kyurogi Prestasi Semi Putra.</div>
+        <div><strong class="text-slate-950">• 5 Medali Emas Olimpiade (2023):</strong> POSI & OSN (Ekonomi, Sosiologi, PPKn, B.Inggris).</div>
+        <div><strong class="text-slate-950">• Pembinaan KSN SMP Tahap 1 (2021):</strong> Seleksi Kompetisi Sains Nasional IPA/Matematika.</div>
+        <div><strong class="text-slate-950">• Semifinalis Jagoan Hosting (2025):</strong> Infrastruktur Server & Cloud Computing.</div>
+        <div><strong class="text-slate-950">• Semifinalis NIPRO ICHEVO ITS (2025):</strong> Inovasi Bioplastik Ramah Lingkungan.</div>
+        <div><strong class="text-slate-950">• Pelatihan AI Puspresnas (2025):</strong> Program Bina Talenta Koding & Artificial Intelligence.</div>
+        <div><strong class="text-slate-950">• Pelatihan Game Dev GIGA Lab ITS (2025):</strong> Workshop Unity 3D, Construct 3, dan VR.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Keahlian Teknis & Organisasi</h2>
+      <div class="space-y-1.5 text-[8.8pt]">
+        <div>
+          <span class="font-bold text-slate-950">Bahasa Pemrograman:</span>
+          <span class="text-slate-800">Python, JavaScript (ES6+), HTML5, CSS3, C# (Basic Unity), SQL.</span>
+        </div>
+        <div>
+          <span class="font-bold text-slate-950">Framework & Software:</span>
+          <span class="text-slate-800">React.js, Tailwind CSS, Articulate Storyline 3, Unity 3D (Vuforia), Construct 2/3.</span>
+        </div>
+        <div>
+          <span class="font-bold text-slate-950">Tools & Otomasi:</span>
+          <span class="text-slate-800">Git, GitHub, Android Debug Bridge (ADB), FFmpeg, yt-dlp, VS Code.</span>
+        </div>
+        <div>
+          <span class="font-bold text-slate-950">Multimedia & Desain:</span>
+          <span class="text-slate-800">Adobe Premiere Pro, CapCut, Alight Motion, Canva, Photoshop, PixelLab.</span>
+        </div>
+        <div>
+          <span class="font-bold text-slate-950">Kepemimpinan:</span>
+          <span class="text-slate-800">Ketua Kelompok Ilmiah Remaja SMAN 17 (2024–2026), Pengurus OSIS SMAN 17 & SMPIT Al Uswah.</span>
+        </div>
+        <div class="flex justify-between items-baseline pt-0.5 text-[8.6pt]">
+          <div>
+            <span class="font-bold text-slate-950">Kemampuan Bahasa:</span>
+            <span class="text-slate-800">Bahasa Indonesia (Native), Bahasa Inggris (Intermediate).</span>
+          </div>
+          <div>
+            <span class="font-bold text-slate-950">Tambahan:</span>
+            <span class="text-slate-800">Hafalan Al-Qur'an 3 Juz</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-footer">
+      <span>Javier Ahmad Arivery — Curriculum Vitae</span>
+      <span>Halaman 2 dari 2</span>
+    </div>
+  </main>
+</body>
+</html>`;
+
+    // Buat iframe terisolasi
+    const iframe = document.createElement('iframe');
+    iframe.style.position = 'fixed';
+    iframe.style.top = '0';
+    iframe.style.left = '0';
+    iframe.style.width = '210mm';
+    iframe.style.height = '100vh';
+    iframe.style.zIndex = '-9999';
+    iframe.style.opacity = '0';
+    iframe.style.border = 'none';
+
+    document.body.appendChild(iframe);
+
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    iframeDoc.open();
+    iframeDoc.write(cvHtmlString);
+    iframeDoc.close();
+
+    // Beri jeda 800ms agar font & Tailwind di dalam iframe selesai render
+    setTimeout(async () => {
+        const targetElement = iframeDoc.body;
+
+        const opt = {
+            margin:       0,
+            filename:     'CV_ATS_Javier_Ahmad_Arivery.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true, logging: false },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        try {
+            await html2pdf().set(opt).from(targetElement).save();
+            showToast("⚡ CV Javier Ahmad Arivery (PDF) berhasil diunduh!");
+        } catch (err) {
+            console.error("Gagal generate PDF:", err);
+            showToast("❌ Terjadi kesalahan saat mengunduh PDF.");
+        } finally {
+            document.body.removeChild(iframe);
+        }
+    }, 800);
+}
 
         // 6. WhatsApp & Telegram Contact Integration
         function handleContactSubmit(e) {
