@@ -31,9 +31,1450 @@
       "url": "https://dejavi.id/"
     }
     </script>
+        
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#08080a',
+                            800: '#121216',
+                            700: '#1a1a20',
+                            600: '#26262e',
+                            500: '#3f3f48'
+                        },
+                        lightning: {
+                            bright: '#ffffff',
+                            muted: '#a1a1aa',
+                            glow: 'rgba(255, 255, 255, 0.18)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts & Font Awesome CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- html2pdf.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08080a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #26262e;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #52525b;
+        }
+
+        .lightning-glow {
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.12);
+        }
+        .lightning-glow-hover:hover {
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .bg-grid-pattern {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 0.3; transform: scale(0.99); }
+            50% { opacity: 1; transform: scale(1.01); filter: drop-shadow(0 0 12px #fff); }
+        }
+        .animate-lightning {
+            animation: flash 3.5s infinite ease-in-out;
+        }
+
+        .modal {
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+        .modal-active {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-zinc-100 font-sans antialiased selection:bg-white selection:text-black min-h-screen relative overflow-x-hidden">
+
+    <!-- Canvas for Dynamic Lightning Spark Particles -->
+    <canvas id="bgCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
+
+    <!-- Notification Toast Container -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-zinc-800 text-white border border-zinc-600 px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3 pointer-events-none">
+        <span id="toastIcon" class="text-xl">⚡</span>
+        <span id="toastMessage" class="text-sm font-medium">Pesan berhasil dikirim!</span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-dark-900/85 backdrop-blur-md border-b border-zinc-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#hero" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center group-hover:border-white transition-colors duration-300 shadow-md">
+                    <i class="fa-solid fa-bolt text-white group-hover:scale-125 transition-transform"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-black tracking-wider text-base text-white group-hover:text-zinc-300 transition-colors">JAVI AHMAD</span>
+                    <span class="text-[10px] text-zinc-400 tracking-widest font-mono">dejavi.id // ⚡</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-6 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                <a href="#about" class="hover:text-white transition-colors">Services</a>
+                <a href="#education" class="hover:text-white transition-colors">Pendidikan</a>
+                <a href="#achievements" class="hover:text-white transition-colors">Prestasi</a>
+                <a href="#projects" class="hover:text-white transition-colors">Proyek</a>
+                <a href="#quotes" class="hover:text-white transition-colors">Kutipan</a>
+                <a href="#blog" class="hover:text-white transition-colors">Blog</a>
+            </nav>
+
+            <!-- Quick Action CTA -->
+            <div class="hidden md:flex items-center gap-3">
+                <a href="#contact" class="px-4 py-2 rounded-xl bg-white text-black font-extrabold text-xs tracking-wider uppercase hover:bg-zinc-200 transition-all transform hover:-translate-y-0.5 flex items-center gap-1.5 shadow-md">
+                    <i class="fa-solid fa-paper-plane text-xs"></i> Hubungi Saya
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobileMenuBtn" aria-label="Buka Menu Navigasi" class="md:hidden text-zinc-300 hover:text-white focus:outline-none p-2">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-dark-800 border-b border-zinc-700 px-6 py-4 space-y-3 text-sm font-mono">
+            <a href="#about" class="block text-zinc-300 hover:text-white">Services</a>
+            <a href="#education" class="block text-zinc-300 hover:text-white">Pendidikan</a>
+            <a href="#achievements" class="block text-zinc-300 hover:text-white">Prestasi</a>
+            <a href="#projects" class="block text-zinc-300 hover:text-white">Proyek</a>
+            <a href="#quotes" class="block text-zinc-300 hover:text-white">Kutipan</a>
+            <a href="#blog" class="block text-zinc-300 hover:text-white">Blog</a>
+        </div>
+    </header>
+
+    <!-- Main Section Container -->
+    <main class="relative z-10 pt-20">
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="relative pb-16">
+            <!-- Background Header Banner with Image & Monochromatic Overlay -->
+            <div class="relative w-full h-[320px] sm:h-[380px] bg-dark-800 overflow-hidden border-b border-zinc-800">
+                <img src="https://lh3.googleusercontent.com/d/1Z3rTmQN8nzE6bt8T2o0xulwJonomwXUM=w1000?authuser=1" 
+                     alt="Header Background" 
+                     class="w-full h-full object-cover filter brightness-[0.35] grayscale contrast-125"
+                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80';">
+                
+                <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-dark-900/80 via-transparent to-dark-900/80"></div>
+                <div class="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none"></div>
+            </div>
+
+            <!-- Profile Info Container -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-28 sm:-mt-36 relative z-20">
+                <div class="flex flex-col md:flex-row items-center md:items-end gap-6 sm:gap-8">
+                    
+                    <!-- Profile Picture Frame -->
+                    <div class="relative shrink-0 group">
+                        <div class="w-44 h-56 sm:w-56 sm:h-72 rounded-2xl bg-zinc-800 border-2 border-zinc-700/80 overflow-hidden shadow-2xl lightning-glow group-hover:border-white transition-all duration-300">
+                            <img src="https://lh3.googleusercontent.com/d/1zZb7bASvs4qP8qZAnkm2oYEiCBBoDoSO=w1000?authuser=1" 
+                                 alt="Javier Ahmad Arivery" 
+                                 class="w-full h-full object-cover filter grayscale contrast-110 group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/400x500/18181b/ffffff?text=Javier+Ahmad';">
+                        </div>
+                        <div class="absolute -bottom-3 -right-3 w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-600 flex items-center justify-center text-white shadow-xl">
+                            <i class="fa-solid fa-bolt text-amber-400 text-sm animate-pulse"></i>
+                        </div>
+                    </div>
+
+                    <!-- Right Header Info -->
+                    <div class="flex-1 space-y-4 text-center md:text-left pt-2 md:pt-0">
+                        <div>
+                            <h1 class="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight font-mono">
+                                Javier Ahmad Arivery
+                            </h1>
+                            <p class="text-sm sm:text-base text-zinc-400 font-mono mt-1">
+                                College Student Politeknik Elektronika Negeri Surabaya
+                            </p>
+                        </div>
+
+                        <!-- Quick Info Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2 text-xs font-mono text-zinc-300">
+                            <div class="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800/80 backdrop-blur-sm">
+                                <span class="text-zinc-500 block text-[10px] uppercase">UMUR:</span>
+                                <span class="font-bold text-white">18 Tahun</span>
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800/80 backdrop-blur-sm">
+                                <span class="text-zinc-500 block text-[10px] uppercase">NOMOR HP:</span>
+                                <span class="font-bold text-white">+62 822-4666-8753</span>
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800/80 backdrop-blur-sm">
+                                <span class="text-zinc-500 block text-[10px] uppercase">EMAIL:</span>
+                                <span class="font-bold text-white truncate block">masjavi08@gmail.com</span>
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800/80 backdrop-blur-sm">
+                                <span class="text-zinc-500 block text-[10px] uppercase">ALAMAT:</span>
+                                <span class="font-bold text-white">Surabaya, Indonesia</span>
+                            </div>
+                        </div>
+
+                        <!-- Social Icons Row & Action Buttons -->
+                        <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
+                            <div class="flex items-center space-x-2 text-lg text-zinc-400 bg-zinc-900/80 px-4 py-2 rounded-xl border border-zinc-800">
+                                <a href="https://instagram.com/dejavi08" target="_blank" aria-label="Instagram" class="hover:text-white transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.youtube.com/@Javi_Gaming" target="_blank" aria-label="YouTube" class="hover:text-white transition-colors"><i class="fa-brands fa-youtube"></i></a>
+                                <a href="https://dsc.gg/jg-team" target="_blank" aria-label="Discord" class="hover:text-white transition-colors"><i class="fa-brands fa-discord"></i></a>
+                                <a href="https://twitter.com" target="_blank" aria-label="Twitter" class="hover:text-white transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
+                                <a href="https://github.com/DeJavi08" target="_blank" aria-label="GitHub" class="hover:text-white transition-colors"><i class="fa-brands fa-github"></i></a>
+                            </div>
+
+                            <!-- Tombol Download CV Langsung ke File PDF -->
+                            <a href="assets/CV_Javier_Ahmad_Arivery.pdf" 
+                               download="CV_Javier_Ahmad_Arivery.pdf" 
+                               target="_blank" 
+                               class="px-6 py-2.5 rounded-xl bg-white text-black font-black text-xs tracking-wider uppercase hover:bg-zinc-200 transition-all transform hover:-translate-y-0.5 flex items-center gap-2 shadow-lg">
+                                <i class="fa-solid fa-file-arrow-down text-sm"></i>
+                                <span>DOWNLOAD CV</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Salam Kenal Description Section -->
+                <div class="mt-12 bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6 sm:p-8 space-y-4 lightning-glow">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white font-mono uppercase tracking-tight flex items-center gap-2">
+                        <span>Salam Kenal</span>
+                        <i class="fa-solid fa-bolt text-white text-lg"></i>
+                    </h2>
+                    <p class="text-zinc-300 text-sm sm:text-base leading-relaxed">
+                        Halo Rek! Saya Javier Ahmad Arivery (Javi), mahasiswa baru Politeknik Elektronika Negeri Surabaya (PENS). Saat ini saya aktif mengeksplorasi dunia rekayasa perangkat lunak, sains data, dan teknologi kreatif. Di samping fokus akademik dan ikhtiar menjaga hafalan Al-Qur'an sejak SD, saya gemar membangun proyek web interaktif, otomatisasi Python, serta riset solutif. Punya ide proyek menarik atau ingin berdiskusi? Yuk, kita Collab!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES & HOBI SECTION -->
+        <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-zinc-800/60 max-w-6xl mx-auto">
+            <div class="text-center space-y-3 mb-16">
+                <div class="inline-flex items-center gap-2 text-zinc-400 text-xs font-mono uppercase tracking-widest">
+                    <i class="fa-solid fa-bolt text-white"></i> Layanan & Kolaborasi
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase">Services & Hobi</h2>
+                <p class="text-zinc-400 text-sm max-w-xl mx-auto">
+                    Kombinasi antara semangat akademik, dedikasi penghafalan Qur'an, serta keterampilan industri kreatif digital.
+                </p>
+            </div>
+
+            <!-- Grid Services Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-500 transition-all duration-300 lightning-glow-hover flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center text-white text-xl group-hover:bg-white group-hover:text-black transition-colors">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">BELAJAR BARENG</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Saya senang menjadi teman belajar Anda. Bersama-sama menjelajahi topik menarik, pemrograman, matematika, serta saling berbagi ilmu.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-zinc-800/80 text-xs font-mono text-zinc-500 flex justify-between items-center">
+                        <span>SERVICE // 01</span>
+                        <i class="fa-solid fa-bolt text-zinc-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-500 transition-all duration-300 lightning-glow-hover flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center text-white text-xl group-hover:bg-white group-hover:text-black transition-colors">
+                            <i class="fa-solid fa-quran"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">SIMAK'AN AL-QUR'AN</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Mendukung perjalanan hafalan Al-Qur'an. Siap menyimak hafalan, memberikan motivasi moral, serta berbagi pengalaman pembelajaran.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-zinc-800/80 text-xs font-mono text-zinc-500 flex justify-between items-center">
+                        <span>SERVICE // 02</span>
+                        <i class="fa-solid fa-bolt text-zinc-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-500 transition-all duration-300 lightning-glow-hover flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center text-white text-xl group-hover:bg-white group-hover:text-black transition-colors">
+                            <i class="fa-solid fa-video"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">NGONTEN BARENG</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Kolaborasi pembuatan konten edukasi, YouTube, gaming, dan teknologi dengan ide kreatif unik yang menginspirasi.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-zinc-800/80 text-xs font-mono text-zinc-500 flex justify-between items-center">
+                        <span>SERVICE // 03</span>
+                        <i class="fa-solid fa-bolt text-zinc-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-500 transition-all duration-300 lightning-glow-hover flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center text-white text-xl group-hover:bg-white group-hover:text-black transition-colors">
+                            <i class="fa-solid fa-pen-nib"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">DESAIN GAMBAR</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Menguasai Canva, Pixellab, Ibis Paint, Photoshop, & Illustrator untuk poster, grafis promosi, serta materi publikasi.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-zinc-800/80 text-xs font-mono text-zinc-500 flex justify-between items-center">
+                        <span>SERVICE // 04</span>
+                        <i class="fa-solid fa-bolt text-zinc-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-500 transition-all duration-300 lightning-glow-hover flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center text-white text-xl group-hover:bg-white group-hover:text-black transition-colors">
+                            <i class="fa-solid fa-film"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">EDIT VIDEO</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Penyuntingan video profesional menggunakan Alight Motion, CapCut, Kinemaster, dan Adobe Premiere Pro.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-zinc-800/80 text-xs font-mono text-zinc-500 flex justify-between items-center">
+                        <span>SERVICE // 05</span>
+                        <i class="fa-solid fa-bolt text-zinc-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-500 transition-all duration-300 lightning-glow-hover flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center text-white text-xl group-hover:bg-white group-hover:text-black transition-colors">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">MAIN BARENG (MABAR)</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Penggemar Minecraft, Roblox, Clash of Clans, dan game online. Sarana menjalin pertemanan & koneksi baru.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-zinc-800/80 text-xs font-mono text-zinc-500 flex justify-between items-center">
+                        <span>SERVICE // 06</span>
+                        <i class="fa-solid fa-bolt text-zinc-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EDUCATION SECTION -->
+        <section id="education" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-zinc-800/60 max-w-4xl mx-auto">
+            <div class="text-center space-y-3 mb-16">
+                <div class="inline-flex items-center gap-2 text-zinc-400 text-xs font-mono uppercase tracking-widest">
+                    <i class="fa-solid fa-graduation-cap text-white"></i> Pendidikan Formal
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase">Jejak Pembelajaran</h2>
+                <p class="text-zinc-400 text-sm">
+                    Riwayat pendidikan formal yang membentuk fondasi akademis, karakter kepemimpinan, dan kecintaan pada inovasi digital.
+                </p>
+            </div>
+
+            <!-- Timeline Vertical -->
+            <div class="relative border-l-2 border-zinc-800 ml-4 sm:ml-8 space-y-12 pl-6 sm:pl-10">
+                
+                <!-- PENS (Kuliah) -->
+                <div class="relative group">
+                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 border-white flex items-center justify-center text-white text-xs shadow-md">
+                        <i class="fa-solid fa-bolt text-[10px]"></i>
+                    </div>
+                    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                            <h3 class="text-lg font-bold text-white">Politeknik Elektronika Negeri Surabaya (PENS)</h3>
+                            <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono text-xs w-fit">2026 — Sekarang</span>
+                        </div>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+                            Mahasiswa program studi <strong>D4 Teknik Informatika</strong>. Fokus pada rekayasa perangkat lunak, sains data, algoritma, serta komputasi terapan.
+                        </p>
+                        <div class="bg-zinc-800/50 p-4 rounded-xl border border-zinc-800 space-y-2">
+                            <h4 class="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">⚡ Highlights & Fokus Studi:</h4>
+                            <ul class="text-xs text-zinc-400 space-y-1.5 list-disc list-inside">
+                                <li>Pengembangan perangkat lunak berbasis web & otomasi sistem cerdas</li>
+                                <li>Eksplorasi kecerdasan buatan, algoritma, dan arsitektur data lanjutan</li>
+                                <li>Kolaborasi riset teknologi dan proyek rekayasa digital aplikatif</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SMA -->
+                <div class="relative group">
+                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 border-zinc-600 flex items-center justify-center text-zinc-400 text-xs group-hover:border-white group-hover:text-white transition-all">
+                        <i class="fa-solid fa-school text-[10px]"></i>
+                    </div>
+                    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                            <h3 class="text-lg font-bold text-white">SMA Negeri 17 Surabaya (SMANTASS)</h3>
+                            <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono text-xs w-fit">2023 — 2026</span>
+                        </div>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+                            Masuk melalui jalur prestasi rapor. Aktif dalam organisasi penelitian ilmiah, teknologi, dan kepengurusan sekolah.
+                        </p>
+                        <div class="bg-zinc-800/50 p-4 rounded-xl border border-zinc-800 space-y-2">
+                            <h4 class="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">⚡ Highlights & Pencapaian:</h4>
+                            <ul class="text-xs text-zinc-400 space-y-1.5 list-disc list-inside">
+                                <li>Meraih peringkat pertama di kelas serta peringkat 6 paralel satu sekolah</li>
+                                <li>Menjabat sebagai Ketua Kelompok Ilmiah Remaja SMANTASS (KIRTASS)</li>
+                                <li>Dipercaya mengembangkan media pembelajaran berbasis teknologi interaktif kelas XI & XII</li>
+                                <li>Aktif berkontribusi di organisasi OSIS dan komunitas fotografi sekolah 7TEENITY</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SMP -->
+                <div class="relative group">
+                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-zinc-400 text-xs group-hover:border-white group-hover:text-white transition-all">
+                        <i class="fa-solid fa-school text-[10px]"></i>
+                    </div>
+                    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                            <h3 class="text-lg font-bold text-white">SMPIT Al Uswah Surabaya</h3>
+                            <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono text-xs w-fit">2020 — 2023</span>
+                        </div>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+                            Aktif dalam kegiatan organisasi kepemimpinan serta dipercaya mengemban amanah sebagai Sekretaris OSIS I.
+                        </p>
+                        <div class="bg-zinc-800/50 p-4 rounded-xl border border-zinc-800 space-y-2">
+                            <h4 class="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">⚡ Highlights & Pencapaian:</h4>
+                            <ul class="text-xs text-zinc-400 space-y-1.5 list-disc list-inside">
+                                <li>Lulus sebagai peringkat pertama angkatan</li>
+                                <li>Sekretaris OSIS I & memimpin program Community Development kemasyarakatan</li>
+                                <li>Meraih penghargaan program COMDEV Terbaik untuk donor donasi Al-Qur'an</li>
+                                <li>Eksplorasi server Minecraft lanjutan, bot Discord, dan bot fungsional WhatsApp</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SD -->
+                <div class="relative group">
+                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 border-zinc-800 flex items-center justify-center text-zinc-500 text-xs group-hover:border-white group-hover:text-white transition-all">
+                        <i class="fa-solid fa-child text-[10px]"></i>
+                    </div>
+                    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                            <h3 class="text-lg font-bold text-white">SDIT Al Uswah Surabaya</h3>
+                            <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono text-xs w-fit">2014 — 2020</span>
+                        </div>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+                            Sekolah Islam yang berfokus pada pembentukan karakter, prestasi akademik, dan pendidikan Al-Qur'an.
+                        </p>
+                        <div class="bg-zinc-800/50 p-4 rounded-xl border border-zinc-800 space-y-2">
+                            <h4 class="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">⚡ Highlights & Pencapaian:</h4>
+                            <ul class="text-xs text-zinc-400 space-y-1.5 list-disc list-inside">
+                                <li>Lulus dengan peringkat lima besar terbaik</li>
+                                <li>Menyelesaikan hafalan Al-Qur'an sebanyak 3 juz</li>
+                                <li>Awal perjalanan sebagai kreator YouTube Minecraft & Roblox</li>
+                                <li>Eksperimen awal grafis digital dengan PixelLab dan Ibis Paint</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TK -->
+                <div class="relative group">
+                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 border-zinc-800 flex items-center justify-center text-zinc-500 text-xs">
+                        <i class="fa-solid fa-shapes text-[10px]"></i>
+                    </div>
+                    <div class="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                            <h3 class="text-lg font-bold text-white">KB-TKIT Al Uswah 2 Surabaya</h3>
+                            <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs w-fit">2010 — 2014</span>
+                        </div>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Langkah awal pendidikan usia dini yang menanamkan nilai-nilai karakter dasar dan kebersamaan.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ACHIEVEMENTS & PRESTASI SECTION -->
+        <section id="achievements" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-zinc-800/60 max-w-6xl mx-auto">
+            <div class="text-center space-y-3 mb-16">
+                <div class="inline-flex items-center gap-2 text-zinc-400 text-xs font-mono uppercase tracking-widest">
+                    <i class="fa-solid fa-trophy text-white"></i> Achievements & Experiences
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase">Prestasi & Kompetisi</h2>
+                <p class="text-zinc-400 text-sm max-w-xl mx-auto">
+                    Pengalaman kompetisi inovasi teknologi, pelatihan nasional, dan medali penghargaan yang telah diraih.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-all flex flex-col justify-between group lightning-glow-hover">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="px-2.5 py-1 rounded bg-zinc-800 text-white font-bold">🥇 GOLD MEDAL</span>
+                            <span class="text-zinc-500">2023</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">World Youth Invention and Innovation Award (WYIIA)</h3>
+                        <p class="text-xs text-zinc-400 font-mono">Kategori Teknologi — Science Book AR (SEBAR)</p>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Mendigitalisasikan materi tata surya buku pelajaran SMP sehingga objek planet divisualisasikan 3D menggunakan teknologi Augmented Reality.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-6 border-t border-zinc-800 flex justify-between items-center text-xs font-mono">
+                        <span class="text-zinc-500">IYSA INTERNASIONAL</span>
+                        <a href="https://wyiia.or.id" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-white hover:text-black text-white font-mono text-xs transition-colors flex items-center gap-1.5 border border-zinc-700">
+                            Lihat Sertifikat <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-all flex flex-col justify-between group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="px-2.5 py-1 rounded bg-zinc-800 text-zinc-300">🤖 PELATIHAN AI</span>
+                            <span class="text-zinc-500">2025</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Puspresnas Bina Talenta Indonesia 2025</h3>
+                        <p class="text-xs text-zinc-400 font-mono">Koding & Kecerdasan Artifisial</p>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Program pelatihan intensif koding dan AI yang diselenggarakan Pusat Prestasi Nasional untuk pengembangan kapabilitas masa depan.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-6 border-t border-zinc-800 flex justify-between items-center text-xs font-mono">
+                        <span class="text-zinc-500">PUSPRESNAS</span>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-white hover:text-black text-white font-mono text-xs transition-colors flex items-center gap-1.5 border border-zinc-700">
+                            Lihat Sertifikat ↗
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-all flex flex-col justify-between group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="px-2.5 py-1 rounded bg-zinc-800 text-zinc-300">🥈 SEMIFINALIST</span>
+                            <span class="text-zinc-500">2025</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Jagoan Hosting Infra Competition 2025</h3>
+                        <p class="text-xs text-zinc-400 font-mono">Infrastruktur & Rekayasa Web Sekolah</p>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Membawa rancangan website sekolah interaktif, modern, dan informatif untuk meningkatkan kualitas penyampaian informasi.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-6 border-t border-zinc-800 flex justify-between items-center text-xs font-mono">
+                        <span class="text-zinc-500">JAGOAN HOSTING</span>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-white hover:text-black text-white font-mono text-xs transition-colors flex items-center gap-1.5 border border-zinc-700">
+                            Lihat Sertifikat ↗
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-all flex flex-col justify-between group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="px-2.5 py-1 rounded bg-zinc-800 text-zinc-300">🎮 GAME DEV</span>
+                            <span class="text-zinc-500">2025</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">HMTC Goes To School - Laboratorium GIGA ITS</h3>
+                        <p class="text-xs text-zinc-400 font-mono">Construct, Unity & Virtual Reality (VR)</p>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Pelatihan pembuatan game Flappy Bird modern serta pengalaman eksplorasi game edukasi berbasis Virtual Reality (VR) di ITS.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-6 border-t border-zinc-800 flex justify-between items-center text-xs font-mono">
+                        <span class="text-zinc-500">GIGA LAB ITS</span>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-white hover:text-black text-white font-mono text-xs transition-colors flex items-center gap-1.5 border border-zinc-700">
+                            Lihat Sertifikat ↗
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-all flex flex-col justify-between group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="px-2.5 py-1 rounded bg-zinc-800 text-zinc-300">🌱 INOVASI NASIONAL</span>
+                            <span class="text-zinc-500">2025</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">NIPRO ICHEVO 2025 - Teknik Kimia ITS</h3>
+                        <p class="text-xs text-zinc-400 font-mono">Bioplastik Singkong Ramah Lingkungan</p>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Semifinalist kompetisi inovasi nasional riset pemanfaatan singkong sebagai bahan baku bioplastik masa depan.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-6 border-t border-zinc-800 flex justify-between items-center text-xs font-mono">
+                        <span class="text-zinc-500">ICHEVO ITS</span>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-white hover:text-black text-white font-mono text-xs transition-colors flex items-center gap-1.5 border border-zinc-700">
+                            Lihat Sertifikat ↗
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-all flex flex-col justify-between group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="px-2.5 py-1 rounded bg-zinc-800 text-white font-bold">🥇 5 MEDALI EMAS</span>
+                            <span class="text-zinc-500">2023</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Olimpiade Sains Nasional & POSI</h3>
+                        <p class="text-xs text-zinc-400 font-mono">Ekonomi, Sosiologi, PPKn & Bahasa Inggris</p>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Sederet Medali Emas pada IYSC Ekonomi, OSP PKN, OSP B.Inggris, OSPN Sosiologi, dan ISC Sosiologi tingkat nasional.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-6 border-t border-zinc-800 flex justify-between items-center text-xs font-mono">
+                        <span class="text-zinc-500">POSI / PRESMANESIA</span>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-white hover:text-black text-white font-mono text-xs transition-colors flex items-center gap-1.5 border border-zinc-700">
+                            Lihat Sertifikat ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURED PROJECTS SECTION -->
+        <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-zinc-800/60 max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 text-zinc-400 text-xs font-mono uppercase tracking-widest mb-2">
+                        <i class="fa-solid fa-layer-group text-white"></i> Featured Works
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase">Project Unggulan</h2>
+                </div>
+                <a href="https://github.com/DeJavi08" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-zinc-100 text-black font-extrabold text-xs uppercase tracking-wider hover:bg-white transition-all transform hover:-translate-y-0.5 group shadow-lg w-fit">
+                    <i class="fa-brands fa-github text-lg group-hover:rotate-12 transition-transform"></i>
+                    <span>All Repositories on GitHub ⚡</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Project 0: Android Backup ADB -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-500 transition-all duration-300 flex flex-col justify-between group lightning-glow-hover">
+                    <div>
+                        <div class="h-48 bg-zinc-800 relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?auto=format&fit=crop&w=800&q=80" 
+                                 alt="Android Backup ADB" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter grayscale contrast-110 brightness-90 group-hover:brightness-100"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/800x480/18181b/ffffff?text=Android+Backup+ADB';">
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10"></div>
+                            <span class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-black/80 border border-zinc-700 text-[10px] font-mono text-zinc-300 backdrop-blur-sm">PYTHON / ADB</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white">📱 Android Backup ADB</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed line-clamp-3">
+                                Solusi transfer file Android langsung via ADB, pipeline streaming tanpa temporary file, kecepatan optimal, dan monitoring real-time.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-zinc-800/80 mt-4">
+                        <span class="text-xs text-zinc-500 font-mono">BACKUP TOOL</span>
+                        <button onclick="openProjectModal('Android Backup ADB', 'Backup data Android seringkali menjadi tantangan karena metode MTP rentan gagal saat menangani ribuan file. Aplikasi ini hadir sebagai solusi dengan memanfaatkan ADB untuk transfer file langsung, pipeline streaming tanpa temporary file, kecepatan optimal, dan monitoring real-time menggunakan python yang memudahkan pengguna mengetahui progres backup setiap saat.', 'https://github.com/DeJavi08/ADB-FileTransfer', 'GitHub Repository ↗')" class="text-xs text-white hover:underline font-medium">
+                            Detail Project →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project 1: TryOut SNBT CPNS -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-500 transition-all duration-300 flex flex-col justify-between group lightning-glow-hover">
+                    <div>
+                        <div class="h-48 bg-zinc-800 relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80" 
+                                 alt="TryOut SNBT CPNS" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter grayscale contrast-110 brightness-90 group-hover:brightness-100"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/800x480/18181b/ffffff?text=TryOut+SNBT+CPNS';">
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10"></div>
+                            <span class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-black/80 border border-zinc-700 text-[10px] font-mono text-zinc-300 backdrop-blur-sm">REACT</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white">📝 TryOut SNBT CPNS</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed line-clamp-3">
+                                Platform simulasi interaktif tryout seleksi CPNS (SKD) & SNBT (UTBK) presisi CAT orisinal dengan evaluasi sub-materi terpadu.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-zinc-800/80 mt-4">
+                        <span class="text-xs text-zinc-500 font-mono">LIVE WEB APP</span>
+                        <button onclick="openProjectModal('TryOut SNBT CPNS', 'Platform simulasi interaktif untuk tryout seleksi CPNS (SKD) dan SNBT (UTBK). Dirancang presisi menyerupai sistem seleksi CAT orisinal dengan evaluasi sub-materi terpadu dan persentase kelulusan yang diperbarui.')" class="text-xs text-white hover:underline font-medium">
+                            Detail Project →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project 2: Lyrics Audio Search -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-500 transition-all duration-300 flex flex-col justify-between group lightning-glow-hover">
+                    <div>
+                        <div class="h-48 bg-zinc-800 relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80" 
+                                 alt="Lyrics Audio Search" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter grayscale contrast-110 brightness-90 group-hover:brightness-100"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/800x480/18181b/ffffff?text=Lyrics+Audio+Search';">
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10"></div>
+                            <span class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-black/80 border border-zinc-700 text-[10px] font-mono text-zinc-300 backdrop-blur-sm">REACT / GEMINI</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white">🎵 Lyrics Audio Search</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed line-clamp-3">
+                                Pembuat berkas sinkronisasi lirik lagu bertenaga Multi-Model Gemini (9Router) untuk menghasilkan file .lrc presisi tinggi.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-zinc-800/80 mt-4">
+                        <span class="text-xs text-zinc-500 font-mono">AI AUDIO TOOL</span>
+                        <button onclick="openProjectModal('Lyrics Audio Search', 'Pembuat berkas sinkronisasi lirik lagu terdepan bertenaga rangkaian Multi-Model Gemini (9Router). Unggah berkas audio Anda dan pilih metode penyelarasan untuk menghasilkan berkas .lrc presisi tinggi secara instan.')" class="text-xs text-white hover:underline font-medium">
+                            Detail Project →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project 3: LBB MASHAR -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-500 transition-all duration-300 flex flex-col justify-between group lightning-glow-hover">
+                    <div>
+                        <div class="h-48 bg-zinc-800 relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" 
+                                 alt="LBB MASHAR Portal" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter grayscale contrast-110 brightness-90 group-hover:brightness-100"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/800x480/18181b/ffffff?text=LBB+MASHAR+Portal';">
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10"></div>
+                            <span class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-black/80 border border-zinc-700 text-[10px] font-mono text-zinc-300 backdrop-blur-sm">JAVASCRIPT</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white">🎓 LBB MASHAR Portal</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed line-clamp-3">
+                                Antarmuka web interaktif modern untuk lembaga bimbingan belajar jenjang SD, SMP, dan SMA terpercaya di Surabaya.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-zinc-800/80 mt-4">
+                        <span class="text-xs text-zinc-500 font-mono">WEB PORTAL</span>
+                        <button onclick="openProjectModal('LBB MASHAR', 'Lembaga bimbingan belajar terpercaya jenjang SD, SMP, dan SMA di daerah Surabaya dengan antarmuka web interaktif yang modern dan responsif.')" class="text-xs text-white hover:underline font-medium">
+                            Detail Project →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project 4: KIRTASS Portal -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-500 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="h-48 bg-zinc-800 relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80" 
+                                 alt="KIRTASS Portal" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter grayscale contrast-110 brightness-90 group-hover:brightness-100"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/800x480/18181b/ffffff?text=KIRTASS+Portal';">
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10"></div>
+                            <span class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-black/80 border border-zinc-700 text-[10px] font-mono text-zinc-300 backdrop-blur-sm">HTML / CSS</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white">🧪 KIRTASS Portal</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed line-clamp-3">
+                                Portal resmi Kelompok Ilmiah Remaja SMAN 17 Surabaya, wadah kreativitas penelitian dan publikasi karya ilmiah.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-zinc-800/80 mt-4">
+                        <span class="text-xs text-zinc-500 font-mono">ORGANIZATION WEB</span>
+                        <button onclick="openProjectModal('KIRTASS Portal', 'Situs portal resmi Kelompok Ilmiah Remaja SMAN 17 Surabaya (KIRTASS), wadah kreativitas penelitian dan publikasi karya ilmiah remaja.')" class="text-xs text-white hover:underline font-medium">
+                            Detail Project →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project 5: YT Flash Converter -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-500 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="h-48 bg-zinc-800 relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80" 
+                                 alt="YT Flash Converter" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter grayscale contrast-110 brightness-90 group-hover:brightness-100"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/800x480/18181b/ffffff?text=YT+Flash+Converter';">
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10"></div>
+                            <span class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-black/80 border border-zinc-700 text-[10px] font-mono text-zinc-300 backdrop-blur-sm">PYTHON</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white">⚡ YT Flash Converter</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed line-clamp-3">
+                                Alat pengunduh playlist video/audio YouTube super cepat bertenaga yt-dlp dan integrasi ffmpeg.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-zinc-800/80 mt-4">
+                        <span class="text-xs text-zinc-500 font-mono">CLI / BACKEND</span>
+                        <button onclick="openProjectModal('YT Flash Converter', 'Alat pengunduh playlist video/audio YouTube super cepat bertenaga yt-dlp dan integrasi ffmpeg di latar belakang.')" class="text-xs text-white hover:underline font-medium">
+                            Detail Project →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project 6: MetaTimeChanger -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-500 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="h-48 bg-zinc-800 relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" 
+                                 alt="MetaTimeChanger" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter grayscale contrast-110 brightness-90 group-hover:brightness-100"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/800x480/18181b/ffffff?text=MetaTimeChanger';">
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10"></div>
+                            <span class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-black/80 border border-zinc-700 text-[10px] font-mono text-zinc-300 backdrop-blur-sm">PYTHON SCRIPT</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white">⚙️ MetaTimeChanger</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed line-clamp-3">
+                                Program Python pintar untuk menyelaraskan secara otomatis tanggal modifikasi berkas media berdasarkan format penamaannya.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-zinc-800/80 mt-4">
+                        <span class="text-xs text-zinc-500 font-mono">PYTHON SCRIPT</span>
+                        <button onclick="openProjectModal('MetaTimeChanger', 'Program Python pintar untuk menyelaraskan secara otomatis tanggal modifikasi berkas media berdasarkan format penamaannya.')" class="text-xs text-white hover:underline font-medium">
+                            Detail Project →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project 7: WEB TES BUTA WARNA -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-500 transition-all duration-300 flex flex-col justify-between group lightning-glow-hover">
+                    <div>
+                        <div class="h-48 bg-zinc-800 relative overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/d/1D5c4zqTGBTBGQ4QVUyGxH0oclD675G0F=w1000?authuser=1" 
+                                 alt="WEB TES BUTA WARNA" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter grayscale contrast-110 brightness-90 group-hover:brightness-100"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/800x480/18181b/ffffff?text=Web+Tes+Buta+Warna';">
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10"></div>
+                            <span class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-black/80 border border-zinc-700 text-[10px] font-mono text-zinc-300 backdrop-blur-sm">HTML / JS / CONSTRUCT</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white">👁️ WEB TES BUTA WARNA</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed line-clamp-3">
+                                Tes buta warna interaktif & praktis untuk siswa SMP mengetahui kondisi visual lebih awal sebelum memilih jurusan SMK/Kuliah.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-zinc-800/80 mt-4">
+                        <span class="text-xs text-zinc-500 font-mono">LIVE WEB</span>
+                        <button onclick="openProjectModal('WEB TES BUTA WARNA', 'Tes buta warna menjadi prasyarat beberapa jurusan di SMK dan perguruan tinggi sehingga siswa SMP perlu mengetahui lebih awal apakah dirinya buta warna atau tidak, agar bisa mengetahui jurusan yang dipilihnya kelak. Perlu adanya tes buta warna yang praktis, memudahkan siswa SMP mengetahui kondisi nya lebih awal.', 'https://isihara.kidz02.repl.co/', 'Kunjungi Live Web ↗')" class="text-xs text-white hover:underline font-medium">
+                            Detail Project →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project 8: Aplikasi AR Senam -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-500 transition-all duration-300 flex flex-col justify-between group lightning-glow-hover">
+                    <div>
+                        <div class="h-48 bg-zinc-800 relative overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/d/1dYfA8G2y5Vc58StYLZO4BPqI999oJudS=w1000?authuser=1" 
+                                 alt="Aplikasi AR Senam" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter grayscale contrast-110 brightness-90 group-hover:brightness-100"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/800x480/18181b/ffffff?text=Aplikasi+AR+Senam';">
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10"></div>
+                            <span class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-black/80 border border-zinc-700 text-[10px] font-mono text-zinc-300 backdrop-blur-sm">UNITY 3D / AR</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white">🤸 Aplikasi AR Senam</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed line-clamp-3">
+                                Aplikasi Android Augmented Reality buatan Unity 3D yang memproyeksikan peragaan gerakan senam 3D interaktif ke dunia nyata.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-zinc-800/80 mt-4">
+                        <span class="text-xs text-zinc-500 font-mono">ANDROID APP</span>
+                        <button onclick="openProjectModal('Aplikasi AR Senam', 'Saya membuat aplikasi ini dengan tujuan untuk belajar bikin aplikasi saja, saya menggunakan Unity 3D untuk membuat apk ini. Augmented Reality atau AR adalah teknologi yang memperoleh penggabungan secara real-time terhadap digital konten yang dibuat oleh komputer dengan dunia nyata. Augmented Reality memperbolehkan pengguna melihat objek maya 2D atau 3D yang diproyeksikan terhadap dunia nyata.', 'https://drive.google.com/drive/folders/1u2siQu365VrYlOORONrCnkocQ8LZLWKV?usp=sharing', 'Download App ↗')" class="text-xs text-white hover:underline font-medium">
+                            Detail Project →
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- QUOTES SLIDER SECTION -->
+        <section id="quotes" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-zinc-800/60 bg-zinc-950/70">
+            <div class="max-w-4xl mx-auto text-center space-y-8">
+                <div class="inline-flex items-center gap-2 text-zinc-400 text-xs font-mono uppercase tracking-widest">
+                    <i class="fa-solid fa-quote-left text-white"></i> Quotes Inspiratif
+                </div>
+
+                <div class="relative bg-zinc-900 border border-zinc-800 rounded-3xl p-8 sm:p-12 lightning-glow min-h-[280px] flex flex-col justify-between">
+                    <div id="quoteContent" class="space-y-4 transition-all duration-500 ease-in-out">
+                        <p id="quoteText" class="text-lg sm:text-2xl font-serif italic text-zinc-200 leading-relaxed">
+                            "Jadilah seperti isim dhomir, tidak berubah-rubah walaupun di lingkungan yang berbeda-beda."
+                        </p>
+                        <div class="pt-4 border-t border-zinc-800 w-1/4 mx-auto"></div>
+                        <h4 id="quoteAuthor" class="text-sm sm:text-base font-bold text-white tracking-widest uppercase font-mono">
+                            — MONDZIR AL HASANI
+                        </h4>
+                        <p id="quoteRole" class="text-xs text-zinc-500">Integritas Diri & Karakter Tetap Teguh</p>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-8">
+                        <button onclick="prevQuote()" aria-label="Quotes Sebelumnya" class="w-10 h-10 rounded-full bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white flex items-center justify-center transition-all">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                        </button>
+
+                        <div id="quoteDots" class="flex space-x-2"></div>
+
+                        <button onclick="nextQuote()" aria-label="Quotes Selanjutnya" class="w-10 h-10 rounded-full bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white flex items-center justify-center transition-all">
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOG SECTION (Filterable & External Link Integration) -->
+        <section id="blog" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-zinc-800/60 max-w-6xl mx-auto">
+            <div class="text-center space-y-3 mb-12">
+                <div class="inline-flex items-center gap-2 text-zinc-400 text-xs font-mono uppercase tracking-widest">
+                    <i class="fa-solid fa-newspaper text-white"></i> Catatan & Blog
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase">Artikel & Pengalaman</h2>
+                <p class="text-zinc-400 text-sm max-w-xl mx-auto">
+                    Kumpulan tulisan seputar perjalanan, prestasi, teknologi, serta cerita keseharian.
+                </p>
+            </div>
+
+            <!-- Blog Category Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-2 mb-10">
+                <button onclick="filterBlog('all')" class="blog-filter-btn px-4 py-2 rounded-xl text-xs font-mono tracking-wider transition-all bg-white text-black font-bold" data-category="all">
+                    SEMUA BLOG
+                </button>
+                <button onclick="filterBlog('prestasi')" class="blog-filter-btn px-4 py-2 rounded-xl text-xs font-mono tracking-wider transition-all bg-zinc-800 text-zinc-400 hover:text-white" data-category="prestasi">
+                    🏆 PRESTASI
+                </button>
+                <button onclick="filterBlog('stuff')" class="blog-filter-btn px-4 py-2 rounded-xl text-xs font-mono tracking-wider transition-all bg-zinc-800 text-zinc-400 hover:text-white" data-category="stuff">
+                    🛠️ STUFF & TECH
+                </button>
+                <button onclick="filterBlog('daily')" class="blog-filter-btn px-4 py-2 rounded-xl text-xs font-mono tracking-wider transition-all bg-zinc-800 text-zinc-400 hover:text-white" data-category="daily">
+                    ☕ DAILY & REFLECTION
+                </button>
+            </div>
+
+            <!-- Dynamic Blog Grid Container -->
+            <div id="blogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Injected dynamically via JS from daftar_blog.json -->
+            </div>
+        </section>
+
+        <!-- FOOTER & GET IN TOUCH SECTION -->
+        <footer id="contact" class="border-t border-zinc-800 bg-black pt-20 pb-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16">
+                <!-- Column 1: Info & Direct Contacts -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="inline-flex items-center gap-2 text-zinc-400 text-xs font-mono uppercase tracking-widest">
+                        <i class="fa-solid fa-paper-plane text-white"></i> Get In Touch
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase">
+                        Mari Berdiskusi & Bekerja Sama ⚡
+                    </h2>
+                    <p class="text-zinc-400 text-sm leading-relaxed">
+                        Terbuka untuk kolaborasi pembuatan web sekolah, proyek otomatisasi Python, media interaktif, atau sekadar bertukar ide. Saya merespons cukup cepat!
+                    </p>
+
+                    <!-- Contact Details Badges -->
+                    <div class="space-y-3 pt-2 font-mono text-sm">
+                        <a href="https://wa.me/6282246668753" target="_blank" class="flex items-center gap-4 p-3 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-500 transition-colors group">
+                            <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors">
+                                <i class="fa-brands fa-whatsapp text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-zinc-500">WHATSAPP / HP</div>
+                                <div class="text-zinc-200 font-semibold">+62 822-4666-8753</div>
+                            </div>
+                        </a>
+
+                        <a href="mailto:masjavi08@gmail.com" class="flex items-center gap-4 p-3 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-500 transition-colors group">
+                            <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-zinc-500">EMAIL RESMI</div>
+                                <div class="text-zinc-200 font-semibold">xiergraph@gmail.com</div>
+                            </div>
+                        </a>
+
+                        <a href="https://instagram.com/dejavi08" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-3 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-500 transition-colors group">
+                            <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors">
+                                <i class="fa-brands fa-instagram text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-zinc-500">INSTAGRAM</div>
+                                <div class="text-zinc-200 font-semibold">@dejavi08</div>
+                            </div>
+                        </a>
+
+                        <a href="https://github.com/DeJavi08" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-3 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-500 transition-colors group">
+                            <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors">
+                                <i class="fa-brands fa-github text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-zinc-500">GITHUB REPOSITORY</div>
+                                <div class="text-zinc-200 font-semibold">@DeJavi08</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Column 2: Message Form -->
+                <div class="lg:col-span-7 bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 relative lightning-glow">
+                    <h3 class="text-xl font-bold text-white mb-2">Kirim Pesan Langsung</h3>
+                    <p class="text-xs text-zinc-400 mb-6">Pilih tujuan platform pengiriman (WhatsApp atau Telegram).</p>
+
+                    <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="platform" value="whatsapp" checked class="peer sr-only">
+                                <div class="p-3 rounded-xl bg-zinc-800/80 border border-zinc-700 text-center peer-checked:bg-white peer-checked:text-black peer-checked:font-bold transition-all flex items-center justify-center gap-2 text-xs font-mono">
+                                    <i class="fa-brands fa-whatsapp text-base"></i> WHATSAPP
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="platform" value="telegram" class="peer sr-only">
+                                <div class="p-3 rounded-xl bg-zinc-800/80 border border-zinc-700 text-center peer-checked:bg-white peer-checked:text-black peer-checked:font-bold transition-all flex items-center justify-center gap-2 text-xs font-mono">
+                                    <i class="fa-brands fa-telegram text-base"></i> TELEGRAM
+                                </div>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label for="senderName" class="block text-xs font-mono text-zinc-400 mb-1">NAMA LENGKAP Anda</label>
+                            <input type="text" id="senderName" required placeholder="Contoh: Budi Santoso" class="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-white text-sm transition-colors">
+                        </div>
+
+                        <div>
+                            <label for="messageSubject" class="block text-xs font-mono text-zinc-400 mb-1">SUBJEK / PERIHAL</label>
+                            <input type="text" id="messageSubject" required placeholder="Contoh: Diskusi Web Sekolah / Proyek Python" class="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-white text-sm transition-colors">
+                        </div>
+
+                        <div>
+                            <label for="messageContent" class="block text-xs font-mono text-zinc-400 mb-1">ISI PESAN</label>
+                            <textarea id="messageContent" rows="4" required placeholder="Tuliskan detail pesan atau surat Anda di sini..." class="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-white text-sm transition-colors resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-xl bg-white text-black font-black text-xs uppercase tracking-widest hover:bg-zinc-200 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 shadow-lg">
+                            <i class="fa-solid fa-paper-plane text-sm"></i>
+                            <span>KIRIM PESAN SEKARANG ⚡</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="max-w-6xl mx-auto border-t border-zinc-800/80 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 font-mono gap-4">
+                <div>
+                    © 2026 JAVIER AHMAD ARIVERY. ALL RIGHTS RESERVED.
+                </div>
+                <div class="flex items-center gap-2">
+                    <span>GW GANTENG :)</span>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Info / Detail Modal -->
+        <div id="infoModal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 invisible">
+            <div class="bg-zinc-900 border border-zinc-700 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-4 shadow-2xl relative">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white p-2">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+                <div class="flex items-center gap-2 text-xs font-mono text-zinc-400">
+                    <i class="fa-solid fa-bolt text-white"></i> DETAIL INFORMASI
+                </div>
+                <h3 id="modalTitle" class="text-xl font-bold text-white">Judul Informasi</h3>
+                <div id="modalBody" class="text-zinc-300 text-sm leading-relaxed space-y-3 max-h-[60vh] overflow-y-auto pr-2">
+                </div>
+                <div class="pt-4 border-t border-zinc-800 flex justify-end">
+                    <button onclick="closeModal()" class="px-5 py-2 rounded-xl bg-zinc-800 text-white hover:bg-zinc-700 text-xs font-semibold">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // 1. Particle Canvas Engine (Lightning Sparks Background)
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.alpha = Math.random() * 0.6 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+
+        // 2. Mobile Nav Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+
+        // 3. Quotes Slider Data & Logic
+        const quotes = [
+            {
+                quote: "Jadilah seperti isim dhomir, tidak berubah-rubah walaupun di lingkungan yang berbeda-beda.",
+                author: "MONDZIR AL HASANI",
+                role: "Integritas & Karakter Tetap Teguh"
+            },
+            {
+                quote: "Harga untuk jadi sukses itu terlalu mahal, TETAPI harga penyesalan itu jauh lebih mahal dibanding untuk jadi sukses.",
+                author: "TIMOTHY RONALD",
+                role: "Motivator & Investor"
+            },
+            {
+                quote: "Focus on yourself and ignore the distractions. Go on monk mode for 200 days, ignore the noise. BE THE GUY WHO REALLY WANT TO BE.",
+                author: "LORINCZ UGRON ETELE",
+                role: "Filosofi Monk Mode & Produktivitas"
+            },
+            {
+                quote: "Jika Anda ingin menemukan rahasia alam semesta, pikirlah dalam hal energi, frekuensi, dan vibrasi.",
+                author: "NIKOLA TESLA",
+                role: "Fisikawan & Penemu Listrik"
+            }
+        ];
+
+        let currentQuoteIndex = 0;
+
+        function renderQuoteDots() {
+            const dotsContainer = document.getElementById('quoteDots');
+            dotsContainer.innerHTML = '';
+            quotes.forEach((_, idx) => {
+                const dot = document.createElement('button');
+                dot.className = `w-2.5 h-2.5 rounded-full transition-all ${idx === currentQuoteIndex ? 'bg-white w-6' : 'bg-zinc-700 hover:bg-zinc-500'}`;
+                dot.setAttribute('aria-label', `Go to quote ${idx + 1}`);
+                dot.onclick = () => setQuote(idx);
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function setQuote(index) {
+            currentQuoteIndex = index;
+            const quoteText = document.getElementById('quoteText');
+            const quoteAuthor = document.getElementById('quoteAuthor');
+            const quoteRole = document.getElementById('quoteRole');
+            const container = document.getElementById('quoteContent');
+
+            container.style.opacity = '0';
+            setTimeout(() => {
+                quoteText.textContent = `"${quotes[index].quote}"`;
+                quoteAuthor.textContent = `— ${quotes[index].author}`;
+                quoteRole.textContent = quotes[index].role;
+                container.style.opacity = '1';
+                renderQuoteDots();
+            }, 250);
+        }
+
+        function nextQuote() {
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            setQuote(currentQuoteIndex);
+        }
+
+        function prevQuote() {
+            currentQuoteIndex = (currentQuoteIndex - 1 + quotes.length) % quotes.length;
+            setQuote(currentQuoteIndex);
+        }
+
+        renderQuoteDots();
+        setInterval(nextQuote, 7500);
+
+
+        // 4. Dynamic Blog Loader (Detects daftar_blog.json)
+        let loadedBlogList = [];
+
+        const defaultBlogPosts = [
+            {
+                folder: "10000-youtube-subscriber",
+                title: "10.000 YOUTUBE SUBSCRIBER",
+                category: "prestasi",
+                date: "22 SEPT 2024",
+                readTime: "3 MIN READ",
+                excerpt: "Sebuah kisah pencapaian Javi dalam mendapatkan 10.000 subscriber di YouTube yang dimulai sejak kelas 6 SD. Pelan-pelan yang penting konsisten!",
+                image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                folder: "perjalanan-menuju-kebun-bibit",
+                title: "PERJALANAN MENUJU KEBUN BIBIT",
+                category: "daily",
+                date: "09 NOV 2019",
+                readTime: "2 MIN READ",
+                excerpt: "Kisah manis berkunjung ke Taman Flora Surabaya saat berumur 12 tahun yang menjadi memori berharga.",
+                image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                folder: "sosis-gulung-ninja",
+                title: "🌭 Sosis Gulung Ninja - Wirausaha SMP",
+                category: "stuff",
+                date: "01 FEB 2023",
+                readTime: "4 MIN READ",
+                excerpt: "Eksperimen wirausaha kuliner dan awal mulanya membangun situs promosi web sederhana berbasis HTML & CSS.",
+                image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
+            }
+        ];
+
+        async function loadBlogData() {
+            try {
+                let response = await fetch('daftar_blog.json').catch(() => fetch('../blog/daftar_blog.json'));
+                if (response && response.ok) {
+                    const data = await response.json();
+                    if (Array.isArray(data)) {
+                        loadedBlogList = data.map(item => {
+                            if (typeof item === 'string') {
+                                return {
+                                    folder: item,
+                                    title: item.replace(/-/g, ' ').toUpperCase(),
+                                    category: "daily",
+                                    date: "LATEST",
+                                    readTime: "3 MIN READ",
+                                    excerpt: `Artikel blog tentang ${item.replace(/-/g, ' ')}.`,
+                                    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80"
+                                };
+                            }
+                            return item;
+                        });
+                    } else {
+                        loadedBlogList = defaultBlogPosts;
+                    }
+                } else {
+                    loadedBlogList = defaultBlogPosts;
+                }
+            } catch (err) {
+                console.log("Using default blog list:", err);
+                loadedBlogList = defaultBlogPosts;
+            }
+
+            renderBlogCards('all');
+        }
+
+        function renderBlogCards(activeCategory) {
+            const grid = document.getElementById('blogGrid');
+            grid.innerHTML = '';
+
+            const filtered = loadedBlogList.filter(item => activeCategory === 'all' || item.category === activeCategory);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-zinc-500 font-mono py-8">Belum ada artikel di kategori ini.</p>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const categoryBadge = item.category === 'prestasi' ? '🏆 PRESTASI' : (item.category === 'stuff' ? '🛠️ STUFF' : '☕ DAILY');
+                
+                const card = document.createElement('article');
+                card.className = "blog-card bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-500 transition-all duration-300 flex flex-col justify-between group lightning-glow-hover";
+                
+                const targetUrl = `./blog/${encodeURIComponent(item.folder)}/`;
+                const cardImage = item.image || "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80";
+
+                card.innerHTML = `
+                    <div>
+                        <div class="h-48 bg-zinc-800 relative overflow-hidden">
+                            <img src="${cardImage}" 
+                                 alt="${item.title}" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter grayscale contrast-110 brightness-90 group-hover:brightness-100"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/800x480/18181b/ffffff?text=Blog+Article';">
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10"></div>
+                            <span class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-black/80 border border-zinc-700 text-[10px] font-mono text-zinc-300 backdrop-blur-sm">${categoryBadge}</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <div class="flex items-center justify-between text-xs font-mono text-zinc-500">
+                                <span class="flex items-center gap-1.5"><i class="fa-regular fa-calendar"></i> ${item.date || 'LATEST'}</span>
+                                <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock"></i> ${item.readTime || '3 MIN READ'}</span>
+                            </div>
+                            <a href="${targetUrl}" class="block">
+                                <h3 class="text-xl font-bold text-white group-hover:text-zinc-300 transition-colors uppercase">
+                                    ${item.title}
+                                </h3>
+                            </a>
+                            <p class="text-zinc-400 text-sm leading-relaxed line-clamp-3">
+                                ${item.excerpt}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-zinc-800/80 mt-2">
+                        <span class="text-xs text-zinc-500 font-mono">READ ARTICLE</span>
+                        <a href="${targetUrl}" class="text-xs text-white font-semibold hover:underline inline-flex items-center gap-1">
+                            <span>Baca Selengkapnya</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterBlog(category) {
+            const buttons = document.querySelectorAll('.blog-filter-btn');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.className = "blog-filter-btn px-4 py-2 rounded-xl text-xs font-mono tracking-wider transition-all bg-white text-black font-bold";
+                } else {
+                    btn.className = "blog-filter-btn px-4 py-2 rounded-xl text-xs font-mono tracking-wider transition-all bg-zinc-800 text-zinc-400 hover:text-white";
+                }
+            });
+            renderBlogCards(category);
+        }
+
+        // Initialize blog data on load
+        window.addEventListener('DOMContentLoaded', loadBlogData);
+
+
+        // 5. WhatsApp & Telegram Contact Integration
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            
+            const platform = document.querySelector('input[name="platform"]:checked').value;
+            const name = document.getElementById('senderName').value.trim();
+            const subject = document.getElementById('messageSubject').value.trim();
+            const message = document.getElementById('messageContent').value.trim();
+
+            if (!name || !subject || !message) {
+                showToast("❌ Mohon isi semua kolom pesan.");
+                return;
+            }
+
+            const formattedMessage = `Halo Javier Ahmad Arivery,⚡\n\nSaya: *${name}*\nSubjek: *${subject}*\n\nPesan:\n"${message}"\n\n--- Dikirim melalui Portofolio Website`;
+
+            if (platform === 'whatsapp') {
+                const targetPhone = "6282246668753";
+                const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(formattedMessage)}`;
+                showToast("⚡ Membuka WhatsApp...");
+                setTimeout(() => {
+                    window.open(waUrl, '_blank');
+                }, 700);
+            } else if (platform === 'telegram') {
+                const targetTelegramUser = "dejavi08";
+                const tgUrl = `https://t.me/${targetTelegramUser}?text=${encodeURIComponent(formattedMessage)}`;
+                showToast("⚡ Membuka Telegram...");
+                setTimeout(() => {
+                    window.open(tgUrl, '_blank');
+                }, 700);
+            }
+
+            document.getElementById('contactForm').reset();
+        }
+
+
+        // 6. Modal Handlers
+        function openProjectModal(title, text, linkUrl = null, linkText = "Buka Link ↗") {
+            document.getElementById('modalTitle').textContent = title;
+            let htmlContent = `<p class="leading-relaxed text-zinc-300 text-sm">${text}</p>`;
+            if (linkUrl) {
+                htmlContent += `
+                    <div class="pt-4 mt-4 border-t border-zinc-800 flex justify-start">
+                        <a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-black font-extrabold text-xs uppercase hover:bg-zinc-200 transition-all shadow-md">
+                            <span>${linkText}</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+                        </a>
+                    </div>
+                `;
+            }
+            document.getElementById('modalBody').innerHTML = htmlContent;
+            const modal = document.getElementById('infoModal');
+            modal.classList.add('modal-active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('infoModal');
+            modal.classList.remove('modal-active');
+        }
+
+        document.getElementById('infoModal').addEventListener('click', (e) => {
+            if (e.target.id === 'infoModal') {
+                closeModal();
+            }
+        });
+
+
+        // 7. Custom Toast Notification
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMessage');
+            toastMsg.textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
         
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
