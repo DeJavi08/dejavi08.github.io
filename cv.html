@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV ATS - Javier Ahmad Arivery</title>
+  <style>
+    /* Print Setup for Standard A4 */
+    @page {
+      size: A4 portrait;
+      margin: 14mm 18mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: "Times New Roman", Times, "Nimbus Roman No9 L", serif;
+      color: #000000;
+      line-height: 1.33;
+      font-size: 10pt;
+      background-color: #e5e7eb;
+    }
+
+    /* Top Action Bar (Browser Only) */
+    .action-bar {
+      background: #1e293b;
+      color: #ffffff;
+      padding: 12px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 13px;
+    }
+
+    .action-btn {
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background: #1d4ed8;
+    }
+
+    /* CV Document Container */
+    .cv-container {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 20px auto;
+      background: #ffffff;
+      padding: 16mm 18mm;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* HEADER */
+    .header {
+      text-align: center;
+      margin-bottom: 11px;
+    }
+
+    .header h1 {
+      font-size: 19pt;
+      font-weight: normal;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      color: #000000;
+    }
+
+    .header .contact-line {
+      font-size: 9.5pt;
+      color: #111111;
+      line-height: 1.4;
+    }
+
+    .header .contact-line a {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+
+    /* SECTION TITLE */
+    .section-heading {
+      font-size: 10.5pt;
+      font-weight: bold;
+      font-style: italic;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #111111;
+      padding-bottom: 2px;
+      margin-top: 11px;
+      margin-bottom: 6px;
+    }
+
+    /* ABOUT SECTION WITH 3x4 PHOTO */
+    .about-wrapper {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      text-align: justify;
+    }
+
+    .photo-3x4 {
+      width: 26mm;
+      height: 35mm;
+      object-fit: cover;
+      border: 1px solid #333333;
+      flex-shrink: 0;
+      display: block;
+      background-color: #f3f4f6;
+    }
+
+    .about-desc {
+      flex: 1;
+      font-size: 9.6pt;
+      line-height: 1.34;
+      text-align: justify;
+    }
+
+    /* ENTRY BLOCKS */
+    .entry-item {
+      margin-bottom: 6px;
+    }
+
+    .entry-header {
+      font-weight: bold;
+      font-size: 10pt;
+    }
+
+    .entry-sub {
+      font-style: italic;
+      font-size: 9.5pt;
+      color: #222222;
+    }
+
+    .entry-desc {
+      font-size: 9.5pt;
+      margin-top: 2px;
+      text-align: justify;
+    }
+
+    /* LISTS */
+    ul.bullet-items {
+      margin-left: 18px;
+      margin-top: 2px;
+      margin-bottom: 3px;
+    }
+
+    ul.bullet-items li {
+      font-size: 9.5pt;
+      margin-bottom: 2px;
+      text-align: justify;
+      line-height: 1.3;
+    }
+
+    ol.number-items {
+      margin-left: 18px;
+      margin-top: 2px;
+    }
+
+    ol.number-items li {
+      font-size: 9.5pt;
+      margin-bottom: 2.5px;
+      text-align: justify;
+      line-height: 1.3;
+    }
+
+    .skill-category {
+      margin-bottom: 4px;
+      font-size: 9.5pt;
+      line-height: 1.32;
+    }
+
+    .skill-category strong {
+      font-size: 9.5pt;
+    }
+
+    /* PRINT STYLES */
+    @media print {
+      body {
+        background: transparent !important;
+      }
+      .action-bar {
+        display: none !important;
+      }
+      .cv-container {
+        width: 100% !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+      }
+      .section-heading {
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+      .entry-item {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      a {
+        text-decoration: none !important;
+        color: #000000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Action Bar -->
+  <div class="action-bar">
+    <div>
+      <strong>Curriculum Vitae ATS Formal</strong> — Standard A4 Print Ready (Times New Roman / Serif)
+    </div>
+    <button class="action-btn" onclick="window.print()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+        <rect x="6" y="14" width="12" height="8"></rect>
+      </svg>
+      Cetak / Simpan PDF
+    </button>
+  </div>
+
+  <div class="cv-container">
+
+    <!-- HEADER -->
+    <header class="header">
+      <h1>JAVIER AHMAD ARIVERY</h1>
+      <div class="contact-line">
+        Surabaya, Indonesia | (+62) 82246668753 | xiergraph@gmail.com | 
+        <a href="https://linkedin.com/in/javiahmad" target="_blank">LinkedIn</a> | 
+        <a href="https://github.com/DeJavi08" target="_blank">GitHub</a> | 
+        <a href="https://dejavi.id" target="_blank">Portfolio</a>
+      </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section>
+      <div class="section-heading">A B O U T</div>
+      <div class="about-wrapper">
+        <img 
+          class="photo-3x4" 
+          src="https://lh3.googleusercontent.com/d/1kdyMxTmJLWPFlI3rAwISzj_VbQkUAF6H=w1000?authuser=1" 
+          alt="Pas Foto Javier Ahmad Arivery"
+          onerror="this.onerror=null; this.src='https://placehold.co/300x400/1e293b/ffffff?text=Foto+3x4';"
+        />
+        <div class="about-desc">
+          Freshman student of the D4 Informatics Engineering study program at Politeknik Elektronika Negeri Surabaya (PENS). Dedicated, disciplined, creative, and possesses solid leadership qualities honed through active engagement in student councils, academic research organizations, and student enterprises since junior high school. Highly passionate about software engineering, web development, process automation, and interactive educational technology. Experienced in building full-stack web applications, authoring multimedia courseware, and leading public relations and digital media initiatives. Possesses a strong commitment to academic excellence, continuous learning, and impactful technological innovation.
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section>
+      <div class="section-heading">E D U C A T I O N</div>
+      <div class="entry-item">
+        <div class="entry-header">Politeknik Elektronika Negeri Surabaya (PENS)</div>
+        <div class="entry-sub">D4 Informatics Engineering, Department of Informatics and Computers (August 2026 – Present)</div>
+        <div class="entry-desc">GPA : -</div>
+      </div>
+
+      <div class="entry-item">
+        <div class="entry-header">SMA Negeri 17 Surabaya</div>
+        <div class="entry-sub">Science / Mathematics and Natural Sciences (July 2023 – 2026)</div>
+        <div class="entry-desc">GPA : 92.5/100</div>
+      </div>
+
+      <div class="entry-item">
+        <div class="entry-header">SMPIT Al Uswah Surabaya</div>
+        <div class="entry-sub">Junior High School (July 2020 – 2023)</div>
+        <div class="entry-desc">GPA : 91/100</div>
+      </div>
+    </section>
+
+    <!-- WORK & PROJECT EXPERIENCES -->
+    <section>
+      <div class="section-heading">W O R K &nbsp; &amp; &nbsp; P R O J E C T &nbsp; E X P E R I E N C E S</div>
+      
+      <div class="entry-item">
+        <div class="entry-header">Interactive Digital Literacy Learning App (GEMPITA) – Developer / 2025</div>
+        <div class="entry-desc">An interactive gamified digital literacy courseware for high school students built with Articulate Storyline 3 and custom JavaScript triggers under teacher supervision for the GEMPITA Program.</div>
+        <ul class="bullet-items">
+          <li>Architected modular interactive scenarios, quiz evaluations, volume controls, and background audio loops via custom JavaScript scripts.</li>
+          <li>Packaged and distributed cross-platform builds for both Web (GitHub Pages) and standalone Android (APK).</li>
+        </ul>
+      </div>
+
+      <div class="entry-item">
+        <div class="entry-header">English Lesson Media: Narrative Text (GEMPITA Awards) – Developer / 2024</div>
+        <div class="entry-desc">Interactive English courseware focused on narrative text comprehension, submitted for the East Java Gempita Awards.</div>
+        <ul class="bullet-items">
+          <li>Engineered interactive storytelling modules, reading comprehension exercises, and structured analytical reading flows.</li>
+          <li>Collaborated with UI designers and academic mentors to ensure pedagogical effectiveness and intuitive UX.</li>
+        </ul>
+      </div>
+
+      <div class="entry-item">
+        <div class="entry-header">UTBK Tracker &amp; Preparation Dashboard – Full-Stack Developer / 2025 – 2026</div>
+        <div class="entry-desc">A Progressive Web App (PWA) built with React, Tailwind CSS, Recharts, and Cloud Firestore to track 58 UTBK sub-topics.</div>
+        <ul class="bullet-items">
+          <li>Implemented Item Response Theory (IRT) scoring models, radar strength mapping, and real-time cloud data synchronization.</li>
+          <li>Engineered daily study targets, checklist trackers, and dark-mode responsive analytics.</li>
+        </ul>
+      </div>
+
+      <div class="entry-item">
+        <div class="entry-header">YouTube Content Creator &amp; Video Producer – Channel Manager / 2016 – Present</div>
+        <div class="entry-desc">Managed gaming channel (@Javi_Gaming, ±14,000 subscribers) and technology/vlog channel (@javii08_.).</div>
+        <ul class="bullet-items">
+          <li>Produced and edited over 290+ published videos; flagship technical tutorial achieved 334,000+ views.</li>
+          <li>Proficient in Adobe Premiere Pro, CapCut, and Alight Motion for digital video storytelling and production.</li>
+        </ul>
+      </div>
+
+      <div class="entry-item">
+        <div class="entry-header">Android ADB Backup Tool &amp; Augmented Reality Senam – Developer / 2022 – 2024</div>
+        <div class="entry-desc">Created direct-stream Android backup automation via Python/ADB and a 3D AR gymnastics demonstration app with Unity 3D &amp; Vuforia.</div>
+      </div>
+    </section>
+
+    <!-- ORGANIZATIONS -->
+    <section>
+      <div class="section-heading">O R G A N I Z A T I O N S</div>
+      
+      <div class="entry-item">
+        <div class="entry-header">Head of Kelompok Ilmiah Remaja SMAN 17 Surabaya (KIRTASS) / December 2023 – 2025</div>
+        <div class="entry-desc">KIRTASS is the official student scientific research and innovation organization of SMAN 17 Surabaya. Directed research delegations, organized science exhibitions, and mentored junior members for national innovation competitions.</div>
+      </div>
+
+      <div class="entry-item">
+        <div class="entry-header">Student Council (OSIS) – Section 1 Officer (Spiritual &amp; Religious Affairs) / October 2023 – October 2024</div>
+        <div class="entry-desc">Member of Seksi Bidang 1 (Pembinaan Keimanan dan Ketakwaan terhadap Tuhan YME) at SMAN 17 Surabaya.</div>
+        <ul class="bullet-items">
+          <li>Coordinated and executed school-wide religious commemorations, spiritual development programs, and character-building initiatives.</li>
+          <li>Fostered inter-student collaboration, religious tolerance, and social welfare drives across diverse student communities.</li>
+        </ul>
+      </div>
+
+      <div class="entry-item">
+        <div class="entry-header">Public Relations Officer – SKEVA Student Company (Prestasi Junior Indonesia) / 2023 – 2024</div>
+        <div class="entry-desc">SKEVA Student Company is an entrepreneurship simulation enterprise at SMAN 17 Surabaya affiliated with Prestasi Junior Indonesia (PJI) / Junior Achievement (JA).</div>
+        <ul class="bullet-items">
+          <li>Managed brand voice, public communications, press releases, and digital promotional narratives for sustainable innovative products (such as the P-BOOM product line).</li>
+          <li>Liaised external relations with competition judges, school media, and potential partners, while coordinating cross-departmental communications across BoD, Marketing, Production, and Finance.</li>
+          <li>Co-organized public product launch events, trade fairs, and presentation pitch materials for the PJI Student Company Regional &amp; National competitions.</li>
+        </ul>
+      </div>
+
+      <div class="entry-item">
+        <div class="entry-header">Student Council (OSIS) – 1st Secretary / 2021 – 2023</div>
+        <div class="entry-sub">SMPIT Al Uswah Surabaya</div>
+        <div class="entry-desc">Directed the Community Development department, oversaw internal executive administration, and supervised student club activities.</div>
+      </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section>
+      <div class="section-heading">A C H I E V E M E N T S</div>
+      <ol class="number-items">
+        <li>Gold Medal in World Youth Invention and Innovation Award (WYIIA) – International Level, Technology Category (Science Book AR). (2023)</li>
+        <li>Certified Graduate in Coding &amp; AI Training – Puspresnas Bina Talenta Indonesia. (2025)</li>
+        <li>National Science Olympiad (OSN) in Astronomy – Surabaya City Level. (2025)</li>
+        <li>Semifinalist in Jagoan Hosting Infra Competition. (2025)</li>
+        <li>Semifinalist in National Innovation Project (NIPRO) ICHEVO ITS – Cassava Bioplastic Innovation. (2025)</li>
+        <li>1st Place in Taekwondo UMSIDA CUP – Men's Kyorugi Semi-Prestasi Category across East Java. (2022)</li>
+      </ol>
+    </section>
+
+    <!-- SKILLS -->
+    <section>
+      <div class="section-heading">S K I L L S</div>
+      <div class="skill-category">
+        <strong>Soft Skill:</strong> Leadership, public speaking, public relations, communication, event management, analytical problem solving, time management, teamwork, and growth mindset.
+      </div>
+      <div class="skill-category">
+        <strong>Hard Skill:</strong>
+        <ul class="bullet-items">
+          <li><strong>Programming &amp; Web:</strong> Python, JavaScript (ES6+), HTML5, CSS3, React.js, Tailwind CSS, Cloud Firestore, ADB Scripting, Git/GitHub.</li>
+          <li><strong>Interactive &amp; Multimedia:</strong> Articulate Storyline 3, Unity 3D (AR), Adobe Premiere Pro, CapCut, Alight Motion, Canva, Photoshop.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- LANGUAGES -->
+    <section>
+      <div class="section-heading">L A N G U A G E S</div>
+      <ol class="number-items">
+        <li>Indonesia : Scored 616 (Superior) on the Uji Kemahiran Berbahasa Indonesia (UKBI).</li>
+        <li>English : Duolingo English Test (DET) Score 115.</li>
+      </ol>
+    </section>
+
+  </div>
+
+</body>
+</html>
