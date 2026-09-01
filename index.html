@@ -71,6 +71,7 @@
     <style>
         ::-webkit-scrollbar {
             width: 8px;
+            height: 8px;
         }
         ::-webkit-scrollbar-track {
             background: #08080a;
@@ -112,6 +113,20 @@
         .modal-active {
             opacity: 1 !important;
             visibility: visible !important;
+        }
+
+        /* Iframe Pan & Drag Utilities */
+        .pan-viewport {
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+        }
+        .pan-viewport.is-dragging {
+            cursor: grabbing;
+        }
+        .iframe-wrapper {
+            transform-origin: top center;
+            transition: transform 0.08s ease-out;
         }
     </style>
 </head>
@@ -1107,28 +1122,45 @@
             </div>
         </div>
 
-        <!-- Pop-up CV Iframe Modal -->
-        <div id="cvModal" class="modal fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md opacity-0 invisible transition-all duration-300">
-            <div class="bg-zinc-900 border border-zinc-700 rounded-2xl sm:rounded-3xl w-full max-w-5xl h-[92vh] flex flex-col shadow-2xl overflow-hidden relative lightning-glow">
+        <!-- Pop-up CV Iframe Modal (Dengan Jarak Sticky Navbar & Fitur Geser/Zoom Preview) -->
+        <div id="cvModal" class="modal fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 pt-24 sm:pt-28 bg-black/85 backdrop-blur-md opacity-0 invisible transition-all duration-300">
+            <div class="bg-zinc-900 border border-zinc-700 rounded-2xl sm:rounded-3xl w-full max-w-5xl h-[82vh] max-h-[82vh] flex flex-col shadow-2xl overflow-hidden relative lightning-glow">
                 
                 <!-- Modal Top Header Bar -->
-                <div class="px-5 py-3.5 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between shrink-0">
+                <div class="px-4 sm:px-5 py-3 bg-zinc-950 border-b border-zinc-800 flex flex-wrap items-center justify-between gap-2 shrink-0">
                     <div class="flex items-center gap-2 text-xs font-mono text-zinc-300">
                         <i class="fa-solid fa-file-pdf text-red-400 text-sm"></i>
-                        <span class="font-bold tracking-wider uppercase text-white">Curriculum Vitae (ATS Preview)</span>
+                        <span class="font-bold tracking-wider uppercase text-white hidden sm:inline">Preview CV ATS</span>
+                        <span class="text-[10px] text-zinc-400 bg-zinc-800 px-2 py-0.5 rounded border border-zinc-700 font-mono flex items-center gap-1">
+                            <i class="fa-solid fa-hand text-[9px]"></i> Geser / Drag Aktif
+                        </span>
                     </div>
                     
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-1.5 sm:gap-2">
+                        <!-- Toolbar Zoom & Reset -->
+                        <div class="flex items-center bg-zinc-800/90 rounded-lg p-0.5 border border-zinc-700 text-xs font-mono">
+                            <button onclick="adjustCvZoom(-0.1)" title="Perkecil" class="px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-700 rounded">
+                                <i class="fa-solid fa-minus text-[10px]"></i>
+                            </button>
+                            <span id="zoomLevelDisplay" class="px-1.5 text-[11px] text-zinc-300 min-w-[42px] text-center">100%</span>
+                            <button onclick="adjustCvZoom(0.1)" title="Perbesar" class="px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-700 rounded">
+                                <i class="fa-solid fa-plus text-[10px]"></i>
+                            </button>
+                            <button onclick="resetCvPanZoom()" title="Reset Posisi" class="px-2 py-1 text-zinc-400 hover:text-white hover:bg-zinc-700 rounded ml-0.5 border-l border-zinc-700 text-[10px]">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                        </div>
+
                         <!-- Tombol Print / Download PDF dari Iframe -->
                         <button onclick="printCvIframe()" class="px-3 py-1.5 rounded-lg bg-white text-black hover:bg-zinc-200 text-xs font-mono font-bold flex items-center gap-1.5 transition-colors shadow-sm">
                             <i class="fa-solid fa-print"></i>
-                            <span class="hidden sm:inline">Cetak / PDF</span>
+                            <span class="hidden md:inline">Cetak / PDF</span>
                         </button>
                         
                         <!-- Tombol Buka di Tab Baru -->
-                        <a href="cv.html" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white text-xs font-mono flex items-center gap-1.5 border border-zinc-700 transition-colors">
+                        <a href="cv.html" target="_blank" rel="noopener noreferrer" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white text-xs font-mono flex items-center gap-1.5 border border-zinc-700 transition-colors">
                             <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
-                            <span class="hidden sm:inline">Buka Tab Baru</span>
+                            <span class="hidden md:inline">Tab Baru</span>
                         </a>
 
                         <!-- Tombol Close Modal -->
@@ -1138,9 +1170,14 @@
                     </div>
                 </div>
 
-                <!-- Modal Body: Iframe Container -->
-                <div class="flex-1 w-full h-full bg-zinc-950 relative overflow-hidden">
-                    <iframe id="cvIframe" src="" class="w-full h-full border-none bg-white"></iframe>
+                <!-- Modal Body: Interactive Draggable / Pannable Viewport -->
+                <div id="cvViewport" class="pan-viewport flex-1 w-full h-full bg-zinc-950/90 relative overflow-hidden flex items-start justify-center p-4">
+                    <!-- Layer Penampung Transform -->
+                    <div id="cvTransformLayer" class="iframe-wrapper w-[215mm] min-h-[305mm] bg-white rounded shadow-2xl overflow-hidden pointer-events-auto relative">
+                        <iframe id="cvIframe" src="" class="w-full h-[1200px] border-none bg-white"></iframe>
+                        <!-- Overlay transparan saat drag agar mouse tidak tertangkap iframe -->
+                        <div id="dragCaptureOverlay" class="absolute inset-0 bg-transparent hidden z-20"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1420,7 +1457,82 @@
 
         window.addEventListener('DOMContentLoaded', loadBlogData);
 
-        // 5. CV Modal Handlers & Iframe Controls
+        // 5. CV Modal & Interactive Pan/Drag Engine
+        let panX = 0, panY = 0;
+        let zoomScale = 1.0;
+        let isDragging = false;
+        let startMouseX = 0, startMouseY = 0;
+
+        const cvViewport = document.getElementById('cvViewport');
+        const cvTransformLayer = document.getElementById('cvTransformLayer');
+        const dragCaptureOverlay = document.getElementById('dragCaptureOverlay');
+        const zoomDisplay = document.getElementById('zoomLevelDisplay');
+
+        function updateCvTransform() {
+            cvTransformLayer.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomScale})`;
+            zoomDisplay.textContent = `${Math.round(zoomScale * 100)}%`;
+        }
+
+        function adjustCvZoom(delta) {
+            zoomScale = Math.min(Math.max(0.5, zoomScale + delta), 2.0);
+            updateCvTransform();
+        }
+
+        function resetCvPanZoom() {
+            panX = 0;
+            panY = 0;
+            // Di layar ponsel kecil, default zoom disesuaikan
+            zoomScale = window.innerWidth < 640 ? 0.65 : 0.95;
+            updateCvTransform();
+        }
+
+        // Mouse Drag Events
+        cvViewport.addEventListener('mousedown', (e) => {
+            if (e.target.closest('button') || e.target.closest('a')) return;
+            isDragging = true;
+            cvViewport.classList.add('is-dragging');
+            dragCaptureOverlay.classList.remove('hidden');
+            startMouseX = e.clientX - panX;
+            startMouseY = e.clientY - panY;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            panX = e.clientX - startMouseX;
+            panY = e.clientY - startMouseY;
+            updateCvTransform();
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                cvViewport.classList.remove('is-dragging');
+                dragCaptureOverlay.classList.add('hidden');
+            }
+        });
+
+        // Touch Drag Support (Mobile)
+        cvViewport.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                isDragging = true;
+                dragCaptureOverlay.classList.remove('hidden');
+                startMouseX = e.touches[0].clientX - panX;
+                startMouseY = e.touches[0].clientY - panY;
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging || e.touches.length !== 1) return;
+            panX = e.touches[0].clientX - startMouseX;
+            panY = e.touches[0].clientY - startMouseY;
+            updateCvTransform();
+        }, { passive: true });
+
+        window.addEventListener('touchend', () => {
+            isDragging = false;
+            dragCaptureOverlay.classList.add('hidden');
+        });
+
         function openCvModal() {
             const iframe = document.getElementById('cvIframe');
             if (!iframe.src || iframe.src === "about:blank" || !iframe.src.includes('cv.html')) {
@@ -1428,7 +1540,8 @@
             }
             const modal = document.getElementById('cvModal');
             modal.classList.add('modal-active');
-            document.body.style.overflow = 'hidden'; // Mencegah scrolling background
+            document.body.style.overflow = 'hidden';
+            resetCvPanZoom();
         }
 
         function closeCvModal() {
