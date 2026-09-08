@@ -160,7 +160,6 @@
             user-select: none;
         }
 
-        /* Education Timeline Styling */
         .education-dot {
             transition: all 0.3s ease;
         }
@@ -785,7 +784,6 @@
                 "institution": "Politeknik Elektronika Negeri Surabaya (PENS)",
                 "period": "2026 — Sekarang",
                 "icon": "fa-bolt",
-                "isCurrent": true,
                 "description": "Mahasiswa program studi <strong>D4 Teknik Informatika</strong>. Fokus pada rekayasa perangkat lunak, sains data, algoritma, serta komputasi terapan.",
                 "highlights": [
                     "Pengembangan perangkat lunak berbasis web & otomasi sistem cerdas",
@@ -797,7 +795,6 @@
                 "institution": "SMA Negeri 17 Surabaya (SMANTASS)",
                 "period": "2023 — 2026",
                 "icon": "fa-school",
-                "isCurrent": false,
                 "description": "Masuk melalui jalur prestasi rapor. Aktif dalam organisasi penelitian ilmiah, teknologi, dan kepengurusan sekolah.",
                 "highlights": [
                     "Meraih peringkat pertama di kelas serta peringkat 6 paralel satu sekolah",
@@ -810,7 +807,6 @@
                 "institution": "SMPIT Al Uswah Surabaya",
                 "period": "2020 — 2023",
                 "icon": "fa-school",
-                "isCurrent": false,
                 "description": "Aktif dalam kegiatan organisasi kepemimpinan serta dipercaya mengemban amanah sebagai Sekretaris OSIS I.",
                 "highlights": [
                     "Lulus sebagai peringkat pertama angkatan",
@@ -823,7 +819,6 @@
                 "institution": "SDIT Al Uswah Surabaya",
                 "period": "2014 — 2020",
                 "icon": "fa-child",
-                "isCurrent": false,
                 "description": "Sekolah Islam yang berfokus pada pembentukan karakter, prestasi akademik, dan pendidikan Al-Qur'an.",
                 "highlights": [
                     "Lulus dengan peringkat lima besar terbaik",
@@ -836,7 +831,6 @@
                 "institution": "KB-TKIT Al Uswah 2 Surabaya",
                 "period": "2010 — 2014",
                 "icon": "fa-shapes",
-                "isCurrent": false,
                 "description": "Aku anak Al Uswah, memulai awal pendidikan usia dini yang menanamkan nilai-nilai karakter dasar islami dan kebersamaan.",
                 "highlights": []
             }
@@ -849,21 +843,20 @@
             container.innerHTML = '';
 
             educationData.forEach((item) => {
-                const borderColor = item.isCurrent ? 'border-white' : 'border-zinc-600';
-                const iconColor = item.isCurrent ? 'text-white' : 'text-zinc-400';
+                // Setiap item memiliki border warna putih (tidak ada badge aktif)
+                const borderColor = 'border-white';
 
                 const div = document.createElement('div');
                 div.className = 'relative group';
 
                 div.innerHTML = `
-                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 ${borderColor} flex items-center justify-center ${iconColor} text-xs shadow-md transition-all group-hover:border-white group-hover:text-white">
+                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 ${borderColor} flex items-center justify-center text-white text-xs shadow-md transition-all group-hover:border-white group-hover:text-white">
                         <i class="fa-solid ${item.icon} text-[10px]"></i>
                     </div>
-                    <div class="education-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors ${item.isCurrent ? 'ring-1 ring-zinc-700' : ''}">
+                    <div class="education-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                            <h3 class="text-lg font-bold text-white ${item.isCurrent ? 'flex items-center gap-2' : ''}">
+                            <h3 class="text-lg font-bold text-white">
                                 ${item.institution}
-                                ${item.isCurrent ? '<span class="text-[10px] bg-white text-black px-2.5 py-0.5 rounded-full font-mono font-bold">AKTIF</span>' : ''}
                             </h3>
                             <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono text-xs w-fit">${item.period}</span>
                         </div>
