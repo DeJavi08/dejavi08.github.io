@@ -109,7 +109,6 @@
             visibility: visible !important;
         }
 
-        /* CV Modal Pan/Drag */
         .pan-viewport {
             cursor: grab;
             user-select: none;
@@ -123,12 +122,10 @@
             transition: transform 0.08s ease-out;
         }
 
-        /* 1. BANNER ATAS TETAP BERWARNA NORMAL */
         .hero-banner-img {
             filter: grayscale(0%) !important;
         }
 
-        /* 2. SEMUA THUMBNAIL KARTU DEFAULT MONOKROM */
         #achievementsGrid img,
         #projectsGrid img,
         #blogGrid img,
@@ -140,7 +137,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 3. HOVER (PC) DAN ACTIVE / TAP (HP) BERUBAH MENJADI BERWARNA */
         #achievementsGrid .group:hover img,
         #projectsGrid .group:hover img,
         #blogGrid .group:hover img,
@@ -154,7 +150,6 @@
             filter: grayscale(0%) !important;
         }
 
-        /* 4. PREVIEW MODAL LIGHTBOX TETAP BERWARNA PENUH */
         #lightboxImg,
         #modalBody img {
             filter: grayscale(0%) !important;
@@ -163,6 +158,20 @@
             max-width: 90vw;
             max-height: 80vh;
             user-select: none;
+        }
+
+        /* Education Timeline Styling */
+        .education-dot {
+            transition: all 0.3s ease;
+        }
+        .education-card {
+            transition: all 0.3s ease;
+        }
+        .education-card:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        .highlight-list li::marker {
+            color: #ffffff;
         }
     </style>
 </head>
@@ -459,83 +468,8 @@
                 </p>
             </div>
 
-            <div class="relative border-l-2 border-zinc-800 ml-4 sm:ml-8 space-y-12 pl-6 sm:pl-10">
-                <div class="relative group">
-                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 border-white flex items-center justify-center text-white text-xs shadow-md">
-                        <i class="fa-solid fa-bolt text-[10px]"></i>
-                    </div>
-                    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                            <h3 class="text-lg font-bold text-white">Politeknik Elektronika Negeri Surabaya (PENS)</h3>
-                            <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono text-xs w-fit">2026 — Sekarang</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">
-                            Mahasiswa program studi <strong>D4 Teknik Informatika</strong>. Fokus pada rekayasa perangkat lunak, sains data, algoritma, serta komputasi terapan.
-                        </p>
-                        <div class="bg-zinc-800/50 p-4 rounded-xl border border-zinc-800 space-y-2">
-                            <h4 class="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">⚡ Highlights & Fokus Studi:</h4>
-                            <ul class="text-xs text-zinc-400 space-y-1.5 list-disc list-inside">
-                                <li>Pengembangan perangkat lunak berbasis web & otomasi sistem cerdas</li>
-                                <li>Eksplorasi kecerdasan buatan, algoritma, dan arsitektur data terapan</li>
-                                <li>Kolaborasi riset teknologi dan proyek rekayasa digital aplikatif</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative group">
-                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 border-zinc-600 flex items-center justify-center text-zinc-400 text-xs group-hover:border-white group-hover:text-white transition-all">
-                        <i class="fa-solid fa-school text-[10px]"></i>
-                    </div>
-                    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                            <h3 class="text-lg font-bold text-white">SMA Negeri 17 Surabaya (SMANTASS)</h3>
-                            <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono text-xs w-fit">2023 — 2026</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">
-                            Masuk melalui jalur prestasi rapor. Aktif dalam organisasi penelitian ilmiah, teknologi, dan kepengurusan sekolah.
-                        </p>
-                        <div class="bg-zinc-800/50 p-4 rounded-xl border border-zinc-800 space-y-2">
-                            <h4 class="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">⚡ Highlights & Pencapaian:</h4>
-                            <ul class="text-xs text-zinc-400 space-y-1.5 list-disc list-inside">
-                                <li>Meraih peringkat pertama di kelas serta peringkat 6 paralel satu sekolah</li>
-                                <li>Menjabat sebagai Ketua Kelompok Ilmiah Remaja SMANTASS (KIRTASS)</li>
-                                <li>Dipercaya mengembangkan media pembelajaran berbasis teknologi interaktif</li>
-                                <li>Aktif berkontribusi di organisasi OSIS dan fotografi sekolah 7TEENITY</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative group">
-                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-zinc-400 text-xs group-hover:border-white group-hover:text-white transition-all">
-                        <i class="fa-solid fa-school text-[10px]"></i>
-                    </div>
-                    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                            <h3 class="text-lg font-bold text-white">SMPIT Al Uswah Surabaya</h3>
-                            <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono text-xs w-fit">2020 — 2023</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">
-                            Aktif dalam organisasi kepemimpinan serta dipercaya mengemban amanah sebagai Sekretaris OSIS I.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="relative group">
-                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 border-zinc-800 flex items-center justify-center text-zinc-500 text-xs group-hover:border-white group-hover:text-white transition-all">
-                        <i class="fa-solid fa-child text-[10px]"></i>
-                    </div>
-                    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                            <h3 class="text-lg font-bold text-white">SDIT Al Uswah Surabaya</h3>
-                            <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono text-xs w-fit">2014 — 2020</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm leading-relaxed">
-                            Lulus peringkat lima besar terbaik, menyelesaikan hafalan 3 juz Al-Qur'an, dan merintis channel YouTube serta eksperimen grafis awal.
-                        </p>
-                    </div>
-                </div>
+            <div id="educationContainer" class="relative border-l-2 border-zinc-800 ml-4 sm:ml-8 space-y-12 pl-6 sm:pl-10">
+                <!-- Data pendidikan akan dirender oleh JavaScript -->
             </div>
         </section>
 
@@ -845,7 +779,112 @@
     </main>
 
     <script>
-        // 1. Data Prestasi & Kompetisi
+        // ===== DATA PENDIDIKAN =====
+        const educationData = [
+            {
+                "institution": "Politeknik Elektronika Negeri Surabaya (PENS)",
+                "period": "2026 — Sekarang",
+                "icon": "fa-bolt",
+                "isCurrent": true,
+                "description": "Mahasiswa program studi <strong>D4 Teknik Informatika</strong>. Fokus pada rekayasa perangkat lunak, sains data, algoritma, serta komputasi terapan.",
+                "highlights": [
+                    "Pengembangan perangkat lunak berbasis web & otomasi sistem cerdas",
+                    "Eksplorasi kecerdasan buatan, algoritma, dan arsitektur data lanjutan",
+                    "Kolaborasi riset teknologi dan proyek rekayasa digital aplikatif"
+                ]
+            },
+            {
+                "institution": "SMA Negeri 17 Surabaya (SMANTASS)",
+                "period": "2023 — 2026",
+                "icon": "fa-school",
+                "isCurrent": false,
+                "description": "Masuk melalui jalur prestasi rapor. Aktif dalam organisasi penelitian ilmiah, teknologi, dan kepengurusan sekolah.",
+                "highlights": [
+                    "Meraih peringkat pertama di kelas serta peringkat 6 paralel satu sekolah",
+                    "Menjabat sebagai Ketua Kelompok Ilmiah Remaja SMANTASS (KIRTASS)",
+                    "Dipercaya mengembangkan media pembelajaran berbasis teknologi interaktif kelas XI & XII",
+                    "Aktif berkontribusi di organisasi OSIS dan komunitas fotografi sekolah 7TEENITY"
+                ]
+            },
+            {
+                "institution": "SMPIT Al Uswah Surabaya",
+                "period": "2020 — 2023",
+                "icon": "fa-school",
+                "isCurrent": false,
+                "description": "Aktif dalam kegiatan organisasi kepemimpinan serta dipercaya mengemban amanah sebagai Sekretaris OSIS I.",
+                "highlights": [
+                    "Lulus sebagai peringkat pertama angkatan",
+                    "Sekretaris OSIS I & memimpin program Community Development kemasyarakatan",
+                    "Meraih penghargaan program COMDEV Terbaik untuk donor donasi Al-Qur'an",
+                    "Eksplorasi server Minecraft lanjutan, bot Discord, dan bot fungsional WhatsApp"
+                ]
+            },
+            {
+                "institution": "SDIT Al Uswah Surabaya",
+                "period": "2014 — 2020",
+                "icon": "fa-child",
+                "isCurrent": false,
+                "description": "Sekolah Islam yang berfokus pada pembentukan karakter, prestasi akademik, dan pendidikan Al-Qur'an.",
+                "highlights": [
+                    "Lulus dengan peringkat lima besar terbaik",
+                    "Menyelesaikan hafalan Al-Qur'an sebanyak 3 juz",
+                    "Awal perjalanan sebagai kreator YouTube Minecraft & Roblox",
+                    "Eksperimen awal grafis digital dengan PixelLab dan Ibis Paint"
+                ]
+            },
+            {
+                "institution": "KB-TKIT Al Uswah 2 Surabaya",
+                "period": "2010 — 2014",
+                "icon": "fa-shapes",
+                "isCurrent": false,
+                "description": "Aku anak Al Uswah, memulai awal pendidikan usia dini yang menanamkan nilai-nilai karakter dasar islami dan kebersamaan.",
+                "highlights": []
+            }
+        ];
+
+        // ===== RENDER PENDIDIKAN =====
+        function renderEducation() {
+            const container = document.getElementById('educationContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            educationData.forEach((item) => {
+                const borderColor = item.isCurrent ? 'border-white' : 'border-zinc-600';
+                const iconColor = item.isCurrent ? 'text-white' : 'text-zinc-400';
+
+                const div = document.createElement('div');
+                div.className = 'relative group';
+
+                div.innerHTML = `
+                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 ${borderColor} flex items-center justify-center ${iconColor} text-xs shadow-md transition-all group-hover:border-white group-hover:text-white">
+                        <i class="fa-solid ${item.icon} text-[10px]"></i>
+                    </div>
+                    <div class="education-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors ${item.isCurrent ? 'ring-1 ring-zinc-700' : ''}">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                            <h3 class="text-lg font-bold text-white ${item.isCurrent ? 'flex items-center gap-2' : ''}">
+                                ${item.institution}
+                                ${item.isCurrent ? '<span class="text-[10px] bg-white text-black px-2.5 py-0.5 rounded-full font-mono font-bold">AKTIF</span>' : ''}
+                            </h3>
+                            <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono text-xs w-fit">${item.period}</span>
+                        </div>
+                        <p class="text-zinc-400 text-sm leading-relaxed ${item.highlights.length > 0 ? 'mb-4' : ''}">
+                            ${item.description}
+                        </p>
+                        ${item.highlights.length > 0 ? `
+                            <div class="bg-zinc-800/50 p-4 rounded-xl border border-zinc-800 space-y-2">
+                                <h4 class="text-xs font-mono text-zinc-300 font-bold uppercase tracking-wider">⚡ Highlights:</h4>
+                                <ul class="highlight-list text-xs text-zinc-400 space-y-1.5 list-disc list-inside">
+                                    ${item.highlights.map(h => `<li>${h}</li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // ===== DATA PRESTASI =====
         const achievementsData = [
             {
                 badge: "🥇 GOLD MEDAL",
@@ -929,7 +968,7 @@
             }
         ];
 
-        // 2. Data Projek Unggulan (JSON Sesuai Permintaan)
+        // ===== DATA PROYEK =====
         const projectsData = [
             {
                 title: "Android Backup ADB",
@@ -997,17 +1036,7 @@
                 type: "PYTHON SCRIPT",
                 image: "https://lh3.googleusercontent.com/d/1lkSyrlcMNnO8m0ozrVf-wF8AYppgivLg=w720?authuser=1",
                 shortDesc: "Program Python pintar untuk menyelaraskan secara otomatis tanggal modifikasi berkas media berdasarkan format penamaannya.",
-                fullDesc: `MetaTimeChanger v2.0 merupakan aplikasi berbasis Python yang dirancang untuk memperbarui metadata tanggal dan waktu pada file foto dan video secara otomatis berdasarkan informasi yang terdapat dalam nama file. Program ini mengatasi permasalahan umum ketika file media kehilangan metadata asli akibat proses transfer, kompresi, atau pengeditan, sehingga tanggal pembuatan file tidak sesuai dengan momen pengambilan gambar atau rekaman. Dengan pendekatan cerdas dalam mengekstraksi pola tanggal dari berbagai format penamaan file, aplikasi ini memungkinkan pengguna untuk mempersiapkan file media sebelum diunggah ke platform seperti Google Photos yang mengandalkan metadata untuk pengaturan galeri.
-
-Program ini mendukung tiga mode pemrosesan yang dapat dipilih sesuai kebutuhan pengguna. Mode Auto Fast melakukan ekstraksi otomatis tanpa konfirmasi dan hanya akan bertanya jika format tanggal tidak ditemukan dalam nama file, menjadikannya pilihan paling efisien untuk memproses banyak file sekaligus. Mode Confirm One-by-One memberikan kendali penuh kepada pengguna dengan menampilkan konfirmasi untuk setiap file sebelum perubahan dilakukan, cocok untuk file-file penting yang memerlukan verifikasi. Mode Batch Same Date menerapkan satu tanggal yang sama untuk seluruh file dalam satu folder, berguna ketika kumpulan file tidak memiliki pola penamaan yang mengandung informasi tanggal.
-
-Dari sisi teknis, aplikasi ini mendukung berbagai format file media, mencakup ekstensi video seperti MP4, MOV, AVI, MKV, M4V, WMV, FLV, 3GP, dan WEBM, serta format foto seperti JPG, JPEG, PNG, HEIC, GIF, BMP, TIFF, dan WEBP. Untuk memperbarui metadata, program memanfaatkan beberapa tools pendukung. ExifTool digunakan sebagai metode utama karena kemampuannya mengubah metadata secara lengkap pada kedua jenis file. FFmpeg tersedia sebagai alternatif khusus untuk file video dengan tingkat kompatibilitas yang baik. Apabila kedua tools tersebut tidak tersedia, program masih dapat beroperasi dalam mode Basic yang hanya memperbarui timestamp file sistem.
-
-Kemampuan ekstraksi tanggal cerdas menjadi fitur inti dari aplikasi ini. Program mengenali berbagai pola penamaan, termasuk format dengan spasi seperti Vid 20210327 092658, format underscore seperti VID_20231225_143045, format tanpa separator seperti 20231225143045, format dengan dash dan dot, serta format khas dari aplikasi WhatsApp seperti IMG-20231225-WA143045. Selain pola dengan informasi jam lengkap, program juga dapat mengekstraksi tanggal saja dan secara otomatis menetapkan jam default ke 12:00. Validasi dilakukan untuk memastikan nilai tahun, bulan, hari, jam, menit, dan detik berada dalam rentang yang sah.
-
-Proses kerja program dimulai dengan pengecekan ketersediaan ExifTool dan FFmpeg pada sistem. Pengguna kemudian memilih jenis file yang akan diproses, menentukan folder input dan output, memilih mode pemrosesan, serta memilih tool yang akan digunakan. Untuk setiap file, program mengekstraksi tanggal dari nama file berdasarkan pola yang dikenali, kemudian memperbarui metadata sesuai dengan tool yang dipilih. Hasil akhir disimpan di folder output terpisah sehingga file asli tetap aman dan tidak termodifikasi. Setelah seluruh proses selesai, program menampilkan ringkasan yang mencakup jumlah total file, jumlah file yang berhasil diproses, dan jumlah file yang dilewati.
-
-Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan navigasi dan memberikan umpan balik visual terhadap status setiap operasi. Menu pengaturan menyediakan fitur untuk melakukan pengujian terhadap ExifTool, FFmpeg, dan kemampuan ekstraksi cerdas, serta menampilkan informasi mengenai format-format yang didukung. Dengan menggabungkan kemudahan penggunaan, fleksibilitas mode pemrosesan, dan dukungan terhadap berbagai format file serta tools, MetaTimeChanger v2.0 menawarkan solusi praktis dan andal bagi pengguna yang perlu mengelola metadata tanggal pada koleksi file media mereka secara efisien.`,
+                fullDesc: "MetaTimeChanger v2.0 merupakan aplikasi berbasis Python yang dirancang untuk memperbarui metadata tanggal dan waktu pada file foto dan video secara otomatis berdasarkan informasi yang terdapat dalam nama file.",
                 linkUrl: "https://github.com/DeJavi08/MetaTimeChanger",
                 linkText: "Source Code"
             },
@@ -1017,7 +1046,7 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
                 type: "LIVE WEB",
                 image: "https://lh3.googleusercontent.com/d/1D5c4zqTGBTBGQ4QVUyGxH0oclD675G0F=w1000?authuser=1",
                 shortDesc: "Tes buta warna interaktif & praktis untuk siswa SMP mengetahui kondisi visual lebih awal sebelum memilih jurusan SMK/Kuliah.",
-                fullDesc: "Tes buta warna menjadi prasyarat beberapa jurusan di SMK dan perguruan tinggi sehingga siswa SMP perlu mengetahui lebih awal apakah dirinya buta warna atau tidak, agar bisa mengetahui jurusan yang dipilihnya kelak. Perlu adanya tes buta warna yang praktis, memudahkan siswa SMP mengetahui kondisi nya lebih awal.",
+                fullDesc: "Tes buta warna menjadi prasyarat beberapa jurusan di SMK dan perguruan tinggi sehingga siswa SMP perlu mengetahui lebih awal apakah dirinya buta warna atau tidak.",
                 linkUrl: "http://dejavi08.github.io/Isihara-Test/",
                 linkText: "Live Web"
             },
@@ -1027,13 +1056,13 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
                 type: "ANDROID APP",
                 image: "https://lh3.googleusercontent.com/d/1dYfA8G2y5Vc58StYLZO4BPqI999oJudS=w1000?authuser=1",
                 shortDesc: "Aplikasi Android Augmented Reality buatan Unity 3D yang memproyeksikan peragaan gerakan senam 3D interaktif ke dunia nyata.",
-                fullDesc: "Saya membuat aplikasi ini dengan tujuan untuk belajar bikin aplikasi saja, saya menggunakan Unity 3D untuk membuat apk ini. Augmented Reality atau AR adalah teknologi yang memperoleh penggabungan secara real-time terhadap digital konten yang dibuat oleh komputer dengan dunia nyata. Augmented Reality memperbolehkan pengguna melihat objek maya 2D atau 3D yang diproyeksikan terhadap dunia nyata.",
+                fullDesc: "Saya membuat aplikasi ini dengan tujuan untuk belajar bikin aplikasi saja, saya menggunakan Unity 3D untuk membuat apk ini.",
                 linkUrl: "https://drive.google.com/drive/folders/1u2siQu365VrYlOORONrCnkocQ8LZLWKV?usp=sharing",
                 linkText: "Download App"
             }
         ];
 
-        // 3. Render Achievements Grid (Monokrom Default)
+        // ===== RENDER ACHIEVEMENTS =====
         function renderAchievements() {
             const container = document.getElementById('achievementsGrid');
             if (!container) return;
@@ -1077,7 +1106,7 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
             });
         }
 
-        // 4. Render Projects Grid (Monokrom Default)
+        // ===== RENDER PROJECTS =====
         function renderProjects() {
             const container = document.getElementById('projectsGrid');
             if (!container) return;
@@ -1117,7 +1146,7 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
             });
         }
 
-        // 5. Modal Detail Lanjutan (Foto Ditampilkan di Atas Deskripsi)
+        // ===== MODAL FUNCTIONS =====
         function openAchievementDetail(index) {
             const data = achievementsData[index];
             if (!data) return;
@@ -1201,7 +1230,7 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
             if (e.target.id === 'infoModal') closeModal();
         });
 
-        // 6. Lightbox Preview Engine (Zoom In, Zoom Out, Tombol X, Tanpa Geser)
+        // ===== LIGHTBOX FUNCTIONS =====
         let lbZoom = 1.0;
         const lightboxModal = document.getElementById('lightboxModal');
         const lightboxImg = document.getElementById('lightboxImg');
@@ -1234,14 +1263,12 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
             updateLightboxTransform();
         }
 
-        // Tutup lightbox jika klik area luar gambar
         document.getElementById('lightboxViewport').addEventListener('click', (e) => {
             if (e.target.id === 'lightboxViewport') {
                 closeLightbox();
             }
         });
 
-        // Dukungan Keyboard Shortcut (Esc untuk tutup, + / - untuk zoom)
         window.addEventListener('keydown', (e) => {
             if (!lightboxModal.classList.contains('modal-active')) return;
             if (e.key === 'Escape') closeLightbox();
@@ -1250,72 +1277,120 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
             if (e.key === '0') resetLightboxZoom();
         });
 
-        // 7. Particle Canvas Engine
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
+        // ===== CV MODAL FUNCTIONS =====
+        let panX = 0, panY = 0;
+        let zoomScale = 1.0;
+        let isDragging = false;
+        let startMouseX = 0, startMouseY = 0;
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        const cvViewport = document.getElementById('cvViewport');
+        const cvTransformLayer = document.getElementById('cvTransformLayer');
+        const dragCaptureOverlay = document.getElementById('dragCaptureOverlay');
+        const zoomDisplay = document.getElementById('zoomLevelDisplay');
+
+        function updateCvTransform() {
+            cvTransformLayer.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomScale})`;
+            if (zoomDisplay) zoomDisplay.textContent = `${Math.round(zoomScale * 100)}%`;
         }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
 
-        class Particle {
-            constructor() {
-                this.reset();
+        function adjustCvZoom(delta) {
+            zoomScale = Math.min(Math.max(0.5, zoomScale + delta), 2.0);
+            updateCvTransform();
+        }
+
+        function resetCvPanZoom() {
+            panX = 0;
+            panY = 0;
+            zoomScale = window.innerWidth < 640 ? 0.65 : 0.95;
+            updateCvTransform();
+        }
+
+        if (cvViewport) {
+            cvViewport.addEventListener('mousedown', (e) => {
+                if (e.target.closest('button') || e.target.closest('a')) return;
+                isDragging = true;
+                cvViewport.classList.add('is-dragging');
+                if (dragCaptureOverlay) dragCaptureOverlay.classList.remove('hidden');
+                startMouseX = e.clientX - panX;
+                startMouseY = e.clientY - panY;
+            });
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            panX = e.clientX - startMouseX;
+            panY = e.clientY - startMouseY;
+            updateCvTransform();
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                if (cvViewport) cvViewport.classList.remove('is-dragging');
+                if (dragCaptureOverlay) dragCaptureOverlay.classList.add('hidden');
             }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.alpha = Math.random() * 0.6 + 0.1;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.reset();
+        });
+
+        if (cvViewport) {
+            cvViewport.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    if (dragCaptureOverlay) dragCaptureOverlay.classList.remove('hidden');
+                    startMouseX = e.touches[0].clientX - panX;
+                    startMouseY = e.touches[0].clientY - panY;
                 }
+            }, { passive: true });
+        }
+
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging || e.touches.length !== 1) return;
+            panX = e.touches[0].clientX - startMouseX;
+            panY = e.touches[0].clientY - startMouseY;
+            updateCvTransform();
+        }, { passive: true });
+
+        window.addEventListener('touchend', () => {
+            isDragging = false;
+            if (dragCaptureOverlay) dragCaptureOverlay.classList.add('hidden');
+        });
+
+        function openCvModal() {
+            const iframe = document.getElementById('cvIframe');
+            if (iframe && (!iframe.src || iframe.src === "about:blank" || !iframe.src.includes('cv.html'))) {
+                iframe.src = 'cv.html';
             }
-            draw() {
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+            const modal = document.getElementById('cvModal');
+            if (modal) {
+                modal.classList.add('modal-active');
+                document.body.style.overflow = 'hidden';
+                resetCvPanZoom();
             }
         }
 
-        for (let i = 0; i < 50; i++) particles.push(new Particle());
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateParticles);
+        function closeCvModal() {
+            const modal = document.getElementById('cvModal');
+            if (modal) {
+                modal.classList.remove('modal-active');
+                document.body.style.overflow = '';
+            }
         }
-        animateParticles();
 
-        // 8. Mobile Nav Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
+        function printCvIframe() {
+            const iframe = document.getElementById('cvIframe');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.focus();
+                iframe.contentWindow.print();
+            }
+        }
 
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        document.querySelectorAll('#mobileMenu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        const cvModal = document.getElementById('cvModal');
+        if (cvModal) {
+            cvModal.addEventListener('click', (e) => {
+                if (e.target.id === 'cvModal') closeCvModal();
             });
-        });
+        }
 
-        // 9. Quotes Slider
+        // ===== QUOTES SLIDER =====
         const quotes = [
             {
                 quote: "Jadilah seperti isim dhomir, tidak berubah-rubah walaupun di lingkungan yang berbeda-beda.",
@@ -1348,6 +1423,7 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
 
         function renderQuoteDots() {
             const dotsContainer = document.getElementById('quoteDots');
+            if (!dotsContainer) return;
             dotsContainer.innerHTML = '';
             quotes.forEach((_, idx) => {
                 const dot = document.createElement('button');
@@ -1364,6 +1440,8 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
             const quoteAuthor = document.getElementById('quoteAuthor');
             const quoteRole = document.getElementById('quoteRole');
             const container = document.getElementById('quoteContent');
+
+            if (!quoteText || !quoteAuthor || !quoteRole || !container) return;
 
             container.style.opacity = '0';
             setTimeout(() => {
@@ -1388,7 +1466,7 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
         renderQuoteDots();
         setInterval(nextQuote, 7500);
 
-        // 10. Dynamic Blog Loader
+        // ===== BLOG DATA & FILTER =====
         let loadedBlogList = [];
         const defaultBlogPosts = [
             {
@@ -1520,109 +1598,7 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
             renderBlogCards(category);
         }
 
-        // 11. CV Modal & Interactive Pan/Drag Engine
-        let panX = 0, panY = 0;
-        let zoomScale = 1.0;
-        let isDragging = false;
-        let startMouseX = 0, startMouseY = 0;
-
-        const cvViewport = document.getElementById('cvViewport');
-        const cvTransformLayer = document.getElementById('cvTransformLayer');
-        const dragCaptureOverlay = document.getElementById('dragCaptureOverlay');
-        const zoomDisplay = document.getElementById('zoomLevelDisplay');
-
-        function updateCvTransform() {
-            cvTransformLayer.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomScale})`;
-            zoomDisplay.textContent = `${Math.round(zoomScale * 100)}%`;
-        }
-
-        function adjustCvZoom(delta) {
-            zoomScale = Math.min(Math.max(0.5, zoomScale + delta), 2.0);
-            updateCvTransform();
-        }
-
-        function resetCvPanZoom() {
-            panX = 0;
-            panY = 0;
-            zoomScale = window.innerWidth < 640 ? 0.65 : 0.95;
-            updateCvTransform();
-        }
-
-        cvViewport.addEventListener('mousedown', (e) => {
-            if (e.target.closest('button') || e.target.closest('a')) return;
-            isDragging = true;
-            cvViewport.classList.add('is-dragging');
-            dragCaptureOverlay.classList.remove('hidden');
-            startMouseX = e.clientX - panX;
-            startMouseY = e.clientY - panY;
-        });
-
-        window.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            panX = e.clientX - startMouseX;
-            panY = e.clientY - startMouseY;
-            updateCvTransform();
-        });
-
-        window.addEventListener('mouseup', () => {
-            if (isDragging) {
-                isDragging = false;
-                cvViewport.classList.remove('is-dragging');
-                dragCaptureOverlay.classList.add('hidden');
-            }
-        });
-
-        cvViewport.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 1) {
-                isDragging = true;
-                dragCaptureOverlay.classList.remove('hidden');
-                startMouseX = e.touches[0].clientX - panX;
-                startMouseY = e.touches[0].clientY - panY;
-            }
-        }, { passive: true });
-
-        window.addEventListener('touchmove', (e) => {
-            if (!isDragging || e.touches.length !== 1) return;
-            panX = e.touches[0].clientX - startMouseX;
-            panY = e.touches[0].clientY - startMouseY;
-            updateCvTransform();
-        }, { passive: true });
-
-        window.addEventListener('touchend', () => {
-            isDragging = false;
-            dragCaptureOverlay.classList.add('hidden');
-        });
-
-        function openCvModal() {
-            const iframe = document.getElementById('cvIframe');
-            if (!iframe.src || iframe.src === "about:blank" || !iframe.src.includes('cv.html')) {
-                iframe.src = 'cv.html';
-            }
-            const modal = document.getElementById('cvModal');
-            modal.classList.add('modal-active');
-            document.body.style.overflow = 'hidden';
-            resetCvPanZoom();
-        }
-
-        function closeCvModal() {
-            const modal = document.getElementById('cvModal');
-            modal.classList.remove('modal-active');
-            document.body.style.overflow = '';
-        }
-
-        function printCvIframe() {
-            const iframe = document.getElementById('cvIframe');
-            if (iframe && iframe.contentWindow) {
-                iframe.contentWindow.focus();
-                iframe.contentWindow.print();
-            }
-        }
-
-        document.getElementById('cvModal').addEventListener('click', (e) => {
-            if (e.target.id === 'cvModal') closeCvModal();
-        });
-
-        // 12. Contact Form Handler (WhatsApp & Telegram)
+        // ===== CONTACT FORM =====
         function handleContactSubmit(e) {
             e.preventDefault();
             const platform = document.querySelector('input[name="platform"]:checked').value;
@@ -1652,10 +1628,11 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
             document.getElementById('contactForm').reset();
         }
 
-        // 13. Custom Toast Notification
+        // ===== TOAST NOTIFICATION =====
         function showToast(msg) {
             const toast = document.getElementById('toast');
             const toastMsg = document.getElementById('toastMessage');
+            if (!toast || !toastMsg) return;
             toastMsg.textContent = msg;
             toast.classList.remove('translate-y-20', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
@@ -1666,7 +1643,76 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
             }, 3500);
         }
 
-        // 14. Mobile Tap Colorize Handler untuk Kartu Thumbnail
+        // ===== PARTICLE CANVAS =====
+        const canvas = document.getElementById('bgCanvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.5;
+                    this.speedY = (Math.random() - 0.5) * 0.5;
+                    this.alpha = Math.random() * 0.6 + 0.1;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                        this.reset();
+                    }
+                }
+                draw() {
+                    ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+        }
+
+        // ===== MOBILE NAV =====
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('#mobileMenu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        // ===== MOBILE TAP COLORIZE =====
         document.addEventListener('click', (e) => {
             const card = e.target.closest('#achievementsGrid .group, #projectsGrid .group, #blogGrid .group, #hero .shrink-0');
             if (card) {
@@ -1682,8 +1728,9 @@ Aplikasi ini dilengkapi dengan antarmuka berbasis teks berwarna yang memudahkan 
             }
         });
 
-        // Inisialisasi Saat Halaman Dimuat
-        window.addEventListener('DOMContentLoaded', () => {
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', () => {
+            renderEducation();
             renderAchievements();
             renderProjects();
             loadBlogData();
