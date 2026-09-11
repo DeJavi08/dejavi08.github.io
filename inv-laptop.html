@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARCHIVE // Koleksi Laptop Keluarga Arivery</title>
+  
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              black: '#070709',
+              dark: '#0e0e13',
+              card: '#13131a',
+              cardHover: '#1a1a24',
+              border: '#22222d',
+              borderLight: '#2e2e3d',
+              accent: '#38bdf8',
+              accentHover: '#0ea5e9',
+              accentGlow: 'rgba(56, 189, 248, 0.18)',
+              emerald: '#10b981',
+              violet: '#8b5cf6',
+              amber: '#f59e0b',
+              pinYellow: '#fef08a'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070709;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #22222d;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #38bdf8;
+    }
+
+    /* Subtle grid background pattern */
+    .cyber-grid {
+      background-size: 38px 38px;
+      background-image: 
+        radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    }
+
+    /* Hardware Stage & Floating Pedestal for Transparent Cutouts */
+    .hardware-stage {
+      background: radial-gradient(circle at 50% 68%, rgba(56, 189, 248, 0.12) 0%, rgba(19, 19, 26, 0.7) 65%, transparent 100%);
+      perspective: 900px;
+    }
+    .hardware-img {
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+      filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.85));
+    }
+    .card-tech:hover .hardware-img {
+      transform: translateY(-9px) scale(1.06);
+      filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 16px rgba(56, 189, 248, 0.35));
+    }
+    .pedestal-ring {
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-tech:hover .pedestal-ring {
+      transform: scale(1.15);
+      border-color: rgba(56, 189, 248, 0.55);
+      box-shadow: 0 0 28px rgba(56, 189, 248, 0.35);
+    }
+
+    /* Grayscale hover transition for card and images */
+    .card-tech {
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-tech .tech-thumb {
+      filter: grayscale(85%) contrast(105%);
+      transition: filter 0.4s ease, transform 0.4s ease;
+    }
+    .card-tech:hover .tech-thumb {
+      filter: grayscale(0%) contrast(100%);
+      transform: scale(1.05);
+    }
+    .card-tech:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px -12px rgba(56, 189, 248, 0.16);
+      border-color: rgba(56, 189, 248, 0.45);
+    }
+
+    /* Floating card animation */
+    @keyframes float-gentle {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+    .animate-float {
+      animation: float-gentle 4s ease-in-out infinite;
+    }
+
+    /* Pulse radar */
+    @keyframes ping-slow {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+    .radar-pulse {
+      animation: ping-slow 2.4s infinite cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    /* Modal custom internal scroll */
+    .custom-modal-scroll::-webkit-scrollbar {
+      width: 5px;
+    }
+    .custom-modal-scroll::-webkit-scrollbar-track {
+      background: rgba(14, 14, 19, 0.6);
+    }
+    .custom-modal-scroll::-webkit-scrollbar-thumb {
+      background: #2e2e3d;
+      border-radius: 4px;
+    }
+    .custom-modal-scroll::-webkit-scrollbar-thumb:hover {
+      background: #38bdf8;
+    }
+
+    /* Hero Background Photo Slider Crossfade */
+    .hero-slide {
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hero-slide.active {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    .hero-slide.inactive {
+      opacity: 0;
+      transform: scale(1.04);
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body class="bg-cyber-black text-zinc-300 font-sans antialiased min-h-screen relative selection:bg-cyan-500/30 selection:text-cyan-200">
+  <!-- Interactive Particle Background Canvas -->
+  <canvas id="cyberCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+  <div class="fixed inset-0 cyber-grid pointer-events-none z-0"></div>
+
+  <!-- Top Floating System Navigation Bar (Inspired by Capsule Header) -->
+  <div class="sticky top-4 z-40 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="rounded-2xl border border-cyber-border/90 bg-cyber-dark/85 backdrop-blur-xl px-4 py-2.5 shadow-2xl shadow-black/60 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status Pill -->
+      <div class="flex items-center space-x-3 shrink-0">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 via-cyber-card to-cyber-border border border-cyan-500/30 flex items-center justify-center text-cyber-accent shadow-inner">
+          <svg class="w-5 h-5 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-bold text-sm tracking-wide text-white font-sans">ARIVERY</span>
+            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-cyan-500/10 border border-cyan-500/25 text-cyan-300">Archive</span>
+          </div>
+          <p class="text-[11px] text-zinc-500 font-mono leading-none mt-0.5">Koleksi Laptop & Hardware</p>
+        </div>
+      </div>
+
+      <!-- Navigation Capsule Links -->
+      <nav class="hidden lg:flex items-center gap-1.5 text-xs font-mono bg-cyber-card/80 p-1 rounded-full border border-cyber-border">
+        <a href="#hero" class="px-4 py-1.5 rounded-full bg-cyber-accent text-black font-semibold shadow-sm transition-all">Beranda</a>
+        <a href="#inventory" class="px-3.5 py-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-cyber-border/60 transition-colors">Direktori Hardware</a>
+        <a href="#compare" class="px-3.5 py-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-cyber-border/60 transition-colors">Komparator</a>
+        <a href="#evolution" class="px-3.5 py-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-cyber-border/60 transition-colors">Linimasa Dekade</a>
+      </nav>
+
+      <!-- Action Buttons Right -->
+      <div class="flex items-center gap-2.5 shrink-0">
+        <a href="#inventory" class="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black shadow-lg shadow-cyan-500/20 transition-all">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <span>Cari Laptop</span>
+        </a>
+      </div>
+
+    </header>
+  </div>
+
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16" id="hero">
+    
+    <!-- Hero Showcase Section -->
+    <section class="relative pt-12 pb-14 overflow-hidden rounded-3xl border border-cyber-border/70 bg-cyber-dark/40 shadow-2xl">
+      
+      <!-- Background Photo Slider (Auto-run only, pure atmospheric backdrop) -->
+      <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none rounded-3xl" id="heroSliderContainer">
+        <!-- Slide 1 -->
+        <div class="hero-slide active absolute inset-0 w-full h-full flex items-center justify-center" id="slide-0">
+          <img 
+            src="https://lh3.googleusercontent.com/d/1VxoI7aWXyaUI27RLq-fgM7FFCaQRBIbN=w720?authuser=1" 
+            alt="Dokumentasi Hardware 1" 
+            class="w-full h-full object-cover object-center filter grayscale-[40%] contrast-110 brightness-[0.7]"
+            onerror="this.style.display='none'"
+          />
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="hero-slide inactive absolute inset-0 w-full h-full flex items-center justify-center" id="slide-1">
+          <img 
+            src="https://lh3.googleusercontent.com/d/1pNMN-VKFoh8BypiViTqPcT-op5tspAT6=w720?authuser=1" 
+            alt="Dokumentasi Hardware 2" 
+            class="w-full h-full object-cover object-center filter grayscale-[40%] contrast-110 brightness-[0.7]"
+            onerror="this.style.display='none'"
+          />
+        </div>
+
+        <!-- Layered Dark Cybernetic Vignette Overlay to maintain contrast & theme consistency -->
+        <div class="absolute inset-0 bg-gradient-to-b from-cyber-black/75 via-cyber-dark/40 to-cyber-black/85 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(7,7,9,0.75)_100%)] pointer-events-none"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none"></div>
+      </div>
+
+      <!-- Center Emblem & Main Centered Title -->
+      <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
+        
+        <!-- Glowing Center Emblem -->
+        <div class="inline-flex items-center justify-center">
+          <div class="relative">
+            <div class="absolute -inset-2 rounded-full bg-cyan-500/20 blur-xl animate-pulse"></div>
+            <div class="w-20 h-20 rounded-full bg-gradient-to-b from-cyber-card to-cyber-dark border-2 border-cyan-400/50 flex items-center justify-center shadow-xl shadow-cyan-500/20 relative z-10">
+              <svg class="w-9 h-9 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Centered Title with Underline Accent -->
+        <div class="space-y-3">
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight font-sans leading-tight">
+            Inventaris Laptop <br class="hidden sm:inline" />
+            <span class="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-cyan-400">
+              Keluarga Arivery
+              <svg class="absolute -bottom-2 left-0 w-full h-3 text-cyan-400/70" viewBox="0 0 200 8" fill="none" preserveAspectRatio="none">
+                <path d="M1 5.5C40 2 120 1 199 5.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
+              </svg>
+            </span>
+          </h1>
+          <p class="text-xs sm:text-sm text-zinc-400 font-sans max-w-2xl mx-auto leading-relaxed pt-2">
+            Pusat data terstruktur spesifikasi teknis, rekaman historis perangkat, dan estimasi harga peluncuran kurun satu dekade transformasi komputasi keluarga.
+          </p>
+        </div>
+
+        <!-- 4 Metric Cards Matrix -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-4 text-left">
+          <div class="p-4 rounded-2xl border border-cyber-border bg-cyber-card/85 backdrop-blur shadow-lg hover:border-cyan-500/40 transition-colors">
+            <div class="flex items-center justify-between text-zinc-500 text-[11px] font-mono uppercase font-semibold">
+              <span>TOTAL ENTITAS</span>
+              <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            </div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-white mt-1">6 <span class="text-xs font-normal text-zinc-400">Unit</span></div>
+            <div class="text-[11px] text-emerald-400 mt-1 flex items-center gap-1 font-mono">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 100% Terdata Lengkap
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl border border-cyber-border bg-cyber-card/85 backdrop-blur shadow-lg hover:border-cyan-500/40 transition-colors">
+            <div class="flex items-center justify-between text-zinc-500 text-[11px] font-mono uppercase font-semibold">
+              <span>RENTANG ERA</span>
+              <svg class="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-white mt-1">10 <span class="text-xs font-normal text-zinc-400">Tahun</span></div>
+            <div class="text-[11px] text-zinc-400 mt-1 font-mono">2014 — 2024</div>
+          </div>
+
+          <div class="p-4 rounded-2xl border border-cyber-border bg-cyber-card/85 backdrop-blur shadow-lg hover:border-cyan-500/40 transition-colors">
+            <div class="flex items-center justify-between text-zinc-500 text-[11px] font-mono uppercase font-semibold">
+              <span>EST. TOTAL RILIS</span>
+              <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-cyan-300 mt-1">±81.5M</div>
+            <div class="text-[11px] text-zinc-400 mt-1 font-mono">IDR (Awal Peluncuran)</div>
+          </div>
+
+          <div class="p-4 rounded-2xl border border-cyber-border bg-cyber-card/85 backdrop-blur shadow-lg hover:border-cyan-500/40 transition-colors">
+            <div class="flex items-center justify-between text-zinc-500 text-[11px] font-mono uppercase font-semibold">
+              <span>PINNACLE SPEC</span>
+              <svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+            </div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-white mt-1">3K OLED</div>
+            <div class="text-[11px] text-cyan-300 mt-1 font-mono">120Hz &bull; Meteor Lake NPU</div>
+          </div>
+        </div>
+
+        <!-- 2 Primary Action Buttons Under Metrics -->
+        <div class="flex flex-wrap items-center justify-center gap-3.5 pt-4">
+          <a href="#inventory" class="px-6 py-3 rounded-full bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-xs sm:text-sm shadow-xl shadow-cyan-500/25 flex items-center gap-2 transition-all transform hover:-translate-y-0.5">
+            <span>Buka Inventaris Hardware</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </a>
+          <a href="#compare" class="px-6 py-3 rounded-full bg-cyber-card hover:bg-cyber-dark border border-cyber-border hover:border-cyan-500/50 text-zinc-300 hover:text-white font-medium text-xs sm:text-sm flex items-center gap-2 transition-all">
+            <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            <span>Komparator Spesifikasi</span>
+          </a>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- INVENTORY SECTION -->
+    <section id="inventory" class="space-y-6 pt-4">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-cyber-border/80 pb-4">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white font-mono flex items-center gap-2">
+            <span class="text-cyber-accent">&gt;</span> DIREKTORI_HARDWARE_KELUARGA
+          </h2>
+          <p class="text-xs text-zinc-400 font-sans mt-0.5">Daftar lengkap 6 perangkat komputer jinjing dengan thumbnail foto dan rincian arsitektur.</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Search input -->
+          <div class="relative w-full sm:w-64">
+            <input 
+              type="text" 
+              id="searchInput" 
+              placeholder="Cari processor, seri, GPU, nama..." 
+              class="w-full bg-cyber-card border border-cyber-border focus:border-cyber-accent text-zinc-200 text-xs rounded-xl pl-9 pr-3 py-2.5 outline-none font-mono transition-colors"
+            />
+            <svg class="w-4 h-4 absolute left-3 top-3 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          
+          <!-- Filter Buttons -->
+          <div class="flex items-center gap-1 bg-cyber-card p-1 rounded-xl border border-cyber-border text-xs font-mono" id="filterButtons">
+            <button class="filter-btn active px-3 py-1.5 rounded-lg text-white bg-cyber-border font-medium" data-filter="all">Semua (6)</button>
+            <button class="filter-btn px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-cyber-border/50" data-filter="era1">2014-15</button>
+            <button class="filter-btn px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-cyber-border/50" data-filter="era2">2019-22</button>
+            <button class="filter-btn px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-cyber-border/50" data-filter="era3">2024</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Laptop Hardware Grid Container -->
+      <div id="laptopGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Injected via JavaScript with Photos -->
+      </div>
+    </section>
+
+    <!-- COMPARATOR WORKBENCH -->
+    <section id="compare" class="border border-cyber-border bg-cyber-card/75 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-cyber-border pb-4">
+        <div>
+          <span class="text-xs font-mono text-cyber-accent tracking-wider">// WORKBENCH //</span>
+          <h2 class="text-xl sm:text-2xl font-bold text-white font-mono mt-0.5">Komparator Spesifikasi Langsung</h2>
+        </div>
+        <p class="text-xs text-zinc-400 font-mono">Bandingkan lompatan performa antar 2 laptop dari generasi berbeda</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Selector Slot A -->
+        <div class="space-y-2">
+          <label class="text-xs font-mono text-zinc-400 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400"></span> UNIT A
+          </label>
+          <select id="compareSelectA" class="w-full bg-cyber-dark border border-cyber-border text-white text-xs font-mono rounded-xl px-3.5 py-3 outline-none focus:border-cyber-accent transition-colors">
+            <!-- options inserted by JS -->
+          </select>
+        </div>
+
+        <!-- Selector Slot B -->
+        <div class="space-y-2">
+          <label class="text-xs font-mono text-zinc-400 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-violet-400 shadow-sm shadow-violet-400"></span> UNIT B
+          </label>
+          <select id="compareSelectB" class="w-full bg-cyber-dark border border-cyber-border text-white text-xs font-mono rounded-xl px-3.5 py-3 outline-none focus:border-cyber-accent transition-colors">
+            <!-- options inserted by JS -->
+          </select>
+        </div>
+      </div>
+
+      <!-- Comparison Dynamic Table -->
+      <div id="comparisonResult" class="overflow-x-auto border border-cyber-border rounded-xl bg-cyber-black/70 p-4">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- HISTORICAL TIMELINE -->
+    <section id="evolution" class="space-y-8 pt-4">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="text-xs font-mono text-cyber-accent uppercase tracking-widest">// HISTORICAL_ARCHIVE //</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white font-sans">Evolusi Dekade Komputasi Keluarga Arivery</h2>
+        <p class="text-xs sm:text-sm text-zinc-400">
+          Transformasi bertahap dari drive mekanis magnetik 5400 RPM hingga era akselerator kecerdasan buatan NPU Meteor Lake.
+        </p>
+      </div>
+
+      <!-- Vertical Timeline Component -->
+      <div class="relative border-l border-cyber-border ml-4 md:ml-32 space-y-12 py-4">
+        
+        <!-- Era 1 -->
+        <div class="relative pl-6 sm:pl-8 group">
+          <div class="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full border-2 border-zinc-600 bg-cyber-black group-hover:border-cyber-accent group-hover:bg-cyber-accent transition-colors"></div>
+          <div class="md:absolute md:-left-32 md:top-1 font-mono text-xs text-zinc-500 font-semibold mb-1 md:mb-0">
+            BABAK I [2014-15]
+          </div>
+          <div class="bg-cyber-card border border-cyber-border rounded-2xl p-5 sm:p-6 space-y-3 shadow-lg">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h3 class="text-base font-bold text-white font-mono">Era HDD Mekanis & Arsitektur Dual-Core</h3>
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-800 text-zinc-300">ASUS X455LD &bull; HP Pavilion 14</span>
+            </div>
+            <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              Masa transisi Windows 8 menuju Windows 10. Mengandalkan Hard Disk Drive 5400 RPM konvensional berlayar resolusi HD (1366x768). Pilihan GPU seperti NVIDIA GeForce 820M dan 840M menjadi andalan mahasiswa dan pelajar untuk mengerjakan tugas serta gaming casual. Fleksibilitas modifikasi RAM manual dan upgrade SSD menjadi penyelamat masa pakai perangkat era ini.
+            </p>
+            <div class="flex flex-wrap gap-2 text-[11px] font-mono text-zinc-400 pt-2 border-t border-cyber-border/50">
+              <span class="px-2.5 py-1 bg-cyber-dark rounded-lg border border-cyber-border/50">Layar 768p TN</span>
+              <span class="px-2.5 py-1 bg-cyber-dark rounded-lg border border-cyber-border/50">Port VGA & RJ45</span>
+              <span class="px-2.5 py-1 bg-cyber-dark rounded-lg border border-cyber-border/50">Bobot ~2.0 kg</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Era 2 -->
+        <div class="relative pl-6 sm:pl-8 group">
+          <div class="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full border-2 border-zinc-600 bg-cyber-black group-hover:border-amber-400 group-hover:bg-amber-400 transition-colors"></div>
+          <div class="md:absolute md:-left-32 md:top-1 font-mono text-xs text-amber-500 font-semibold mb-1 md:mb-0">
+            BABAK II [2019-22]
+          </div>
+          <div class="bg-cyber-card border border-cyber-border rounded-2xl p-5 sm:p-6 space-y-3 shadow-lg">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h3 class="text-base font-bold text-white font-mono">Era SSD Standar & Gaming Hexa-Core</h3>
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20">Lenovo L340 &bull; Redmi Book 15</span>
+            </div>
+            <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              Lompatan signifikan menuju komputasi performa tinggi. Laptop gaming masuk ke lingkungan keluarga via Lenovo L340 dengan prosesor 6-core 12-thread (i7-9750H) dan GTX 1650. Disusul demokratisasi SSD NVMe cepat di ranah produktivitas harian lewat Redmi Book 15 di 2022 dengan layar Full HD IPS.
+            </p>
+            <div class="flex flex-wrap gap-2 text-[11px] font-mono text-zinc-400 pt-2 border-t border-cyber-border/50">
+              <span class="px-2.5 py-1 bg-cyber-dark rounded-lg border border-cyber-border/50">SSD NVMe Standar</span>
+              <span class="px-2.5 py-1 bg-cyber-dark rounded-lg border border-cyber-border/50">Resolusi Full HD 1080p</span>
+              <span class="px-2.5 py-1 bg-cyber-dark rounded-lg border border-cyber-border/50">dGPU Gaming GDDR5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Era 3 -->
+        <div class="relative pl-6 sm:pl-8 group">
+          <div class="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full border-2 border-cyan-400 bg-cyan-400 shadow-lg shadow-cyan-500/50"></div>
+          <div class="md:absolute md:-left-32 md:top-1 font-mono text-xs text-cyber-accent font-semibold mb-1 md:mb-0">
+            BABAK III [2024]
+          </div>
+          <div class="bg-cyber-card border border-cyan-500/40 rounded-2xl p-5 sm:p-6 space-y-3 bg-gradient-to-br from-cyber-card to-cyber-dark shadow-2xl">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h3 class="text-base font-bold text-white font-mono flex items-center gap-2">
+                <span>Era AI PC, NPU & Layar OLED 3K 120Hz</span>
+                <span class="px-2.5 py-0.5 text-[10px] font-mono rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">CURRENT PINNACLE</span>
+              </h3>
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-cyan-950 text-cyan-200 border border-cyan-800">Duo Zenbook 14 OLED UX3405</span>
+            </div>
+            <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              Puncak arsitektur modern. Adopsi prosesor Intel Meteor Lake (Core Ultra 5 & Ultra 7) dengan arsitektur hibrida hingga 16 core serta akselerator AI internal (Intel AI Boost NPU). Layar OLED 3K 120Hz memberikan cakupan visual sinematik tak tertandingi. Bobot terpangkas menjadi 1.2 kg dengan kapasitas baterai monster 75 Whr dan koneksi Thunderbolt 4.
+            </p>
+            <div class="flex flex-wrap gap-2 text-[11px] font-mono text-cyan-300 pt-2 border-t border-cyber-border/50">
+              <span class="px-2.5 py-1 bg-cyan-950/40 rounded-lg border border-cyan-800/40">NPU AI Accelerator</span>
+              <span class="px-2.5 py-1 bg-cyan-950/40 rounded-lg border border-cyan-800/40">Layar 3K OLED 120Hz</span>
+              <span class="px-2.5 py-1 bg-cyan-950/40 rounded-lg border border-cyan-800/40">Baterai 75 Whr</span>
+              <span class="px-2.5 py-1 bg-cyan-950/40 rounded-lg border border-cyan-800/40">Ultralight 1.2 kg</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL DETAIL INSPECTION DIALOG -->
+  <div id="detailModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-6 bg-cyber-black/90 backdrop-blur-md">
+    <div class="relative w-full max-w-3xl max-h-[92vh] sm:max-h-[88vh] bg-cyber-card border border-cyber-border rounded-2xl shadow-2xl flex flex-col overflow-hidden my-auto">
+      
+      <!-- Modal Header (Fixed at top, never scrolls out of view) -->
+      <div class="flex items-start justify-between border-b border-cyber-border p-5 sm:p-6 bg-cyber-card/95 backdrop-blur shrink-0 z-10">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="modalOwner" class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-cyber-border text-zinc-300"></span>
+            <span id="modalYear" class="text-xs font-mono text-zinc-500"></span>
+          </div>
+          <h3 id="modalTitle" class="text-xl sm:text-2xl font-bold text-white font-sans mt-1"></h3>
+          <p id="modalCategory" class="text-xs font-mono text-cyber-accent mt-0.5"></p>
+        </div>
+        <button id="closeModalBtn" aria-label="Tutup" class="text-zinc-400 hover:text-white p-2 rounded-xl border border-cyber-border/70 hover:border-cyan-400 bg-cyber-dark transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body (Independently scrollable to accommodate any screen height) -->
+      <div class="overflow-y-auto p-5 sm:p-6 space-y-6 custom-modal-scroll">
+        
+        <!-- Modal Image Showcase with Hologram Pedestal -->
+        <div class="relative w-full h-56 sm:h-64 hardware-stage rounded-2xl border border-cyber-border/80 flex flex-col items-center justify-center p-4 overflow-hidden">
+          <div class="absolute inset-0 bg-[radial-gradient(#2e2e3d_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none"></div>
+          <div class="absolute w-56 h-56 rounded-full bg-cyan-500/15 blur-3xl pointer-events-none animate-pulse"></div>
+          
+          <div class="relative z-10 w-full h-40 sm:h-44 flex items-center justify-center">
+            <img id="modalImage" src="" alt="Laptop thumbnail" class="max-h-full max-w-[92%] object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.9)] drop-shadow-[0_0_24px_rgba(56,189,248,0.25)] transition-all duration-500" />
+          </div>
+
+          <!-- Pedestal base ring in modal -->
+          <div class="w-3/5 flex flex-col items-center -mt-2 relative z-0">
+            <div class="w-full h-5 rounded-[100%] border border-cyan-400/40 bg-gradient-to-r from-transparent via-cyan-500/25 to-transparent shadow-[0_0_24px_rgba(56,189,248,0.3)]"></div>
+            <div class="w-1/2 h-2 rounded-[100%] bg-cyan-400/50 blur-[4px] -mt-3"></div>
+          </div>
+        </div>
+
+        <!-- Specs Table Detail -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono" id="modalSpecsGrid">
+          <!-- Specs injected dynamically -->
+        </div>
+
+        <!-- Advantages & Disadvantages -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div class="bg-emerald-950/20 border border-emerald-500/20 rounded-xl p-4 space-y-2">
+            <div class="font-mono text-emerald-400 font-semibold flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              KEUNGGULAN UTAMA
+            </div>
+            <ul id="modalPros" class="space-y-1.5 text-zinc-300 list-disc list-inside"></ul>
+          </div>
+
+          <div class="bg-rose-950/20 border border-rose-500/20 rounded-xl p-4 space-y-2">
+            <div class="font-mono text-rose-400 font-semibold flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+              LIMITASI / KEKURANGAN
+            </div>
+            <ul id="modalCons" class="space-y-1.5 text-zinc-300 list-disc list-inside"></ul>
+          </div>
+        </div>
+
+        <!-- Historical Context & Verdict -->
+        <div class="bg-cyber-dark/80 border border-cyber-border rounded-xl p-4 space-y-2 text-xs">
+          <div class="font-mono text-zinc-400 uppercase font-semibold">Posisi Kelas Pada Zamannya</div>
+          <p id="modalContext" class="text-zinc-300 leading-relaxed font-sans"></p>
+          <div class="font-mono text-zinc-400 uppercase font-semibold pt-2">Rekomendasi Pemakaian</div>
+          <p id="modalUsage" class="text-zinc-300 font-sans"></p>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer (Fixed at bottom) -->
+      <div class="flex justify-between items-center px-5 sm:px-6 py-3.5 text-[11px] font-mono text-zinc-400 border-t border-cyber-border bg-cyber-dark/95 shrink-0">
+        <span class="hidden sm:inline text-zinc-500">Gunakan scroll mouse / sentuh untuk melihat detail lengkap</span>
+        <span class="sm:hidden text-zinc-500">Scroll untuk detail</span>
+        <span id="modalPriceTag" class="text-cyber-accent font-bold text-xs sm:text-sm"></span>
+      </div>
+    </div>
+  </div>
+
+  <footer class="mt-20 border-t border-cyber-border/80 bg-cyber-black py-10 text-center text-xs font-mono text-zinc-500 space-y-2">
+    <div class="flex items-center justify-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+      <span class="text-zinc-300 font-semibold">ARSIP DIGITAL KELUARGA ARIVERY</span>
+    </div>
+    <p class="text-zinc-600">Dokumentasi spesifikasi perangkat kurun waktu 2014 - 2024 &bull; Diperbarui untuk kebutuhan portofolio dan arsip pribadi</p>
+  </footer>
+
+  <script>
+    // Complete Database of the 6 Family Laptops with official thumbnail images
+    const laptopsData = [
+      {
+        id: "hp-v202tx",
+        owner: "Mas Javi",
+        name: "HP Pavilion 14 V202TX",
+        image: "https://platinum-computer.com/wp-content/uploads/2015/04/HP-Pavilion-Notebook-14-v202tx-K8U46PA.png",
+        era: "era1",
+        year: "2015",
+        category: "Multimedia / Student Laptop",
+        price: "± Rp 8.000.000",
+        priceValue: 8000000,
+        cpu: "Intel Core i5-5200U (Broadwell)",
+        cores: "2 Core / 4 Thread (2.2 - 2.7 GHz)",
+        ram: "4 GB DDR3L (Upgradeable s/d 8 GB)",
+        storage: "500 GB HDD 5400 RPM",
+        storageType: "HDD",
+        gpu: "Intel HD 5500 + NVIDIA GeForce 840M/930M",
+        display: "14 inci TN (1366 x 768 HD)",
+        weight: "~1.95 kg",
+        ports: "USB 3.0 x2, USB 2.0 x1, HDMI, VGA, SD, RJ-45 LAN",
+        battery: "41 Whr (~4-5 jam pemakaian ringan)",
+        npu: "Tidak Ada (Pre-AI Era)",
+        pros: [
+          "Dual GPU (Integrated + Discrete NVIDIA) untuk tugas grafis",
+          "Kemudahan ekspansi RAM dan penggantian HDD ke SSD",
+          "Port warisan lengkap termasuk port analog VGA dan LAN RJ-45",
+          "Bodi kokoh dan keyboard nyaman untuk pengetikan panjang"
+        ],
+        cons: [
+          "Resolusi layar sebatas HD (1366x768) dengan panel TN sudut pandang sempit",
+          "HDD mekanik bawaan terasa lambat untuk standar aplikasi modern",
+          "Bobot hampir 2 kg dengan adaptor charger yang relatif besar",
+          "Generasi prosesor Broadwell sudah pensiun dari pembaruan Windows terbaru"
+        ],
+        context: "Laptop kelas menengah mainstream di tahun 2015. Berada di segmen yang seimbang antara performa dan harga — lebih dari sekadar entry-level, menjadi pilihan populer mahasiswa yang butuh daya komputasi grafis terpisah.",
+        usage: "Pekerjaan dokumen Office, browsing ringan, hiburan video 720p/1080p, dan game kasual era 2015."
+      },
+      {
+        id: "asus-x455ld",
+        owner: "Fausta",
+        name: "ASUS X455LD",
+        image: "https://dlcdnimgs.asus.com/websites/global/products/iHMn3ETq3hZjbuwH/img/01/00.png",
+        era: "era1",
+        year: "2014–2015",
+        category: "Entry-Level Multimedia Laptop",
+        price: "± Rp 5.500.000",
+        priceValue: 5500000,
+        cpu: "Intel Core i3-4030U (Haswell)",
+        cores: "2 Core / 4 Thread (1.9 GHz Fixed)",
+        ram: "2–4 GB DDR3L (Upgradeable s/d 8 GB)",
+        storage: "500 GB HDD 5400 RPM",
+        storageType: "HDD",
+        gpu: "Intel HD 4400 + NVIDIA GeForce 820M",
+        display: "14 inci TN (1366 x 768 HD)",
+        weight: "~2.0 kg",
+        ports: "USB 3.0 x1, USB 2.0 x2, HDMI, VGA, SD, RJ-45",
+        battery: "~37 Whr (~3-4 jam)",
+        npu: "Tidak Ada (Pre-AI Era)",
+        pros: [
+          "Harga sangat terjangkau pada masanya untuk laptop dengan dGPU NVIDIA",
+          "Daya tahan bodi ASUS klasik yang awet digunakan bertahun-tahun",
+          "Kemudahan servis dan suku cadang melimpah",
+          "Slot ekspansi RAM tersedia"
+        ],
+        cons: [
+          "CPU Core i3 tanpa fitur Turbo Boost terasa lambat saat multitasking berat",
+          "Layar resolusi HD 768p kurang leluasa untuk multi-window",
+          "Drive HDD mekanik rentan guncangan dan memiliki waktu boot lama",
+          "Baterai berkapasitas kecil yang cepat terdegradasi"
+        ],
+        context: "Laptop entry-level yang sangat populer di era transisi Windows 8 menuju Windows 10 (2014–2015). Menjadi andalan para pelajar karena harganya yang ekonomis namun tetap dibekali kartu grafis terpisah.",
+        usage: "Tugas sekolah harian, streaming video web, pengolahan spreadsheet sederhana, dan media edukasi."
+      },
+      {
+        id: "redmibook-15",
+        owner: "Bunda",
+        name: "Xiaomi Redmi Book 15",
+        image: "https://i01.appmifile.com/webfile/globalimg/products/m/redmibook-15/specs-header.png",
+        era: "era2",
+        year: "2022",
+        category: "Office / Student Ultrabook",
+        price: "± Rp 7.000.000",
+        priceValue: 7000000,
+        cpu: "Intel Core i3-1115G4 (Tiger Lake Gen 11)",
+        cores: "2 Core / 4 Thread (Turbo s/d 4.1 GHz)",
+        ram: "8 GB DDR4 Onboard",
+        storage: "256 GB SSD NVMe PCIe",
+        storageType: "SSD NVMe",
+        gpu: "Intel UHD Graphics (Xe Gen 11)",
+        display: "15.6 inci IPS Anti-Glare (1920 x 1080 FHD)",
+        weight: "~1.8 kg",
+        ports: "USB-C, USB-A x3, HDMI 1.4, Audio Jack 3.5mm",
+        battery: "46 Whr (~7-8 jam pemakaian ringan)",
+        npu: "Tidak Ada (Pre-NPU Era)",
+        pros: [
+          "Layar lega 15.6 inci Full HD IPS yang nyaman di mata untuk lembar kerja",
+          "SSD NVMe bawaan memberikan kecepatan boot dan respon buka aplikasi instan",
+          "Bobot tergolong ringan untuk kelas laptop berlayar 15.6 inci",
+          "Desain bodi minimalis bersih dan konektor modern"
+        ],
+        cons: [
+          "RAM berstatus onboard soldered dan tidak memiliki slot upgrade",
+          "Konfigurasi prosesor masih 2 Core, terbatas untuk komputasi render berat",
+          "Material sasis plastik polikarbonat entry-level",
+          "Kualitas speaker bawaan standar"
+        ],
+        context: "Pemberontak pasar di tahun 2022 yang mengusung nilai 'value-for-money' agresif khas Xiaomi. Sukses mempopulerkan kombinasi SSD NVMe dan layar FHD IPS ke segmen harga 7 jutaan.",
+        usage: "Pekerjaan kantor, meeting daring Zoom/Google Meet, pengelolaan berkas, dan hiburan streaming Full HD."
+      },
+      {
+        id: "zenbook-ux3405c",
+        owner: "Bunda / Kel.",
+        name: "ASUS Zenbook 14 OLED UX3405C",
+        image: "https://dlcdnwebimgs.asus.com/gain/838fbdac-6d10-4190-8e52-d4b9463f5d23/w800",
+        era: "era3",
+        year: "2024",
+        category: "Premium AI Ultrabook",
+        price: "± Rp 24.500.000",
+        priceValue: 24500000,
+        cpu: "Intel Core Ultra 5 125H (Meteor Lake)",
+        cores: "14 Core (4P + 8E + 2LPE) / 18 Thread (Up to 4.5 GHz)",
+        ram: "16 GB LPDDR5X Onboard (Ultra Fast)",
+        storage: "512 GB SSD NVMe PCIe 4.0",
+        storageType: "SSD Gen4",
+        gpu: "Intel Arc Graphics (Xe-LPG)",
+        display: "14 inci OLED 3K (2880 x 1800), 120Hz 0.2ms",
+        weight: "~1.2 kg",
+        ports: "Thunderbolt 4 x2, USB-A 3.2, HDMI 2.1, Audio Combo",
+        battery: "75 Whr (~10-12 jam pemakaian produktif)",
+        npu: "Intel AI Boost NPU (Hingga 11 TOPS)",
+        pros: [
+          "Panel OLED 3K 120Hz dengan 100% DCI-P3 & kontras rasio 1,000,000:1",
+          "Dedicated NPU siap untuk inferensi lokal Windows Copilot+ AI",
+          "Sasis ultra-tipis military-grade dengan bobot hanya 1.2 kg",
+          "Daya tahan baterai 75 Whr yang sangat efisien sepanjang hari"
+        ],
+        cons: [
+          "Harga unit dan suku cadang masuk kategori flagship premium",
+          "RAM LPDDR5X onboard permanen tidak dapat ditambah",
+          "Performa grafis terpadu bukan ditujukan untuk gaming kelas berat AAA"
+        ],
+        context: "Representasi awal era AI PC (Meteor Lake) di tahun 2024. Menggabungkan arsitektur tile chip hybrid dengan display visual terbaik di kelas konsumen.",
+        usage: "Multitasking kelas berat, produktivitas eksekutif, workflow kecerdasan buatan, kreasi konten foto & video portabel."
+      },
+      {
+        id: "lenovo-l340",
+        owner: "Ayah",
+        name: "Lenovo IdeaPad L340-15IRH Gaming",
+        image: "https://datadistinct.com/wp-content/uploads/2020/04/lenovo-ideapad-l340-15-gaming-he.png",
+        era: "era2",
+        year: "2019",
+        category: "Gaming Entry-to-Mid Laptop",
+        price: "± Rp 14.000.000",
+        priceValue: 14000000,
+        cpu: "Intel Core i7-9750H (Coffee Lake-H)",
+        cores: "6 Core / 12 Thread (2.6 - 4.5 GHz Turbo)",
+        ram: "8–16 GB DDR4 2666MHz (Upgradeable s/d 32 GB)",
+        storage: "512 GB SSD NVMe PCIe",
+        storageType: "SSD NVMe",
+        gpu: "NVIDIA GeForce GTX 1650 (4 GB GDDR5)",
+        display: "15.6 inci IPS Anti-Glare (1920 x 1080 FHD, 60Hz)",
+        weight: "~2.2 kg",
+        ports: "USB-C 3.1, USB-A 3.1 x2, HDMI 2.0, RJ-45 LAN, Audio",
+        battery: "45 Whr (~4 jam produktivitas)",
+        npu: "Tidak Ada (Pre-AI Era)",
+        pros: [
+          "Prosesor 6 Core / 12 Thread i7-9750H bertenaga tinggi untuk beban kerja berat",
+          "Discrete GPU GTX 1650 sanggup melibas judul game AAA di setelan 1080p",
+          "Dukungan upgrade RAM hingga 32 GB dan opsi ekspansi dual-storage",
+          "Desain 'stealth gaming' profesional tanpa lampu RGB yang mencolok"
+        ],
+        cons: [
+          "Kipas pendingin terdengar cukup bising saat beban kerja maksimal",
+          "Daya tahan baterai cepat habis saat GPU NVIDIA aktif",
+          "Refresh rate layar masih standar 60Hz",
+          "Adaptor charger berukuran cukup besar (135W)"
+        ],
+        context: "Laptop penggebrak segmen gaming di bawah Rp 15 juta pada tahun 2019. Menjadi standar laptop performa tinggi pertama di dalam keluarga yang sanggup menangani rendering dan gaming serius.",
+        usage: "Gaming mainstream 1080p, compile code pemrograman intensif, software engineering, dan rendering 3D."
+      },
+      {
+        id: "zenbook-ux3405m",
+        owner: "Ayah",
+        name: "ASUS Zenbook 14 OLED UX3405M",
+        image: "https://id.store.asus.com/media/catalog/product/z/e/zenbook_14_oled_ux3405ma_product_photo_3s_foggy_silver_04_indo_no_numpad_2400_3.png",
+        era: "era3",
+        year: "2024",
+        category: "Premium AI Ultrabook Workhorse",
+        price: "± Rp 22.500.000",
+        priceValue: 22500000,
+        cpu: "Intel Core Ultra 7 155H (Meteor Lake)",
+        cores: "16 Core (6P + 8E + 2LPE) / 22 Thread (s/d 4.8 GHz)",
+        ram: "16 GB LPDDR5X Onboard",
+        storage: "1 TB SSD NVMe PCIe 4.0",
+        storageType: "SSD Gen4",
+        gpu: "Intel Arc Graphics (Xe-LPG up to 1.4 TFLOPS)",
+        display: "14 inci OLED 3K (2880 x 1800), 120Hz 0.2ms",
+        weight: "~1.2 kg",
+        ports: "Dual Thunderbolt 4, USB-A 3.2, HDMI 2.1, Audio Combo",
+        battery: "75 Whr (~11-12 jam produktivitas)",
+        npu: "Intel AI Boost NPU terintegrasi",
+        pros: [
+          "Konfigurasi monster 16 Core / 22 Thread dalam sasis tipis 1.2 kg",
+          "Kapasitas penyimpanan 1 TB SSD Gen 4 langsung dari pabrikan",
+          "Kualitas layar OLED 3K 120Hz yang sangat akurat untuk kebutuhan kreatif",
+          "Efisiensi tinggi berkat arsitektur Low Power Island (LPE Cores)"
+        ],
+        cons: [
+          "Harga investasi tinggi untuk kelas laptop konsumen",
+          "Ketiadaan dedicated GPU NVIDIA untuk render 3D berskala studio besar",
+          "RAM onboard permanen tidak dapat diekspansi mandiri"
+        ],
+        context: "Kasta tertinggi laptop portabel di inventaris keluarga tahun 2024. Menjadi mesin kerja utama (workhorse) yang memadukan mobilitas ekstrem dan pemrosesan multi-thread tinggi.",
+        usage: "Pengembangan software tingkat lanjut, analisis data, video editing 4K portabel, inferensi AI, dan presentasi profesional."
+      }
+    ];
+
+    const laptopGrid = document.getElementById('laptopGrid');
+    const searchInput = document.getElementById('searchInput');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    function renderLaptops(data) {
+      if (!data.length) {
+        laptopGrid.innerHTML = `
+          <div class="col-span-full py-16 text-center border border-dashed border-cyber-border rounded-2xl">
+            <div class="font-mono text-zinc-500 text-sm">// DATA_NOT_FOUND: Kueri tidak cocok dengan inventaris hardware.</div>
+          </div>
+        `;
+        return;
+      }
+
+      laptopGrid.innerHTML = data.map(item => `
+        <div class="card-tech bg-cyber-card border border-cyber-border rounded-2xl p-5 flex flex-col justify-between group relative overflow-hidden shadow-xl" data-id="${item.id}">
+          <div class="absolute -right-12 -top-12 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl pointer-events-none group-hover:bg-cyan-500/15 transition-all"></div>
+          
+          <div class="space-y-4">
+            
+            <!-- Creative 3D Hardware Pedestal Showcase for Transparent PNG -->
+            <div class="relative w-full h-48 sm:h-52 hardware-stage rounded-xl border border-cyber-border/60 flex flex-col items-center justify-center p-3 overflow-hidden group-hover:border-cyan-500/40 transition-all">
+              <!-- Hologram micro-grid & glow aura -->
+              <div class="absolute inset-0 bg-[radial-gradient(#262635_1px,transparent_1px)] [background-size:14px_14px] opacity-40 pointer-events-none"></div>
+              <div class="absolute w-36 h-36 rounded-full bg-cyan-500/10 blur-2xl pointer-events-none group-hover:bg-cyan-400/25 group-hover:scale-125 transition-all"></div>
+              
+              <!-- Floating Cutout Image -->
+              <div class="relative z-10 w-full h-36 flex items-center justify-center">
+                <img 
+                  src="${item.image}" 
+                  alt="${item.name}" 
+                  class="hardware-img max-h-full max-w-[90%] object-contain"
+                  loading="lazy"
+                  onerror="this.onerror=null; this.src='https://placehold.co/600x400/0e0e13/38bdf8?text=' + encodeURIComponent('${item.name}');"
+                />
+              </div>
+
+              <!-- Futuristic Hologram Pedestal Base -->
+              <div class="relative z-0 w-3/4 flex flex-col items-center mt-[-6px]">
+                <div class="pedestal-ring w-full h-4 rounded-[100%] border border-cyan-500/30 bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent"></div>
+                <div class="w-1/2 h-1.5 rounded-[100%] bg-cyan-400/35 blur-[3px] -mt-2.5"></div>
+              </div>
+
+              <!-- Top-Right Year Badge -->
+              <span class="absolute top-2.5 right-2.5 text-[10px] font-mono px-2.5 py-0.5 rounded-md bg-cyber-black/80 border border-cyber-border text-zinc-400 backdrop-blur-sm z-20">
+                ${item.year}
+              </span>
+            </div>
+
+            <!-- Header Chip -->
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-cyber-dark border border-cyber-border text-zinc-400">
+                PEMILIK: <strong class="text-zinc-200">${item.owner}</strong>
+              </span>
+              <span class="text-[11px] font-mono text-cyber-accent font-semibold">${item.price}</span>
+            </div>
+
+            <!-- Title & Category -->
+            <div>
+              <h3 class="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors font-sans leading-snug">
+                ${item.name}
+              </h3>
+              <p class="text-xs text-zinc-400 font-mono mt-1">// ${item.category}</p>
+            </div>
+
+            <!-- Key Specs Pill Matrix -->
+            <div class="space-y-2 pt-3 text-xs font-mono border-t border-cyber-border/60">
+              <div class="flex items-center justify-between text-zinc-300">
+                <span class="text-zinc-500">CPU:</span>
+                <span class="truncate max-w-[210px] text-right font-medium text-white">${item.cpu.split('(')[0]}</span>
+              </div>
+              <div class="flex items-center justify-between text-zinc-300">
+                <span class="text-zinc-500">GPU:</span>
+                <span class="truncate max-w-[210px] text-right text-zinc-300">${item.gpu}</span>
+              </div>
+              <div class="flex items-center justify-between text-zinc-300">
+                <span class="text-zinc-500">RAM / Storage:</span>
+                <span class="text-right text-zinc-200">${item.ram.split('(')[0]} &bull; ${item.storage.split('(')[0]}</span>
+              </div>
+              <div class="flex items-center justify-between text-zinc-300">
+                <span class="text-zinc-500">Layar:</span>
+                <span class="text-right text-zinc-200">${item.display.split('(')[0]}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Bar -->
+          <div class="mt-6 pt-3.5 border-t border-cyber-border flex items-center justify-between">
+            <span class="text-[11px] font-mono text-zinc-500">DETAIL TELEMETRI</span>
+            <button 
+              onclick="openDetail('${item.id}')" 
+              class="text-xs font-mono px-3.5 py-1.5 rounded-xl bg-cyber-dark hover:bg-cyan-400 hover:text-black border border-cyber-border hover:border-cyan-400 transition-all flex items-center gap-1.5 font-medium shadow-sm">
+              <span>INSPECT</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function applyFilters() {
+      let filtered = laptopsData.filter(item => {
+        const matchesFilter = currentFilter === 'all' || item.era === currentFilter;
+        const matchesSearch = searchQuery === '' || 
+          item.name.toLowerCase().includes(searchQuery) ||
+          item.owner.toLowerCase().includes(searchQuery) ||
+          item.cpu.toLowerCase().includes(searchQuery) ||
+          item.gpu.toLowerCase().includes(searchQuery) ||
+          item.category.toLowerCase().includes(searchQuery);
+        return matchesFilter && matchesSearch;
+      });
+      renderLaptops(filtered);
+    }
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => {
+          b.classList.remove('active', 'bg-cyber-border', 'text-white', 'font-medium');
+          b.classList.add('text-zinc-400');
+        });
+        btn.classList.add('active', 'bg-cyber-border', 'text-white', 'font-medium');
+        btn.classList.remove('text-zinc-400');
+        currentFilter = btn.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      applyFilters();
+    });
+
+    renderLaptops(laptopsData);
+
+    const detailModal = document.getElementById('detailModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalImage = document.getElementById('modalImage');
+
+    function openDetail(laptopId) {
+      const item = laptopsData.find(l => l.id === laptopId);
+      if (!item) return;
+
+      modalImage.src = item.image;
+      modalImage.alt = item.name;
+      modalImage.onerror = function() {
+        this.onerror = null;
+        this.src = 'https://placehold.co/800x500/0e0e13/38bdf8?text=' + encodeURIComponent(item.name);
+      };
+
+      document.getElementById('modalOwner').textContent = `PEMILIK: ${item.owner}`;
+      document.getElementById('modalYear').textContent = `RILIS: ${item.year}`;
+      document.getElementById('modalTitle').textContent = item.name;
+      document.getElementById('modalCategory').textContent = `// ${item.category}`;
+      document.getElementById('modalPriceTag').textContent = `Est. Rilis: ${item.price}`;
+
+      // Specs Grid
+      const specsGrid = document.getElementById('modalSpecsGrid');
+      specsGrid.innerHTML = `
+        <div class="p-3 rounded-xl bg-cyber-dark/90 border border-cyber-border"><span class="text-zinc-500">PROSESOR:</span> <div class="text-white mt-0.5 font-medium">${item.cpu}</div></div>
+        <div class="p-3 rounded-xl bg-cyber-dark/90 border border-cyber-border"><span class="text-zinc-500">CORE & FREKUENSI:</span> <div class="text-white mt-0.5">${item.cores}</div></div>
+        <div class="p-3 rounded-xl bg-cyber-dark/90 border border-cyber-border"><span class="text-zinc-500">MEMORI RAM:</span> <div class="text-white mt-0.5">${item.ram}</div></div>
+        <div class="p-3 rounded-xl bg-cyber-dark/90 border border-cyber-border"><span class="text-zinc-500">STORAGE:</span> <div class="text-white mt-0.5">${item.storage}</div></div>
+        <div class="p-3 rounded-xl bg-cyber-dark/90 border border-cyber-border"><span class="text-zinc-500">PENGOLAH GRAFIS (GPU):</span> <div class="text-white mt-0.5">${item.gpu}</div></div>
+        <div class="p-3 rounded-xl bg-cyber-dark/90 border border-cyber-border"><span class="text-zinc-500">AI ACCELERATOR (NPU):</span> <div class="text-cyan-300 font-semibold mt-0.5">${item.npu}</div></div>
+        <div class="p-3 rounded-xl bg-cyber-dark/90 border border-cyber-border"><span class="text-zinc-500">LAYAR:</span> <div class="text-white mt-0.5">${item.display}</div></div>
+        <div class="p-3 rounded-xl bg-cyber-dark/90 border border-cyber-border"><span class="text-zinc-500">BOBOT & BATERAI:</span> <div class="text-white mt-0.5">${item.weight} &bull; ${item.battery}</div></div>
+        <div class="col-span-1 md:col-span-2 p-3 rounded-xl bg-cyber-dark/90 border border-cyber-border"><span class="text-zinc-500">PORT KONEKTIVITAS:</span> <div class="text-white mt-0.5">${item.ports}</div></div>
+      `;
+
+      // Pros & Cons
+      const prosEl = document.getElementById('modalPros');
+      prosEl.innerHTML = item.pros.map(p => `<li>${p}</li>`).join('');
+
+      const consEl = document.getElementById('modalCons');
+      consEl.innerHTML = item.cons.map(c => `<li>${c}</li>`).join('');
+
+      // Context
+      document.getElementById('modalContext').textContent = item.context;
+      document.getElementById('modalUsage').textContent = item.usage;
+
+      detailModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      detailModal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    closeModalBtn.addEventListener('click', closeModal);
+    detailModal.addEventListener('click', (e) => {
+      if (e.target === detailModal) closeModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !detailModal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    const selectA = document.getElementById('compareSelectA');
+    const selectB = document.getElementById('compareSelectB');
+    const comparisonResult = document.getElementById('comparisonResult');
+
+    function populateCompareSelects() {
+      laptopsData.forEach((item, idx) => {
+        const optA = document.createElement('option');
+        optA.value = item.id;
+        optA.textContent = `[${item.year}] ${item.name} (${item.owner})`;
+        if (idx === 0) optA.selected = true;
+        selectA.appendChild(optA);
+
+        const optB = document.createElement('option');
+        optB.value = item.id;
+        optB.textContent = `[${item.year}] ${item.name} (${item.owner})`;
+        if (idx === 5) optB.selected = true;
+        selectB.appendChild(optB);
+      });
+    }
+
+    function updateComparison() {
+      const laptopA = laptopsData.find(l => l.id === selectA.value) || laptopsData[0];
+      const laptopB = laptopsData.find(l => l.id === selectB.value) || laptopsData[5];
+
+      const metrics = [
+        { label: "Foto Unit", isPhoto: true, valA: laptopA.image, valB: laptopB.image, nameA: laptopA.name, nameB: laptopB.name },
+        { label: "Pemilik", valA: laptopA.owner, valB: laptopB.owner },
+        { label: "Tahun Rilis", valA: laptopA.year, valB: laptopB.year },
+        { label: "Est. Harga Awal", valA: laptopA.price, valB: laptopB.price },
+        { label: "Prosesor", valA: laptopA.cpu, valB: laptopB.cpu },
+        { label: "Inti / Thread", valA: laptopA.cores, valB: laptopB.cores },
+        { label: "RAM", valA: laptopA.ram, valB: laptopB.ram },
+        { label: "Media Storage", valA: laptopA.storage, valB: laptopB.storage },
+        { label: "Pengolah Grafis (GPU)", valA: laptopA.gpu, valB: laptopB.gpu },
+        { label: "AI Accelerator (NPU)", valA: laptopA.npu, valB: laptopB.npu },
+        { label: "Kualitas Layar", valA: laptopA.display, valB: laptopB.display },
+        { label: "Bobot Sasis", valA: laptopA.weight, valB: laptopB.weight },
+        { label: "Baterai", valA: laptopA.battery, valB: laptopB.battery }
+      ];
+
+      comparisonResult.innerHTML = `
+        <table class="w-full text-xs font-mono border-collapse">
+          <thead>
+            <tr class="border-b border-cyber-border text-left">
+              <th class="py-3 px-3 text-zinc-500 font-semibold w-1/4">PARAMETER</th>
+              <th class="py-3 px-3 text-cyan-300 font-semibold w-3/8">${laptopA.name}</th>
+              <th class="py-3 px-3 text-violet-300 font-semibold w-3/8">${laptopB.name}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-cyber-border/50">
+            ${metrics.map(m => {
+              if (m.isPhoto) {
+                return `
+                  <tr class="hover:bg-cyber-dark/40 transition-colors">
+                    <td class="py-3 px-3 text-zinc-400 font-medium">${m.label}</td>
+                    <td class="py-3 px-3">
+                      <div class="w-24 h-16 bg-cyber-dark rounded-lg p-1.5 border border-cyber-border flex items-center justify-center">
+                        <img src="${m.valA}" alt="${m.nameA}" class="max-h-full max-w-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/120x80/0e0e13/38bdf8?text=Unit+A';" />
+                      </div>
+                    </td>
+                    <td class="py-3 px-3">
+                      <div class="w-24 h-16 bg-cyber-dark rounded-lg p-1.5 border border-cyber-border flex items-center justify-center">
+                        <img src="${m.valB}" alt="${m.nameB}" class="max-h-full max-w-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/120x80/0e0e13/8b5cf6?text=Unit+B';" />
+                      </div>
+                    </td>
+                  </tr>
+                `;
+              }
+              return `
+                <tr class="hover:bg-cyber-dark/40 transition-colors">
+                  <td class="py-2.5 px-3 text-zinc-400 font-medium">${m.label}</td>
+                  <td class="py-2.5 px-3 text-zinc-200">${m.valA}</td>
+                  <td class="py-2.5 px-3 text-zinc-200">${m.valB}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    populateCompareSelects();
+    updateComparison();
+    selectA.addEventListener('change', updateComparison);
+    selectB.addEventListener('change', updateComparison);
+
+    let currentSlide = 0;
+    const totalSlides = 2;
+    const slides = [document.getElementById('slide-0'), document.getElementById('slide-1')];
+
+    function updateSlider(index) {
+      currentSlide = (index + totalSlides) % totalSlides;
+      slides.forEach((slide, idx) => {
+        if (!slide) return;
+        if (idx === currentSlide) {
+          slide.classList.remove('inactive');
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+          slide.classList.add('inactive');
+        }
+      });
+    }
+
+    // Auto-advance slider automatically in background every 5.5s
+    setInterval(() => {
+      updateSlider(currentSlide + 1);
+    }, 5500);
+
+    const canvas = document.getElementById('cyberCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const numParticles = Math.min(45, Math.floor(window.innerWidth / 28));
+
+    for (let i = 0; i < numParticles; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        radius: Math.random() * 1.6 + 0.8
+      });
+    }
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.45)';
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+          if (dist < 130) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 * (1 - dist / 130)})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animateCanvas);
+    }
+
+    window.onload = function() {
+      animateCanvas();
+    };
+  </script>
+</body>
+</html>
