@@ -160,9 +160,6 @@
             user-select: none;
         }
 
-        .education-dot {
-            transition: all 0.3s ease;
-        }
         .education-card {
             transition: all 0.3s ease;
         }
@@ -171,6 +168,80 @@
         }
         .highlight-list li::marker {
             color: #ffffff;
+        }
+
+        /* ===== TIMELINE PENDIDIKAN ===== */
+        /* Container utama timeline */
+        .education-timeline {
+            position: relative;
+            padding-left: 0;
+        }
+
+        /* Garis vertikal tepat di tengah kolom logo */
+        .education-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 1.5rem;   /* setengah dari lebar kolom logo mobile (3rem) */
+            width: 2px;
+            background-color: #27272a; /* zinc-800 */
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        @media (min-width: 640px) {
+            .education-timeline::before {
+                left: 1.75rem; /* setengah dari lebar kolom logo desktop (3.5rem) */
+            }
+        }
+
+        /* Setiap item pendidikan */
+        .education-item {
+            position: relative;
+            padding-left: 4rem; /* ruang untuk logo + gap */
+        }
+        @media (min-width: 640px) {
+            .education-item {
+                padding-left: 5rem;
+            }
+        }
+
+        /* Kotak logo tepat di atas garis */
+        .education-logo-box {
+            position: absolute;
+            left: 1.5rem;   /* sama dengan posisi garis mobile */
+            top: 0.25rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1rem;
+            background: #ffffff;
+            border: 1px solid rgba(228, 228, 231, 0.8);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            z-index: 20;
+            transform: translateX(-50%);
+            transition: transform 0.3s ease;
+        }
+        .education-logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: none !important;
+        }
+        .education-logo-box:hover {
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        @media (min-width: 640px) {
+            .education-logo-box {
+                left: 1.75rem; /* sama dengan posisi garis desktop */
+                width: 3.5rem;
+                height: 3.5rem;
+            }
         }
     </style>
 </head>
@@ -467,7 +538,7 @@
                 </p>
             </div>
 
-            <div id="educationContainer" class="relative border-l-2 border-zinc-800 ml-4 sm:ml-8 space-y-12 pl-6 sm:pl-10">
+            <div id="educationContainer" class="education-timeline space-y-12">
                 <!-- Data pendidikan akan dirender oleh JavaScript -->
             </div>
         </section>
@@ -781,22 +852,22 @@
         // ===== DATA PENDIDIKAN =====
         const educationData = [
             {
-                "institution": "Politeknik Elektronika Negeri Surabaya (PENS)",
-                "period": "2026 — Sekarang",
-                "icon": "fa-bolt",
-                "description": "Mahasiswa program studi <strong>D4 Teknik Informatika</strong>. Fokus pada rekayasa perangkat lunak, sains data, algoritma, serta komputasi terapan.",
-                "highlights": [
+                institution: "Politeknik Elektronika Negeri Surabaya (PENS)",
+                period: "2026 — Sekarang",
+                logo: "https://lh3.googleusercontent.com/d/1BjwwTUwiGl4qGkPHbxh6mfi8ASV6HS8b=w800?authuser=1",
+                description: "Mahasiswa program studi <strong>D4 Teknik Informatika</strong>. Fokus pada rekayasa perangkat lunak, sains data, algoritma, serta komputasi terapan.",
+                highlights: [
                     "Pengembangan perangkat lunak berbasis web & otomasi sistem cerdas",
                     "Eksplorasi kecerdasan buatan, algoritma, dan arsitektur data lanjutan",
                     "Kolaborasi riset teknologi dan proyek rekayasa digital aplikatif"
                 ]
             },
             {
-                "institution": "SMA Negeri 17 Surabaya (SMANTASS)",
-                "period": "2023 — 2026",
-                "icon": "fa-school",
-                "description": "Masuk melalui jalur prestasi rapor. Aktif dalam organisasi penelitian ilmiah, teknologi, dan kepengurusan sekolah.",
-                "highlights": [
+                institution: "SMA Negeri 17 Surabaya (SMANTASS)",
+                period: "2023 — 2026",
+                logo: "https://lh3.googleusercontent.com/d/1nCuZVeteam2lqq7olfNzZM2nXsmkDgtM=w800?authuser=1",
+                description: "Masuk melalui jalur prestasi rapor. Aktif dalam organisasi penelitian ilmiah, teknologi, dan kepengurusan sekolah.",
+                highlights: [
                     "Meraih peringkat pertama di kelas serta peringkat 6 paralel satu sekolah",
                     "Menjabat sebagai Ketua Kelompok Ilmiah Remaja SMANTASS (KIRTASS)",
                     "Dipercaya mengembangkan media pembelajaran berbasis teknologi interaktif kelas XI & XII",
@@ -804,11 +875,11 @@
                 ]
             },
             {
-                "institution": "SMPIT Al Uswah Surabaya",
-                "period": "2020 — 2023",
-                "icon": "fa-school",
-                "description": "Aktif dalam kegiatan organisasi kepemimpinan serta dipercaya mengemban amanah sebagai Sekretaris OSIS I.",
-                "highlights": [
+                institution: "SMPIT Al Uswah Surabaya",
+                period: "2020 — 2023",
+                logo: "https://lh3.googleusercontent.com/d/1Ky01sz6DEzRbGwwrvGjTmzIsIMGAIOYv=w800?authuser=1",
+                description: "Aktif dalam kegiatan organisasi kepemimpinan serta dipercaya mengemban amanah sebagai Sekretaris OSIS I.",
+                highlights: [
                     "Lulus sebagai peringkat pertama angkatan",
                     "Sekretaris OSIS I & memimpin program Community Development kemasyarakatan",
                     "Meraih penghargaan program COMDEV Terbaik untuk donor donasi Al-Qur'an",
@@ -816,11 +887,11 @@
                 ]
             },
             {
-                "institution": "SDIT Al Uswah Surabaya",
-                "period": "2014 — 2020",
-                "icon": "fa-child",
-                "description": "Sekolah Islam yang berfokus pada pembentukan karakter, prestasi akademik, dan pendidikan Al-Qur'an.",
-                "highlights": [
+                institution: "SDIT Al Uswah Surabaya",
+                period: "2014 — 2020",
+                logo: "https://lh3.googleusercontent.com/d/1Ky01sz6DEzRbGwwrvGjTmzIsIMGAIOYv=w800?authuser=1",
+                description: "Sekolah Islam yang berfokus pada pembentukan karakter, prestasi akademik, dan pendidikan Al-Qur'an.",
+                highlights: [
                     "Lulus dengan peringkat lima besar terbaik",
                     "Menyelesaikan hafalan Al-Qur'an sebanyak 3 juz",
                     "Awal perjalanan sebagai kreator YouTube Minecraft & Roblox",
@@ -828,11 +899,11 @@
                 ]
             },
             {
-                "institution": "KB-TKIT Al Uswah 2 Surabaya",
-                "period": "2010 — 2014",
-                "icon": "fa-shapes",
-                "description": "Aku anak Al Uswah, memulai awal pendidikan usia dini yang menanamkan nilai-nilai karakter dasar islami dan kebersamaan.",
-                "highlights": []
+                institution: "KB-TKIT Al Uswah 2 Surabaya",
+                period: "2010 — 2014",
+                logo: "https://lh3.googleusercontent.com/d/13w33qSfur3jnqou3QrU3nfWlVOgfPzNK=w800?authuser=1",
+                description: "Aku anak Al Uswah, memulai awal pendidikan usia dini yang menanamkan nilai-nilai karakter dasar islami dan kebersamaan.",
+                highlights: []
             }
         ];
 
@@ -843,16 +914,17 @@
             container.innerHTML = '';
 
             educationData.forEach((item) => {
-                // Setiap item memiliki border warna putih (tidak ada badge aktif)
-                const borderColor = 'border-white';
-
                 const div = document.createElement('div');
-                div.className = 'relative group';
+                div.className = 'education-item group';
 
                 div.innerHTML = `
-                    <div class="absolute -left-[31px] sm:-left-[47px] top-0 w-8 h-8 rounded-full bg-zinc-900 border-2 ${borderColor} flex items-center justify-center text-white text-xs shadow-md transition-all group-hover:border-white group-hover:text-white">
-                        <i class="fa-solid ${item.icon} text-[10px]"></i>
+                    <!-- Kotak Logo tepat di atas garis -->
+                    <div class="education-logo-box">
+                        <img src="${item.logo}" 
+                             alt="Logo ${item.institution}" 
+                             loading="lazy">
                     </div>
+
                     <div class="education-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-500 transition-colors">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                             <h3 class="text-lg font-bold text-white">
