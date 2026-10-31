@@ -25,5 +25,14 @@
     "readTime": "4 MIN READ",
     "excerpt": "Situs promosi kuliner sederhana yang saya bangun sejak masa sekolah menengah pertama (SMP) untuk mempromosikan jualan sosis gulung.",
     "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "folder": "mencoba-computer-vision-cctv-pakai-laptop-lawas",
+    "title": "MENCOBA COMPUTER VISION UNTUK MENGHITUNG KENDARAAN DARI CCTV",
+    "category": "stuff",
+    "date": "31 OKT 2026",
+    "readTime": "5 MIN READ",
+    "excerpt": "Eksperimen membuat sistem penghitung kendaraan otomatis dari rekaman CCTV menggunakan YOLOv8 dan ByteTrack, dijalankan di laptop lama dengan RAM 4 GB.",
+    "image": "https://dejavi.id/blog/mencoba-computer-vision-cctv-pakai-laptop-lawas/thumbnail.png"
   }
 ]
