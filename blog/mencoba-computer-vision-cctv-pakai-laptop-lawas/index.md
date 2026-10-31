@@ -5,8 +5,6 @@ date: "31 OKT 2026"
 readTime: "5 MIN READ"
 ---
 
-# Mencoba Computer Vision untuk Menghitung Kendaraan dari CCTV
-
 Saya mencoba membuat program sederhana untuk menghitung kendaraan secara otomatis dari rekaman CCTV. Proyek ini menjadi kesempatan untuk mempelajari computer vision, object detection, dan object tracking menggunakan Python.
 
 Menariknya, proses pengembangan dilakukan menggunakan laptop lama dengan prosesor Intel Core i5-5200U dan RAM 4 GB. Karena keterbatasan perangkat, saya perlu menyesuaikan beberapa pengaturan agar program tetap bisa dijalankan.
