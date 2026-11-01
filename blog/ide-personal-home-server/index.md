@@ -1,5 +1,5 @@
 ---
-title: "Wishlist Personal Server Dejavi: Walkthrough Lengkap"
+title: "Ide Personal Home Server: Walkthrough Lengkap"
 category: "stuff"
 date: "01 NOV 2026"
 readTime: "15 MIN READ"
