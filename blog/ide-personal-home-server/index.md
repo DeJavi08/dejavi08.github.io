@@ -1,5 +1,5 @@
 ---
-title: "Ide Personal Server Dejavi: Walkthrough Lengkap"
+title: "Wishlist Personal Server Dejavi: Walkthrough Lengkap"
 category: "stuff"
 date: "01 NOV 2026"
 readTime: "15 MIN READ"
@@ -9,7 +9,7 @@ Saya menyusun rencana membangun personal server untuk kebutuhan sehari-hari: bac
 
 Catatan ini adalah living document yang saya tulis ulang dari video Pyuragi berjudul "GIVEAWAY! Isi Personal Server Gw" ([youtu.be/J7eXpQ2y9B4](https://youtu.be/J7eXpQ2y9B4)). Saya rangkum isinya, sesuaikan dengan kebutuhan dan budget pribadi, lalu lengkapi dengan penjelasan teknis tiap aplikasi. Setiap kali ada perubahan harga, keputusan, atau aplikasi baru, catatan ini akan saya update.
 
-![Foto tentang homelab personal server mini PC](https://www.google.com/search?q=homelab+personal+server+mini+pc&tbm=isch)
+![Thumbnail personal home server](https://dejavi.id/blog/ide-personal-home-server/thumbnail.jpg)
 
 ## Latar Belakang
 
@@ -60,9 +60,9 @@ Total investasi awal sekitar Rp5,3 juta, dengan biaya bulanan hanya listrik serv
 
 Alternatif yang saya kesampingkan: laptop ASUS X i3-4500U. Kurang ideal untuk NAS jangka panjang karena port SATA hanya satu dan bentuknya laptop, sehingga tidak nyaman dinyalakan 24/7.
 
-![Foto tentang ThinkCentre M720q mini PC](https://www.google.com/search?q=ThinkCentre+M720q&tbm=isch)
+![ThinkCentre M720q mini PC](https://outletclick.com/media/catalog/product/cache/0af4122c382a0b3b06316462d0d57b9f/4/1/41yq-o1fq6l._ac_uf1000_1000_ql80_.jpg)
 
-![Foto tentang WD Red 2TB NAS HDD](https://www.google.com/search?q=WD+Red+2TB+NAS+HDD&tbm=isch)
+![WD Red 2TB NAS HDD](https://www.techandhouse.com/cdn/shop/products/wd20efrx.jpg?v=1661883721)
 
 ## Sistem Operasi: ZimaOS, bukan CasaOS
 
@@ -76,7 +76,7 @@ Versi gratis ZimaOS dibatasi 4 disk dan 3 user. Versi Plus dibayar sekali seumur
 
 Catatan: ZVM (Zima Virtual Machine) ada, tapi performanya terbatas. Kalau nanti serius butuh VM seperti Windows Ghost Spectre atau Linux DE, lebih baik pertimbangkan Proxmox sebagai host, lalu ZimaOS jalan sebagai VM di dalamnya. Proxmox memberi kontrol lebih besar atas resource VM, meskipun setupnya lebih kompleks.
 
-![Foto tentang ZimaOS dashboard NAS](https://www.google.com/search?q=ZimaOS+dashboard&tbm=isch)
+![ZimaOS dashboard](https://www.zimaspace.com/image/zimaos/appstore-install-poster.jpg)
 
 ## Aplikasi Inti (Hari Pertama)
 
@@ -92,7 +92,7 @@ Ada satu pertimbangan privasi yang perlu dicatat. Google Photos dan iCloud punya
 
 Catatan pribadi: karena ZimaOS 1.8 sudah punya Photos native, saya tidak perlu instal Immich terpisah. Lebih simpel, meskipun fiturnya mungkin belum selengkap Immich.
 
-![Foto tentang ZimaOS Photos aplikasi galeri](https://www.google.com/search?q=ZimaOS+Photos+app&tbm=isch)
+![ZimaOS Photos app](https://www.zimaspace.com/image/zimaos/photos/v2/hero-composite.webp?v=20261015)
 
 ### Files
 
@@ -116,7 +116,7 @@ Pyuragi bilang Tailscale adalah aplikasi yang "wajib ada di setiap device". Tanp
 
 Tips: di konsol Tailscale, IP bisa di-rename jadi nama yang mudah diingat, misalnya `zimaboard-2`, supaya tidak perlu hafal angka. Tailscale juga punya fitur MagicDNS yang memungkinkan kita mengakses server lewat nama, bukan IP.
 
-![Foto tentang Tailscale VPN mesh dashboard](https://www.google.com/search?q=Tailscale+dashboard&tbm=isch)
+![Tailscale dashboard](https://cdn.sanity.io/images/w77i7m8x/production/660fe8b97b9d27f68f51bae8a609e61f3d768b2e-2110x1259.png?w=3840&q=75&fit=clip&auto=format)
 
 ### Syncthing (untuk Obsidian)
 
@@ -130,7 +130,7 @@ Ada satu perbedaan penting dengan sinkronisasi cloud biasa. Syncthing tidak puny
 
 Catatan pribadi: Syncthing butuh minimal dua device yang saling percaya lewat Device ID. Jadi Syncthing perlu diinstal di laptop atau HP juga, bukan cuma di server. Kalau cuma di server, tidak ada yang bisa disinkronkan.
 
-![Foto tentang Syncthing file synchronization](https://www.google.com/search?q=Syncthing+interface&tbm=isch)
+![Syncthing interface](https://pimylifeup.com/wp-content/uploads/2024/05/Syncthing-Docker-Compose-05-Syncthing-running-from-within-a-Docker-container.jpg)
 
 ## Produktivitas
 
@@ -146,7 +146,7 @@ Alurnya: Obsidian di laptop dan HP menyimpan vault di folder lokal, Syncthing di
 
 Pyuragi memakai Obsidian untuk semua hal: skrip video, catatan kerja, catatan pribadi, dan jurnal harian. Dia bahkan punya template khusus untuk tiap jenis catatan. Ini menunjukkan bahwa Obsidian bisa dipakai untuk keperluan yang sangat beragam, selama kita mau menyusun struktur folder yang rapi.
 
-![Foto tentang Obsidian notes markdown vault](https://www.google.com/search?q=Obsidian+notes+app&tbm=isch)
+![Obsidian notes app](https://obsidian.md/images/screenshot-1.0-hero-combo.png)
 
 ### Sure (Manajemen Keuangan)
 
@@ -162,7 +162,7 @@ Ada beberapa tantangan teknis yang perlu disiapkan. Pertama, email bank punya fo
 
 Catatan pribadi: Sure punya MCP server yang bisa dipakai AI agent untuk baca dan tulis transaksi. Ini jalur teknis yang lebih rapi daripada membuat skrip manual dari nol. Karena ini menyentuh data keuangan, jangan pakai API gratis untuk bagian ini.
 
-![Foto tentang Sure personal finance self-hosted app](https://www.google.com/search?q=Sure+Maybe+Finance+self-hosted&tbm=isch)
+![Sure Maybe Finance interface](https://raw.githubusercontent.com/we-promise/sure/main/docs/screenshots/dashboard-light.webp)
 
 ### AdGuard Home
 
@@ -176,7 +176,7 @@ Batasan: karena berbasis DNS, AdGuard tidak bisa memblokir iklan yang disajikan 
 
 Pyuragi menyebut AdGuard Home sebagai "senjata makan tuan" karena dia mendapat penghasilan dari YouTube yang penuh iklan, tapi tetap memakai AdGuard untuk kenyamanan pribadi. Ini sedikit humor yang menunjukkan bahwa kadang keputusan teknis tidak selalu selaras dengan kepentingan bisnis.
 
-![Foto tentang AdGuard Home dashboard DNS](https://www.google.com/search?q=AdGuard+Home+dashboard&tbm=isch)
+![AdGuard Home dashboard](https://camo.githubusercontent.com/de063867329de7272ec4f17e1a338a56a5e5913c6cb8a2f39b63f4f0eb2fb50d/68747470733a2f2f63646e2e6164746964792e6f72672f7075626c69632f416467756172642f436f6d6d6f6e2f616467756172645f686f6d652e676966)
 
 ## AI dan Otomasi
 
@@ -192,7 +192,7 @@ Fitur yang menarik dari Open WebUI antara lain: multiple model dalam satu antarm
 
 Rencana pribadi: karena belum mau bayar API, saya akan menghubungkan Open WebUI ke router lokal gratis seperti freelm atau FreeLLMAPI yang menggabungkan API gratis dari Google AI Studio, Groq, dan sejenisnya.
 
-![Foto tentang Open WebUI chat interface](https://www.google.com/search?q=Open+WebUI+interface&tbm=isch)
+![Open WebUI chat interface](https://developer.amd.com/playbooks/_astro/open-webui_chat_interface.D0IPvVer.png)
 
 ### Hermes Agent (Bot Telegram)
 
@@ -214,7 +214,7 @@ Contoh percakapan yang Pyuragi tunjukkan di video: dia chat bot "gimana status s
 
 Catatan pribadi: ini bagian paling kompleks. Perlu API key yang stabil, setup OAuth Google Cloud Console, dan MCP server Sure untuk koneksi Hermes ke Sure. Pyuragi sendiri bilang ini mulai kompleks develop-nya. Saya akan mulai dari cron job sederhana seperti ringkasan berita dulu, baru ke keuangan setelah semuanya stabil.
 
-![Foto tentang Hermes AI agent Telegram bot](https://www.google.com/search?q=Telegram+bot+AI+agent+interface&tbm=isch)
+![Hermes interface local host](https://linuxbeast.com/wp-content/uploads/2026/05/Hermes_v0.16.0-1024x526.png)
 
 ## Sekunder: Minecraft Server
 
@@ -226,7 +226,7 @@ Pembatasan resource ini penting karena server Minecraft bisa sangat boros RAM da
 
 Rencana custom domain saya batalkan. Ternyata playit.gg custom domain adalah $1 per bulan sebagai langganan, bukan sekali bayar. Untuk hobi, gratisnya sudah cukup.
 
-![Foto tentang Minecraft server playit.gg](https://www.google.com/search?q=Minecraft+server+playit.gg&tbm=isch)
+![Minecraft server playit.gg](https://playit.gg/support/post-img/select-https-tunnel-type.png)
 
 ## Strategi AI: Gratis Dulu, Resmi Nanti
 
@@ -240,7 +240,7 @@ Aturan aman: skrip otomasi keuangan yang membaca email lalu menulis ke Sure jang
 
 Untuk eksperimen AI non-kritis seperti chat pribadi atau ringkasan berita, API gratis sudah lebih dari cukup. Yang penting adalah tidak memakainya untuk hal yang menyentuh data sensitif atau tugas yang tidak boleh gagal.
 
-![Foto tentang free LLM API router](https://www.google.com/search?q=free+LLM+API+router&tbm=isch)
+![Free LLM API router](https://repository-images.githubusercontent.com/1297700154/7cf2b0f6-bc1e-4aa2-99cb-fbe27711c6f6)
 
 ## Urutan Praktis
 
