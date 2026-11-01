@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">Blog Article | @dejavi</title>
     
+    <!-- Dynamic Open Graph & Twitter Meta Tags -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" id="ogTitle" content="Blog Article | @dejavi" />
+    <meta property="og:description" id="ogDesc" content="Artikel blog dan catatan eksplorasi teknologi oleh Javier Ahmad." />
+    <meta property="og:image" id="ogImage" content="https://dejavi.id/assets/og-default.png" />
+    <meta property="og:url" id="ogUrl" content="" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" id="twTitle" content="Blog Article | @dejavi" />
+    <meta name="twitter:description" id="twDesc" content="Artikel blog dan catatan eksplorasi teknologi oleh Javier Ahmad." />
+    <meta name="twitter:image" id="twImage" content="https://dejavi.id/assets/og-default.png" />
+
     <link rel="icon" type="image/png" href="../../assets/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg" />
     <link rel="shortcut icon" href="../../assets/favicon.ico" />
@@ -77,9 +88,9 @@
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
 
-        /* News Article Markdown Typography Styling - Compact & Readable */
+        /* News Article Markdown Typography Styling */
         .markdown-body {
-            font-size: 0.9375rem; /* 15px for clean news reading */
+            font-size: 0.9375rem;
             line-height: 1.7;
             color: #d4d4d8;
         }
@@ -214,7 +225,6 @@
     <!-- Header / Navigation -->
     <header class="fixed top-0 left-0 right-0 z-40 bg-dark-900/85 backdrop-blur-md border-b border-zinc-800/80">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-            <!-- Brand Logo -->
             <a href="../../index.html" class="flex items-center gap-2.5 group">
                 <div class="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center group-hover:border-white transition-colors duration-300">
                     <i class="fa-solid fa-bolt text-white text-xs group-hover:scale-110 transition-transform"></i>
@@ -225,7 +235,6 @@
                 </div>
             </a>
 
-            <!-- Back to Portfolio Action Button -->
             <a href="../../index.html" class="px-3 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700 font-mono text-[11px] transition-all flex items-center gap-1.5">
                 <i class="fa-solid fa-arrow-left text-[10px]"></i>
                 <span class="hidden sm:inline">Portofolio Utama</span>
@@ -234,22 +243,21 @@
         </div>
     </header>
 
-    <!-- Main Content Container (Unified Single Box Layout) -->
+    <!-- Main Content Container -->
     <main class="relative z-10 pt-20 pb-12 flex-1">
         <article class="max-w-3xl mx-auto px-4 sm:px-6">
             
-            <!-- UNIFIED ALL-IN-ONE BLOG CARD CONTAINER -->
             <div class="bg-zinc-900/90 border border-zinc-800 rounded-2xl p-5 sm:p-8 lightning-glow relative overflow-hidden divide-y divide-zinc-800/80">
                 
                 <!-- 1. NEWS ARTICLE HEADER SECTION -->
-                <div id="articleHeader" class="pb-6 relative z-10 space-y-3">
+                <div id="articleHeader" class="pb-6 relative z-10 space-y-4">
                     <div class="absolute -top-5 -left-5 w-full h-full bg-grid-pattern opacity-15 pointer-events-none"></div>
 
                     <!-- Category & Meta Info -->
                     <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
                         <div class="flex items-center gap-2">
                             <span id="articleCategory" class="px-2.5 py-0.5 rounded bg-white text-black font-extrabold uppercase tracking-wider text-[10px]">
-                                ⚡ Blog
+                                ⚡ BLOG
                             </span>
                             <span id="articleDate" class="text-zinc-400 flex items-center gap-1">
                                 <i class="fa-regular fa-calendar text-[10px]"></i>
@@ -268,7 +276,7 @@
                     </h1>
 
                     <!-- Author Info & Quick Share -->
-                    <div class="pt-3 flex items-center justify-between gap-3">
+                    <div class="pt-2 flex items-center justify-between gap-3">
                         <div class="flex items-center gap-2.5">
                             <div class="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 overflow-hidden shrink-0">
                                 <img src="https://lh3.googleusercontent.com/d/1zZb7bASvs4qP8qZAnkm2oYEiCBBoDoSO=w1000?authuser=1" 
@@ -282,29 +290,31 @@
                             </div>
                         </div>
 
-                        <!-- Quick Share Trigger -->
                         <button onclick="shareArticle()" title="Bagikan Blog" class="px-2.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700 transition-colors text-xs flex items-center gap-1.5 font-mono">
                             <i class="fa-solid fa-share-nodes"></i>
                             <span class="hidden sm:inline text-[11px]">Bagikan</span>
                         </button>
                     </div>
+
+                    <!-- Blog Thumbnail / Cover Banner (Dynamically Injected) -->
+                    <div id="thumbnailContainer" class="hidden pt-2">
+                        <div class="w-full rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 aspect-video relative">
+                            <img id="articleCoverImage" src="" alt="Thumbnail Blog" class="w-full h-full object-cover">
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 2. LOADING STATE & MARKDOWN BODY SECTION -->
                 <div class="py-6">
-                    <!-- Loading Spinner State -->
                     <div id="loadingState" class="py-12 text-center space-y-3">
                         <div class="inline-block w-8 h-8 border-3 border-zinc-700 border-t-white rounded-full animate-spin"></div>
                         <p class="text-[11px] font-mono text-zinc-400 uppercase tracking-widest">Membaca Berkas Blog...</p>
                     </div>
 
-                    <!-- Parsed Article Output -->
-                    <div id="articleContent" class="markdown-body hidden">
-                        <!-- Parsed Markdown HTML inserted dynamically -->
-                    </div>
+                    <div id="articleContent" class="markdown-body hidden"></div>
                 </div>
 
-                <!-- 3. SHARE FOOTER SECTION (INTEGRATED) -->
+                <!-- 3. SHARE FOOTER SECTION -->
                 <div id="articleShareFooter" class="py-5 flex flex-col sm:flex-row items-center justify-between gap-4 hidden">
                     <div class="text-center sm:text-left">
                         <h3 class="text-xs font-bold text-white uppercase font-mono">Bagikan Blog Ini ⚡</h3>
@@ -326,7 +336,7 @@
                     </div>
                 </div>
 
-                <!-- 4. RECOMMENDED/RELATED ARTICLES SECTION (INTEGRATED) -->
+                <!-- 4. RECOMMENDED/RELATED ARTICLES SECTION -->
                 <div id="relatedArticlesSection" class="pt-6 space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="inline-flex items-center gap-2 text-zinc-400 text-[11px] font-mono uppercase tracking-wider">
@@ -337,9 +347,7 @@
                         </a>
                     </div>
 
-                    <div id="relatedGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <!-- Dynamic cards injected via JS -->
-                    </div>
+                    <div id="relatedGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                 </div>
 
             </div>
@@ -405,8 +413,7 @@
         }
         animateParticles();
 
-
-        // 2. Reading Progress Bar Indicator
+        // 2. Reading Progress Bar
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -414,49 +421,28 @@
             document.getElementById('progressBar').style.width = scrolled + '%';
         });
 
+        // 3. Helper: Fetch Blog Database from JSON
+        async function fetchBlogDatabase() {
+            const sources = [
+                '../../daftar_blog.json',
+                '../daftar_blog.json',
+                'https://dejavi.id/daftar_blog.json',
+                'https://raw.githubusercontent.com/DeJavi08/dejavi08.github.io/refs/heads/main/daftar_blog.json'
+            ];
 
-        // 3. Fallback Sample Content if no markdown file found
-        const fallbackPostContent = `---
-title: "10.000 YOUTUBE SUBSCRIBER"
-category: "prestasi"
-date: "22 SEPT 2024"
-readTime: "3 MIN READ"
----
-
-# 10.000 YOUTUBE SUBSCRIBER: PERJALANAN DAN KONSISTENSI ⚡
-
-Mencapai **10.000 Subscriber** di YouTube bukan sekadar tentang angka, melainkan tentang perjalanan panjang, eksperimen tanpa henti, dan dedikasi tinggi sejak saya duduk di bangku kelas 6 SD.
-
----
-
-### Awal Mula Perjalanan 🎮
-Semuanya dimulai dari ketertarikan saya terhadap dunia *gaming*, khususnya **Minecraft** dan **Roblox**. Pada masa sekolah dasar, saya terinspirasi oleh para kreator konten yang mampu menyajikan hiburan sekaligus edukasi visual.
-
-> "Pelan-pelan yang penting konsisten! Tidak ada hasil instan dalam membangun karya digital."
-
-### Tantangan & Eksperimen
-Dalam prosesnya, saya belajar banyak hal teknis secara otodidak:
-1. **Editing Video:** Belajar memotong gambar, *color grading*, dan menyelaraskan audio menggunakan Alight Motion, CapCut, hingga Adobe Premiere Pro.
-2. **Desain Thumbnails:** Eksperimen visual menggunakan PixelLab dan Canva untuk membuat *thumbnail* yang menarik.
-3. **Analitik YouTube:** Memahami algoritma, waktu tayang terbaik, serta kebutuhan audiens penonton.
-
----
-
-### Pelajaran Berharga 💡
-Perjalanan ini mengajari saya bahwa **disiplin** dan **kemampuan adaptasi** adalah kunci utama dalam industri kreatif digital. Terima kasih banyak kepada teman-teman, keluarga, dan seluruh penonton yang telah mendukung hingga detik ini!
-
-\`\`\`javascript
-// Kode Syukur & Semangat Terus Berkarya
-const stats = {
-    subscribers: 10000,
-    status: "Keep Growing",
-    nextGoal: "100.000 Subscribers 🚀"
-};
-
-console.log("Terima kasih atas dukungan semuanya! ⚡");
-\`\`\`
-`;
-
+            for (const url of sources) {
+                try {
+                    const res = await fetch(url);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (Array.isArray(data) && data.length > 0) return data;
+                    }
+                } catch (e) {
+                    // Try next source
+                }
+            }
+            return [];
+        }
 
         // 4. Markdown Frontmatter Parser
         function parseFrontmatter(text) {
@@ -485,43 +471,62 @@ console.log("Terima kasih atas dukungan semuanya! ⚡");
             return { metadata, content };
         }
 
+        // 5. Update Meta & OpenGraph tags for rich preview
+        function updateMetaTags(info) {
+            if (!info) return;
+            const pageUrl = window.location.href;
 
-        // 5. Main Article Fetcher & Renderer
+            document.getElementById('ogTitle')?.setAttribute('content', info.title);
+            document.getElementById('ogDesc')?.setAttribute('content', info.excerpt || info.title);
+            document.getElementById('twTitle')?.setAttribute('content', info.title);
+            document.getElementById('twDesc')?.setAttribute('content', info.excerpt || info.title);
+
+            const ogUrl = document.getElementById('ogUrl');
+            if (ogUrl) ogUrl.setAttribute('content', pageUrl);
+
+            if (info.image) {
+                document.getElementById('ogImage')?.setAttribute('content', info.image);
+                document.getElementById('twImage')?.setAttribute('content', info.image);
+            }
+        }
+
+        // 6. Main Blog Engine
         async function initBlogEngine() {
             const urlParams = new URLSearchParams(window.location.search);
             let slug = urlParams.get('slug') || urlParams.get('post') || urlParams.get('file');
 
-            // Detect slug from directory path if hosted as ../blog/{slug}/template_blog.html
+            // Detect current folder name if located in /blog/{slug}/index.html
             if (!slug) {
                 const pathSegments = window.location.pathname.split('/').filter(Boolean);
-                if (pathSegments.length > 1) {
-                    const lastSegment = pathSegments[pathSegments.length - 1];
-                    if (lastSegment !== 'template_blog.html' && lastSegment !== 'index.html') {
-                        slug = lastSegment;
-                    } else if (pathSegments.length >= 2) {
-                        slug = pathSegments[pathSegments.length - 2];
+                if (pathSegments.length > 0) {
+                    const last = pathSegments[pathSegments.length - 1];
+                    if (last.endsWith('.html')) {
+                        if (pathSegments.length >= 2) slug = pathSegments[pathSegments.length - 2];
+                    } else {
+                        slug = last;
                     }
                 }
             }
 
             if (!slug || slug === 'blog') {
-                slug = "10000-youtube-subscriber"; // Default initial fallback slug
+                slug = "10000-youtube-subscriber";
             }
 
-            // Target candidate paths for fetching markdown file
+            // Fetch JSON data for metadata & thumbnail
+            const blogList = await fetchBlogDatabase();
+            const currentBlogMeta = blogList.find(item => item.folder === slug) || null;
+
+            // Fetch Markdown Content
             const fetchCandidates = [
                 `./index.md`,
                 `./${slug}.md`,
-                `./${slug}/index.md`,
-                `./${slug}/README.md`,
+                `./post.md`,
+                `./README.md`,
                 `../blog/${slug}.md`,
-                `../blog/${slug}/index.md`,
-                `../blog/${slug}/README.md`,
-                `./post.md`
+                `../blog/${slug}/index.md`
             ];
 
             let rawMarkdown = null;
-
             for (const path of fetchCandidates) {
                 try {
                     const res = await fetch(path);
@@ -529,30 +534,28 @@ console.log("Terima kasih atas dukungan semuanya! ⚡");
                         rawMarkdown = await res.text();
                         break;
                     }
-                } catch (e) {
-                    // Continue checking next candidate
-                }
+                } catch (e) {}
             }
 
             if (!rawMarkdown) {
-                console.warn("Markdown file not found on path candidates. Loading fallback sample post.");
-                rawMarkdown = fallbackPostContent;
+                rawMarkdown = `# ${currentBlogMeta ? currentBlogMeta.title : slug.toUpperCase()}\n\n${currentBlogMeta?.excerpt || 'Konten blog sedang dalam proses sinkronisasi.'}`;
             }
 
-            renderArticle(rawMarkdown, slug);
-            loadRelatedArticles(slug);
+            renderArticle(rawMarkdown, slug, currentBlogMeta);
+            loadRelatedArticles(slug, blogList);
         }
 
-
-        // 6. Render Parsed Content into DOM
-        function renderArticle(rawMarkdown, slug) {
+        // 7. Render Article and Set Thumbnail
+        function renderArticle(rawMarkdown, slug, jsonMeta) {
             const { metadata, content } = parseFrontmatter(rawMarkdown);
 
-            // Populate Metadata Info
-            const title = metadata.title || slug.replace(/-/g, ' ').toUpperCase();
-            const category = metadata.category || 'Blog';
-            const date = metadata.date || 'LATEST';
-            const readTime = metadata.readTime || '3 MIN READ';
+            // Merge metadata: Prioritize frontmatter, fallback to jsonMeta, then defaults
+            const title = metadata.title || jsonMeta?.title || slug.replace(/-/g, ' ').toUpperCase();
+            const category = metadata.category || jsonMeta?.category || 'Blog';
+            const date = metadata.date || jsonMeta?.date || 'LATEST';
+            const readTime = metadata.readTime || jsonMeta?.readTime || '3 MIN READ';
+            const image = metadata.image || jsonMeta?.image || '';
+            const excerpt = metadata.excerpt || jsonMeta?.excerpt || '';
 
             document.getElementById('pageTitle').textContent = `${title} | Blog Javi ⚡`;
             document.getElementById('articleTitle').textContent = title;
@@ -560,7 +563,19 @@ console.log("Terima kasih atas dukungan semuanya! ⚡");
             document.getElementById('articleDate').innerHTML = `<i class="fa-regular fa-calendar text-[10px]"></i> <span>${date}</span>`;
             document.getElementById('articleReadTime').innerHTML = `<i class="fa-regular fa-clock text-[10px]"></i> <span>${readTime}</span>`;
 
-            // Configure Marked.js options
+            // Display thumbnail banner if available
+            if (image) {
+                const thumbContainer = document.getElementById('thumbnailContainer');
+                const coverImg = document.getElementById('articleCoverImage');
+                coverImg.src = image;
+                coverImg.alt = title;
+                thumbContainer.classList.remove('hidden');
+            }
+
+            // Update OG & Twitter Meta Tags
+            updateMetaTags({ title, excerpt, image });
+
+            // Parse Markdown
             marked.setOptions({
                 gfm: true,
                 breaks: true,
@@ -571,98 +586,90 @@ console.log("Terima kasih atas dukungan semuanya! ⚡");
             const contentContainer = document.getElementById('articleContent');
             contentContainer.innerHTML = parsedHtml;
 
-            // Hide Loading State & Show Article Body
             document.getElementById('loadingState').classList.add('hidden');
             contentContainer.classList.remove('hidden');
             document.getElementById('articleShareFooter').classList.remove('hidden');
         }
 
-
-        // 7. Load Related Articles from daftar_blog.json
-        async function loadRelatedArticles(currentSlug) {
+        // 8. Load Related Articles with Images
+        function loadRelatedArticles(currentSlug, list) {
             const grid = document.getElementById('relatedGrid');
             grid.innerHTML = '';
 
-            let list = [];
-            try {
-                const res = await fetch('../../daftar_blog.json').catch(() => fetch('../daftar_blog.json'));
-                if (res && res.ok) {
-                    const data = await res.json();
-                    if (Array.isArray(data)) list = data;
-                }
-            } catch (e) {
-                console.log("Related list fetch skipped:", e);
-            }
+            if (!list || list.length === 0) return;
 
-            if (list.length === 0) {
-                list = [
-                    { folder: "10000-youtube-subscriber", title: "10.000 YOUTUBE SUBSCRIBER", category: "prestasi", date: "22 SEPT 2024" },
-                    { folder: "perjalanan-menuju-kebun-bibit", title: "PERJALANAN MENUJU KEBUN BIBIT", category: "daily", date: "09 NOV 2019" },
-                    { folder: "sosis-gulung-ninja", title: "SOSIS GULUNG NINJA", category: "stuff", date: "01 FEB 2023" }
-                ];
-            }
-
-            const filtered = list.filter(item => {
-                const folderName = typeof item === 'string' ? item : item.folder;
-                return folderName !== currentSlug;
-            }).slice(0, 2);
+            const filtered = list.filter(item => item.folder !== currentSlug).slice(0, 2);
 
             filtered.forEach(item => {
-                const folderName = typeof item === 'string' ? item : item.folder;
-                const itemTitle = typeof item === 'string' ? item.replace(/-/g, ' ').toUpperCase() : item.title;
+                const folderName = item.folder;
+                const itemTitle = item.title;
                 const itemDate = item.date || 'LATEST';
-                const itemCat = item.category || 'DAILY';
+                const itemCat = item.category || 'BLOG';
+                const itemImg = item.image || '';
 
                 const card = document.createElement('a');
                 card.href = `../${encodeURIComponent(folderName)}/`;
-                card.className = "p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/80 hover:border-zinc-500 transition-all flex flex-col justify-between group";
+                card.className = "rounded-xl bg-zinc-950/60 border border-zinc-800/80 hover:border-zinc-500 transition-all flex flex-col overflow-hidden group";
 
                 card.innerHTML = `
-                    <div class="space-y-1.5">
-                        <div class="flex items-center justify-between text-[10px] font-mono">
-                            <span class="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 uppercase">${itemCat}</span>
-                            <span class="text-zinc-500">${itemDate}</span>
+                    ${itemImg ? `
+                    <div class="h-28 w-full overflow-hidden bg-zinc-900 border-b border-zinc-800">
+                        <img src="${itemImg}" alt="${itemTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.parentElement.remove()">
+                    </div>` : ''}
+                    <div class="p-4 flex-1 flex flex-col justify-between space-y-2">
+                        <div class="space-y-1.5">
+                            <div class="flex items-center justify-between text-[10px] font-mono">
+                                <span class="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 uppercase">${itemCat}</span>
+                                <span class="text-zinc-500">${itemDate}</span>
+                            </div>
+                            <h4 class="text-xs font-bold text-white group-hover:text-zinc-300 transition-colors uppercase line-clamp-2 leading-snug">
+                                ${itemTitle}
+                            </h4>
                         </div>
-                        <h4 class="text-xs font-bold text-white group-hover:text-zinc-300 transition-colors uppercase line-clamp-2 leading-snug">
-                            ${itemTitle}
-                        </h4>
-                    </div>
-                    <div class="pt-2.5 mt-2 border-t border-zinc-800/60 text-[11px] text-zinc-400 font-mono flex items-center justify-between group-hover:text-white">
-                        <span>Baca Blog</span>
-                        <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+                        <div class="pt-2 border-t border-zinc-800/60 text-[11px] text-zinc-400 font-mono flex items-center justify-between group-hover:text-white">
+                            <span>Baca Blog</span>
+                            <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+                        </div>
                     </div>
                 `;
                 grid.appendChild(card);
             });
         }
 
-
-        // 8. Sharing & Clipboard Utilities
+        // 9. Sharing & Toast Helpers
         function copyArticleLink() {
-            const pageUrl = window.location.href;
-            const tempInput = document.createElement('input');
-            tempInput.value = pageUrl;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            showToast("⚡ Tautan Blog disalin ke clipboard!");
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                showToast("⚡ Tautan Blog disalin ke clipboard!");
+            }).catch(() => {
+                const tempInput = document.createElement('input');
+                tempInput.value = window.location.href;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                showToast("⚡ Tautan Blog disalin ke clipboard!");
+            });
         }
 
         function shareWhatsApp() {
             const title = document.getElementById('articleTitle').textContent;
-            const waUrl = `https://wa.me/?text=${encodeURIComponent(`Baca Blog "${title}" oleh Javier Ahmad: ${window.location.href}`)}`;
-            window.open(waUrl, '_blank');
+            window.open(`https://wa.me/?text=${encodeURIComponent(`Baca Blog "${title}" oleh Javier Ahmad: ${window.location.href}`)}`, '_blank');
         }
 
         function shareTelegram() {
             const title = document.getElementById('articleTitle').textContent;
-            const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(title)}`;
-            window.open(tgUrl, '_blank');
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(title)}`, '_blank');
         }
 
         function shareArticle() {
-            copyArticleLink();
+            if (navigator.share) {
+                navigator.share({
+                    title: document.getElementById('articleTitle').textContent,
+                    url: window.location.href
+                }).catch(() => copyArticleLink());
+            } else {
+                copyArticleLink();
+            }
         }
 
         function showToast(msg) {
@@ -678,9 +685,7 @@ console.log("Terima kasih atas dukungan semuanya! ⚡");
             }, 3000);
         }
 
-
-        // Initialize engine on page load
         window.addEventListener('DOMContentLoaded', initBlogEngine);
     </script>
 </body>
-  </html>
+</html>
