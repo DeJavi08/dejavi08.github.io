@@ -9,8 +9,6 @@ Saya menyusun rencana membangun personal server untuk kebutuhan sehari-hari: bac
 
 Catatan ini adalah living document yang saya tulis ulang dari video Pyuragi berjudul "GIVEAWAY! Isi Personal Server Gw" ([youtu.be/J7eXpQ2y9B4](https://youtu.be/J7eXpQ2y9B4)). Saya rangkum isinya, sesuaikan dengan kebutuhan dan budget pribadi, lalu lengkapi dengan penjelasan teknis tiap aplikasi. Setiap kali ada perubahan harga, keputusan, atau aplikasi baru, catatan ini akan saya update.
 
-![Thumbnail personal home server](https://dejavi.id/blog/ide-personal-home-server/thumbnail.jpg)
-
 ## Latar Belakang
 
 Ketertarikan saya pada personal server berawal dari dua hal sederhana. Pertama, biaya langganan cloud yang terus naik setiap tahun, mulai dari Google Photos, iCloud, sampai Notion. Kedua, keinginan untuk benar-benar memiliki data sendiri, bukan sekadar menyimpannya di server orang lain.
