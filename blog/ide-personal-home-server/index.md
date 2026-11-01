@@ -5,128 +5,129 @@ date: "01 NOV 2026"
 readTime: "15 MIN READ"
 ---
 
-Saya menyusun rencana membangun personal server untuk kebutuhan sehari-hari: backup foto, NAS, catatan, keuangan, AI, dan nanti server Minecraft. Bukan server untuk kerja atau CI-CD, tapi server yang membuat hidup lebih ringan.
+Belakangan ini aku mulai tertarik untuk membangun personal home server. Awalnya, ketertarikan ini muncul setelah melihat berbagai kemungkinan yang bisa dilakukan dengan sebuah komputer kecil yang terus menyala di rumah. Komputer tersebut tidak hanya berfungsi sebagai tempat menyimpan file, tetapi juga bisa menjalankan berbagai layanan yang dapat diakses dari perangkat lain.
 
-Catatan ini adalah living document yang saya tulis ulang dari video Pyuragi berjudul "GIVEAWAY! Isi Personal Server Gw" ([youtu.be/J7eXpQ2y9B4](https://youtu.be/J7eXpQ2y9B4)). Saya rangkum isinya, sesuaikan dengan kebutuhan dan budget pribadi, lalu lengkapi dengan penjelasan teknis tiap aplikasi. Setiap kali ada perubahan harga, keputusan, atau aplikasi baru, catatan ini akan saya update.
+Salah satu hal yang membuatku tertarik adalah kemungkinan untuk memiliki ekosistem digital sendiri. Selama ini, banyak layanan yang aku gunakan bergantung pada penyedia pihak ketiga. Mulai dari penyimpanan foto, pencatatan keuangan, pengelolaan catatan, sampai layanan AI. Sebagian layanan tersebut memang praktis, tetapi sering kali memiliki batasan kapasitas atau fitur yang mengharuskan penggunanya berlangganan.
+
+Aku ingin mencoba pendekatan yang berbeda. Daripada terus membayar berbagai layanan secara terpisah, aku ingin memiliki satu perangkat yang dapat menjalankan beberapa aplikasi sekaligus. Dengan begitu, aku bisa mengelola data dan layanan tersebut secara lebih mandiri.
+
+Pertimbangan utamaku adalah biaya. Aku lebih tertarik mengeluarkan biaya di awal untuk membeli hardware, kemudian memanfaatkan aplikasi self-hosted yang sebisa mungkin tidak memerlukan biaya langganan bulanan. Bukan berarti semuanya benar-benar gratis, karena server tetap membutuhkan listrik dan koneksi internet. Saat ini, biaya PLN dan Wi-Fi di rumah masih ditanggung keluarga. Harapannya, ketika sudah mandiri secara finansial, aku bisa mulai menanggung biaya operasional tersebut sendiri.
+
+Tulisan ini merupakan dokumentasi dari ide, riset, dan pertimbangan yang sedang aku kumpulkan sebelum benar-benar membangun server. Jadi, beberapa pilihan di dalamnya masih berupa rencana dan belum semuanya pernah aku coba secara langsung.
 
 ## Latar Belakang
 
-Ketertarikan saya pada personal server berawal dari dua hal sederhana. Pertama, biaya langganan cloud yang terus naik setiap tahun, mulai dari Google Photos, iCloud, sampai Notion. Kedua, keinginan untuk benar-benar memiliki data sendiri, bukan sekadar menyimpannya di server orang lain.
+Ketertarikan ini sebenarnya sudah muncul cukup lama, tetapi baru belakangan ini aku mulai serius memikirkannya. Ada beberapa hal yang memicu rasa penasaran tersebut, mulai dari seringnya melihat konten tentang homelab di internet, sampai keinginan sederhana untuk punya tempat penyimpanan data yang bisa diatur sendiri.
 
-Pyuragi membuka mata saya bahwa dengan perangkat seharga satu kali makan malam di restoran, kita bisa membangun server yang menyala 24/7 di rumah. Server itu bisa menggantikan beberapa layanan berbayar sekaligus, selama kita mau belajar sedikit soal Linux dan networking.
+Selama ini, sebagian besar data pribadiku tersebar di berbagai layanan. Foto di Google Photos, catatan di Google Keep, dokumen di Google Drive, dan beberapa file lain di laptop. Pola ini terasa praktis, tetapi lama-kelamaan membuatku sadar bahwa aku tidak benar-benar memiliki kendali penuh atas data tersebut.
 
-Tujuan proyek ini bukan membangun server paling canggih. Tujuannya adalah punya satu tempat untuk menyimpan data pribadi yang bisa diakses dari mana saja, tanpa langganan bulanan, dan tanpa bergantung pada pihak ketiga.
+Aku mulai membaca pengalaman orang lain yang membangun server sendiri di rumah. Beberapa dari mereka menggunakan mini PC bekas, beberapa menggunakan Raspberry Pi, dan ada juga yang memakai laptop lama. Yang menarik, banyak dari mereka melaporkan bahwa biaya yang dikeluarkan jauh lebih kecil dibandingkan langganan layanan cloud dalam jangka panjang.
 
-## Prinsip yang Saya Pegang
+Dari situ, aku mulai menyusun gambaran kasar tentang server seperti apa yang ingin aku bangun. Aku tidak ingin membuat sesuatu yang rumit atau terlalu ambisius. Aku hanya ingin punya satu perangkat yang menyala terus di rumah, bisa diakses dari mana saja, dan menjalankan beberapa aplikasi yang benar-benar aku butuhkan.
 
-Sebelum masuk ke detail hardware dan aplikasi, ada beberapa prinsip yang saya tetapkan agar proyek ini tidak melebar kemana-mana.
+## Prinsip yang Aku Pegang
 
-Pertama, sederhana dulu, canggih nanti. Server ini harus bisa dipakai di hari pertama, bukan setelah seminggu setup. Aplikasi inti seperti Photos, Files, dan Tailscale harus langsung jalan sebelum saya bereksperimen dengan yang lain.
+Ada beberapa pertimbangan yang ingin aku jadikan dasar dalam menentukan hardware maupun software untuk personal server ini.
 
-Kedua, hemat daya dan hemat biaya. Server menyala 24/7, jadi konsumsi daya adalah biaya bulanan yang nyata. Saya memilih perangkat dengan TDP rendah dan menghindari komponen yang boros.
+Pertama, aku ingin menghindari biaya berulang sebisa mungkin. Aku tidak keberatan mengeluarkan biaya lebih besar di awal selama perangkat tersebut bisa digunakan dalam jangka panjang. Karena itu, aku lebih memilih membeli hardware sendiri dan menggunakan software open-source atau layanan self-hosted daripada bergantung pada banyak subscription.
 
-Ketiga, data harus bisa dipindahkan. Semua data yang saya simpan harus dalam format terbuka. Foto dalam format standar, catatan dalam Markdown, keuangan bisa diekspor ke CSV. Kalau suatu hari saya pindah platform, data tetap bisa dibaca.
+Kedua, efisiensi energi tetap menjadi pertimbangan penting. Server kemungkinan akan menyala selama 24 jam sehari, sehingga konsumsi listrik perlu diperhitungkan. Aku tidak ingin perangkat yang digunakan justru membutuhkan daya terlalu besar hanya untuk menjalankan layanan yang sebenarnya tidak terlalu berat.
 
-Keempat, gratis dulu, resmi nanti. Untuk AI dan otomasi, saya akan mulai dari API gratis. Kalau nanti sudah stabil dan bermanfaat, baru pindah ke API resmi berbayar.
+Ketiga, aku ingin data tetap mudah dipindahkan dan tidak terlalu bergantung pada satu platform. Format terbuka seperti Markdown menjadi salah satu alasan mengapa aku tertarik menggunakan aplikasi tertentu. Dengan begitu, apabila suatu saat ingin berpindah aplikasi atau sistem operasi, data yang sudah dikumpulkan tidak sepenuhnya terikat pada satu layanan.
 
 ## Tujuan Akhir
 
-Secara konkret, personal server ini nanti akan menangani beberapa kebutuhan:
+Gambaran akhirnya adalah sebuah personal server yang bisa menjadi pusat penyimpanan dan layanan digital di rumah. Aku ingin bisa mengakses foto, dokumen, catatan, dan beberapa aplikasi lain dari laptop maupun smartphone tanpa harus memindahkan file secara manual.
 
-- **Backup foto otomatis** dari HP, menggantikan Google Photos.
-- **NAS rumah** untuk menyimpan file besar seperti video dan dokumen kerja.
-- **Catatan pribadi** yang tersinkron antar device, menggantikan Notion dan Apple Notes.
-- **Pencatatan keuangan otomatis** dari notifikasi email bank, menggantikan input manual di spreadsheet.
-- **Ad blocker jaringan** untuk semua device di rumah.
-- **Antarmuka AI chat pribadi** dengan kontrol penuh atas data percakapan.
-- **Bot Telegram** untuk otomasi tugas harian dan monitoring server.
-- **Server Minecraft** untuk main bersama teman, menggantikan Aternos.
+Selain untuk penyimpanan, server ini juga ingin aku manfaatkan untuk menjalankan aplikasi produktivitas, layanan jaringan, AI, dan otomasi. Beberapa layanan bahkan bisa saling terhubung melalui API sehingga memungkinkan proses tertentu berjalan secara otomatis.
 
-Daftar ini panjang, tapi tidak semuanya harus jalan di minggu pertama. Urutan praktisnya saya tulis di bagian akhir.
+Aku belum berencana langsung menjalankan semuanya sekaligus. Daftar aplikasi di bawah ini lebih tepat disebut sebagai gambaran ekosistem yang ingin aku bangun secara bertahap.
 
 ## Hardware yang Diincar
 
-Setelah mempertimbangkan beberapa opsi, saya memilih kombinasi berikut:
+Untuk perangkat utama, aku mempertimbangkan Lenovo ThinkCentre M720q Tiny dengan prosesor Intel Core i5-9500T, RAM 16 GB, dan tanpa SSD. Dari beberapa pilihan mini PC yang aku lihat, spesifikasi ini cukup menarik karena ukurannya kecil, konsumsi dayanya relatif rendah, dan performanya masih memadai untuk menjalankan beberapa container sekaligus.
 
-- **Mini PC:** ThinkCentre M720q, i5-9500T, 16 GB RAM, tanpa SSD, sekitar Rp3,8 juta. Enam core, hemat daya (35W TDP), cocok untuk menyala 24/7. Bentuknya kecil dan mudah diletakkan di rak.
-- **SSD sistem:** WD Blue 500 GB SATA, hasil pindahan dari laptop ASUS lama, tanpa biaya tambahan. Untuk OS dan aplikasi.
-- **HDD data:** WD Red 2 TB NASware 3.0 (WD20EFAX, SMR), sekitar Rp1,2 juta. Untuk data NAS; SMR aman untuk beban ringan seperti backup dan arsip.
-- **Enclosure:** Ugreen 3.5 inci USB 3.0, sekitar Rp339 ribu. Wajib pakai adaptor daya 12V karena HDD 3.5 inci butuh daya lebih besar dari port USB.
-- **Jaringan:** HiFi/MNC Play, sekitar Rp200 ribu per bulan, ditanggung ayah. Sudah tersedia, jadi tidak masuk hitungan biaya baru.
+Intel Core i5-9500T memiliki 6 core dengan TDP 35 W. Menurutku, spesifikasi tersebut cukup seimbang untuk kebutuhan personal server. RAM 16 GB juga memberikan ruang yang cukup untuk menjalankan beberapa layanan, meskipun nantinya penggunaan memori tetap perlu dipantau.
 
-Total investasi awal sekitar Rp5,3 juta, dengan biaya bulanan hanya listrik server yang menyala 24/7. Kalau dibandingkan langganan Google One 5 TB sekitar Rp3 juta per bulan, modal ini kembali dalam waktu kurang dari dua bulan.
+Perkiraan harga perangkat yang aku temukan berada di sekitar Rp3.800.000. Karena unit yang diincar belum memiliki SSD, aku berencana memanfaatkan SSD SATA WD Blue 500 GB yang berasal dari laptop ASUS lama. Dengan begitu, aku tidak perlu mengeluarkan biaya tambahan untuk penyimpanan sistem pada tahap awal.
 
-Alternatif yang saya kesampingkan: laptop ASUS X i3-4500U. Kurang ideal untuk NAS jangka panjang karena port SATA hanya satu dan bentuknya laptop, sehingga tidak nyaman dinyalakan 24/7.
+Untuk penyimpanan data utama, aku mempertimbangkan WD Red 2 TB NASware 3.0 (WD20EFAX) dengan perkiraan harga sekitar Rp1.200.000. HDD ini nantinya akan digunakan untuk menyimpan foto, dokumen, dan data aplikasi.
+
+Agar HDD 3,5 inci tersebut bisa digunakan secara eksternal, aku juga mempertimbangkan enclosure USB 3.0 dari UGREEN dengan harga sekitar Rp339.000. Enclosure ini menggunakan adaptor daya 12 V karena HDD 3,5 inci membutuhkan suplai daya tersendiri.
+
+Dengan komponen tersebut, perkiraan investasi awalnya menjadi:
+
+| Komponen | Estimasi harga |
+|----------|----------------|
+| ThinkCentre M720q Tiny | Rp3.800.000 |
+| WD Blue 500 GB SATA | Rp0 |
+| WD Red 2 TB | Rp1.200.000 |
+| UGREEN 3.5-inch USB 3.0 Enclosure | Rp339.000 |
+| **Total** | **Rp5.339.000** |
+
+Jadi, estimasi investasi awal berada di sekitar Rp5,3 juta. Angka tersebut belum termasuk biaya operasional seperti listrik dan internet.
 
 ![ThinkCentre M720q mini PC](https://outletclick.com/media/catalog/product/cache/0af4122c382a0b3b06316462d0d57b9f/4/1/41yq-o1fq6l._ac_uf1000_1000_ql80_.jpg)
 
 ![WD Red 2TB NAS HDD](https://www.techandhouse.com/cdn/shop/products/wd20efrx.jpg?v=1661883721)
 
+Sebagai alternatif, aku juga sempat mempertimbangkan laptop ASUS lama dengan prosesor Intel Core i3-4500U. Namun, laptop tersebut hanya memiliki satu port SATA yang perlu digunakan untuk sistem atau penyimpanan. Selain itu, bentuk dan konfigurasi laptop membuatnya kurang fleksibel untuk kebutuhan penyimpanan eksternal yang ingin aku bangun. Karena itu, mini PC masih menjadi pilihan yang lebih menarik.
+
+Untuk koneksi internet, saat ini rumah menggunakan layanan HiFi/MNC Play dengan biaya sekitar Rp200.000 per bulan. Biaya tersebut merupakan pengeluaran rumah tangga yang sudah berjalan, bukan biaya baru yang muncul khusus karena proyek personal server ini.
+
 ## Sistem Operasi: ZimaOS, bukan CasaOS
 
-Keputusan awal yang penting: memakai ZimaOS, bukan CasaOS.
+Untuk sistem operasi, aku sedang mempertimbangkan ZimaOS sebagai pilihan utama. Sebelumnya, aku juga sempat melihat CasaOS karena keduanya menawarkan pendekatan yang relatif mudah untuk mengelola aplikasi self-hosted melalui antarmuka web.
 
-CasaOS adalah lapisan aplikasi di atas Linux. Artinya, di balik tampilan GUI yang rapi, kita masih harus "tangan kotor" di Linux untuk update manual, mengatur izin, dan reset sistem. Untuk pemula, ini bisa jadi pengalaman pertama yang kurang menyenangkan.
+Namun, ZimaOS terlihat lebih sesuai dengan kebutuhan yang sedang aku rencanakan. Salah satu hal yang menarik adalah integrasi pengelolaan penyimpanan dan aplikasi dalam satu antarmuka. Aku ingin mengurangi kebutuhan untuk mengatur semuanya secara manual melalui terminal, terutama pada tahap awal pembangunan server.
 
-ZimaOS adalah OS NAS utuh. Instal sekali, lalu GUI penuh, OTA update, RAID, backup, dan disk standby sudah terintegrasi. Untuk orang yang ingin server langsung jalan tanpa harus belajar Linux mendalam, ZimaOS lebih ramah.
+Dari riset yang aku lakukan, ZimaOS versi 1.8 memiliki aplikasi Photos bawaan yang dapat digunakan untuk mengelola foto. Hal ini menarik karena aku sebelumnya mempertimbangkan Immich sebagai aplikasi khusus untuk kebutuhan tersebut.
 
-Versi gratis ZimaOS dibatasi 4 disk dan 3 user. Versi Plus dibayar sekali seumur hidup ($29) untuk membuka batasan itu. ZimaOS sendiri dibangun di atas CasaOS oleh IceWhale Technology, jadi ekosistem aplikasinya masih sama dengan CasaOS.
+Ada beberapa batasan yang juga perlu diperhatikan. Pada versi gratis, ZimaOS memiliki batasan jumlah disk dan pengguna, sedangkan fitur tambahan tersedia melalui paket Plus. Informasi yang aku temukan menyebutkan batasan versi gratis berupa maksimal 4 disk dan 3 pengguna, sementara ZimaOS Plus ditawarkan dengan opsi lifetime sekitar US$29. Detail harga dan ketentuan paket tetap perlu diperiksa kembali sebelum membeli.
 
-Catatan: ZVM (Zima Virtual Machine) ada, tapi performanya terbatas. Kalau nanti serius butuh VM seperti Windows Ghost Spectre atau Linux DE, lebih baik pertimbangkan Proxmox sebagai host, lalu ZimaOS jalan sebagai VM di dalamnya. Proxmox memberi kontrol lebih besar atas resource VM, meskipun setupnya lebih kompleks.
+Selain ZimaOS, aku juga menemukan ZVM dan Proxmox dalam proses riset. Keduanya memiliki pendekatan yang berbeda dalam pengelolaan virtualisasi. Untuk sekarang, aku belum melihat kebutuhan yang cukup kuat untuk langsung menggunakan Proxmox, tetapi opsi tersebut tetap menarik untuk dipelajari jika kebutuhan server nantinya berkembang.
 
 ![ZimaOS dashboard](https://www.zimaspace.com/image/zimaos/appstore-install-poster.jpg)
 
-## Aplikasi Inti (Hari Pertama)
+## Aplikasi Inti
 
 ### Photos
 
-Photos adalah aplikasi galeri foto native ZimaOS yang baru dirilis di versi 1.8. Pyuragi sebelumnya memakai Immich, aplikasi galeri foto self-hosted populer, tapi sekarang pindah ke Photos karena sudah bawaan dan terintegrasi.
+Salah satu kebutuhan utamaku adalah penyimpanan dan pengelolaan foto. Selama ini, foto dan video pribadi tersebar di berbagai perangkat. Aku ingin memiliki satu tempat penyimpanan yang dapat diakses dari beberapa perangkat tanpa harus terus-menerus memindahkan file secara manual.
 
-Setelah WD Red di-mount, Photos otomatis jadi tempat penyimpanan foto. Foto dari HP dibackup lewat aplikasi Zima Client yang tersedia di App Store dan Play Store. Di dalam Photos, kita bisa mencari foto dengan kata kunci, melihat peta untuk foto dengan tag lokasi, dan membuat album.
+Awalnya, aku mempertimbangkan Immich karena memang dirancang sebagai alternatif self-hosted untuk pengelolaan foto. Namun, setelah melihat fitur Photos bawaan ZimaOS, aku mulai mempertimbangkan apakah aplikasi terpisah masih diperlukan.
 
-Kenapa penting: ini pengganti Google Photos atau iCloud tanpa langganan. Google One 5 TB harganya sekitar Rp3 juta per bulan, sedangkan di sini hanya biaya HDD sekali beli. Foto tersimpan lokal di server sendiri, bukan di cloud orang lain.
+Hal yang ingin aku perhatikan adalah fitur backup otomatis, pengelompokan foto, pencarian, serta kemudahan mengakses koleksi dari smartphone. Kapasitas penyimpanan juga menjadi pertimbangan karena foto dan video bisa terus bertambah seiring waktu.
 
-Ada satu pertimbangan privasi yang perlu dicatat. Google Photos dan iCloud punya fitur pengenalan wajah dan objek yang sangat matang. Photos ZimaOS mungkin belum seakurat itu, tapi karena semua pemrosesan terjadi di server sendiri, foto tidak pernah keluar dari rumah. Untuk saya, trade-off ini sepadan.
-
-Catatan pribadi: karena ZimaOS 1.8 sudah punya Photos native, saya tidak perlu instal Immich terpisah. Lebih simpel, meskipun fiturnya mungkin belum selengkap Immich.
+Untuk tahap awal, aku ingin memanfaatkan HDD 2 TB sebagai penyimpanan utama. Namun, aku juga perlu memikirkan strategi backup karena menyimpan semua data hanya dalam satu HDD tentu memiliki risiko tersendiri.
 
 ![ZimaOS Photos app](https://www.zimaspace.com/image/zimaos/photos/v2/hero-composite.webp?v=20261015)
 
 ### Files
 
-Files adalah file manager bawaan ZimaOS, fungsinya seperti Windows Explorer. Setelah HDD 2 TB terpasang, kita bisa membuka Files dan melihat isi disk seperti folder biasa.
+Selain foto, server ini juga akan digunakan sebagai tempat penyimpanan dokumen dan file umum. Aku ingin memiliki semacam penyimpanan pribadi yang bisa diakses melalui jaringan lokal maupun dari luar rumah.
 
-Folder bisa dibagikan lewat Samba: klik manage Samba, copy path, lalu di Windows Explorer atau macOS Finder tambahkan Network Location dengan path tersebut. Folder di server akan muncul seperti folder jaringan biasa di laptop.
+Dengan adanya layanan Files, aku berharap tidak perlu terlalu bergantung pada penyimpanan cloud pihak ketiga untuk setiap kebutuhan. File dapat disimpan di server sendiri dan diakses ketika dibutuhkan.
 
-Ini adalah fondasi NAS. Tanpa Files dan Samba, HDD tidak bisa diakses dari komputer lain. Semua aplikasi lain yang butuh akses file, seperti Syncthing atau Photos, juga bergantung pada Files ini.
-
-Tips dari Pyuragi: buat struktur folder yang rapi sejak awal. Misalnya folder `Photos`, `Documents`, `Projects`, `Backups`. Kalau HDD sudah penuh dengan file berantakan, merapikannya nanti akan sangat melelahkan.
+Hal yang perlu diperhatikan adalah bagaimana pengelolaan hak akses, keamanan koneksi, dan proses backup dilakukan. Kemudahan mengakses file dari luar jaringan rumah juga akan menjadi salah satu alasan penggunaan Tailscale.
 
 ### Tailscale
 
-Tailscale adalah VPN mesh yang membuat server terasa seperti satu jaringan lokal meskipun diakses dari luar rumah.
+Untuk mengakses server dari luar jaringan rumah, aku mempertimbangkan Tailscale. Tailscale menggunakan teknologi WireGuard untuk membangun jaringan privat antarperangkat.
 
-Pyuragi menyimpan server di Bandung, tapi bekerja di Jakarta dan Depok. Dia menginstal Tailscale di server dan di semua device. Setelah login dengan email yang sama, setiap device mendapat IP Tailscale sendiri. Kita tinggal membuka browser, mengetik IP Tailscale server, dan ZimaOS terbuka seolah-olah kita ada di rumah.
+Salah satu fitur yang menarik adalah MagicDNS. Dengan fitur tersebut, perangkat yang sudah terhubung ke jaringan Tailscale dapat diakses menggunakan nama perangkat, sehingga tidak perlu selalu mengingat alamat IP.
 
-Ini menghilangkan kebutuhan port forwarding di router yang ribet dan berisiko keamanan. Tailscale memakai WireGuard di belakang layar, jadi koneksi aman dan otomatis.
+Aku tertarik menggunakan Tailscale karena tidak perlu langsung membuka port pada router agar server bisa diakses dari internet. Pendekatan ini terasa lebih praktis untuk kebutuhan akses pribadi.
 
-Pyuragi bilang Tailscale adalah aplikasi yang "wajib ada di setiap device". Tanpa Tailscale, server hanya bisa diakses dari rumah. Dengan Tailscale, server bisa diakses dari kafe, kantor, atau saat liburan.
-
-Tips: di konsol Tailscale, IP bisa di-rename jadi nama yang mudah diingat, misalnya `zimaboard-2`, supaya tidak perlu hafal angka. Tailscale juga punya fitur MagicDNS yang memungkinkan kita mengakses server lewat nama, bukan IP.
+Rencananya, Tailscale akan dipasang pada server, laptop, dan smartphone. Dengan begitu, aku bisa mengakses layanan yang berjalan di server dari perangkat lain selama perangkat tersebut terhubung ke jaringan Tailscale.
 
 ![Tailscale dashboard](https://cdn.sanity.io/images/w77i7m8x/production/660fe8b97b9d27f68f51bae8a609e61f3d768b2e-2110x1259.png?w=3840&q=75&fit=clip&auto=format)
 
 ### Syncthing (untuk Obsidian)
 
-Syncthing adalah aplikasi sinkronisasi peer-to-peer untuk folder. Pyuragi memakainya untuk menyinkronkan vault Obsidian antar device.
+Syncthing merupakan aplikasi sinkronisasi file secara peer-to-peer. Aplikasi ini memungkinkan beberapa perangkat menyinkronkan folder tanpa harus bergantung pada layanan cloud terpusat.
 
-Konsepnya seperti Git atau torrent, tapi untuk file biasa. Kita menentukan folder mana yang mau di-share, lalu Syncthing mengirim perubahan file ke setiap device yang terhubung. Kalau catatan diedit di laptop, file di HP dan server ikut ter-update saat online. File tetap tersimpan offline di setiap device.
-
-Ini adalah pengganti Obsidian Sync yang berbayar $5 per bulan. Dengan Syncthing, sinkronisasi gratis, open-source, dan tanpa pihak ketiga. Data catatan tidak lewat cloud orang lain.
-
-Ada satu perbedaan penting dengan sinkronisasi cloud biasa. Syncthing tidak punya "server pusat" yang menyimpan salinan utama. Setiap device memegang salinan lengkap. Artinya, kalau satu device rusak, data di device lain tetap aman. Kalau semua device rusak, data hilang. Ini sebabnya server selalu menyala: dia jadi "titik tengah" yang memastikan data selalu punya salinan terbaru.
-
-Catatan pribadi: Syncthing butuh minimal dua device yang saling percaya lewat Device ID. Jadi Syncthing perlu diinstal di laptop atau HP juga, bukan cuma di server. Kalau cuma di server, tidak ada yang bisa disinkronkan.
+Dalam risetku, Syncthing sempat menjadi salah satu opsi untuk menyinkronkan vault Obsidian antara laptop dan perangkat lain. Namun, kebutuhan yang ingin aku selesaikan sebenarnya sedikit berbeda.
 
 ![Syncthing interface](https://pimylifeup.com/wp-content/uploads/2024/05/Syncthing-Docker-Compose-05-Syncthing-running-from-within-a-Docker-container.jpg)
 
@@ -134,45 +135,37 @@ Catatan pribadi: Syncthing butuh minimal dua device yang saling percaya lewat De
 
 ### Obsidian
 
-Obsidian adalah aplikasi catatan berbasis file Markdown. Pyuragi sudah tidak memakai Notion, Apple Notes, Samsung Notes, atau Google Keep lagi. Semua catatan pindah ke Obsidian.
+Aku ingin menggunakan Obsidian sebagai aplikasi utama untuk mengelola catatan dan dokumentasi pribadi. Sebelumnya, aku pernah mencoba Notion, tetapi menurutku penggunaannya terasa cukup ribet untuk kebutuhan pencatatan yang aku inginkan. Aku lebih menyukai pendekatan Obsidian yang menggunakan file Markdown dan menyimpan data secara lokal.
 
-Obsidian menyimpan catatan sebagai file `.md` di dalam folder yang disebut vault. File `.md` ini bisa dibuka dengan Notepad biasa, jadi data tidak terkunci di satu aplikasi. Di Obsidian, kita bisa melihat tampilan yang lebih cantik seperti graph view dan link antar catatan, tapi file aslinya tetap teks polos.
+Masalahnya, Obsidian secara default menyimpan vault sebagai folder lokal di perangkat. Kalau ingin mengakses catatan yang sama dari laptop dan smartphone, diperlukan mekanisme sinkronisasi tambahan. Salah satu alternatifnya adalah Obsidian Git, tetapi pengaturan dan alur sinkronisasinya terasa kurang fleksibel dibandingkan aplikasi catatan seperti Google Keep atau aplikasi Notes bawaan smartphone.
 
-Yang menarik dari Pyuragi adalah penekanan pada ownership data. Karena formatnya `.md`, dia tidak bergantung pada Obsidian sebagai perusahaan. Kalau Obsidian tutup, catatan tetap bisa dibaca. Vault disimpan di server dan disinkronkan via Syncthing, jadi kombinasi ini menghasilkan sistem catatan pribadi yang gratis dan mandiri.
+Karena itu, aku mulai tertarik dengan kemungkinan menjalankan sistem pencatatan langsung di server. Harapannya, catatan dapat disimpan terpusat dan diakses dari beberapa perangkat tanpa harus terlalu memikirkan pengelolaan file Markdown secara manual.
 
-Alurnya: Obsidian di laptop dan HP menyimpan vault di folder lokal, Syncthing di server dan device menyinkronkan folder vault, dan server menjadi titik tengah yang selalu menyala sehingga sinkronisasi tetap jalan meskipun laptop atau HP mati.
-
-Pyuragi memakai Obsidian untuk semua hal: skrip video, catatan kerja, catatan pribadi, dan jurnal harian. Dia bahkan punya template khusus untuk tiap jenis catatan. Ini menunjukkan bahwa Obsidian bisa dipakai untuk keperluan yang sangat beragam, selama kita mau menyusun struktur folder yang rapi.
+Syncthing bisa menjadi salah satu alternatif untuk menyinkronkan file, tetapi aku belum menetapkannya sebagai solusi akhir. Aku masih perlu mencari tahu pendekatan yang paling sesuai dengan kebutuhan akses lintas perangkat tersebut.
 
 ![Obsidian notes app](https://obsidian.md/images/screenshot-1.0-hero-combo.png)
 
 ### Sure (Manajemen Keuangan)
 
-Sure adalah aplikasi manajemen keuangan self-hosted, fork dari Maybe Finance. Pyuragi memakainya untuk mencatat pemasukan, pengeluaran, net worth, cash flow, dan alokasi aset.
+Aplikasi lain yang menarik perhatianku adalah Sure, sebuah fork dari Maybe Finance. Aplikasi ini dapat digunakan untuk mencatat dan memantau kondisi keuangan secara mandiri.
 
-Secara manual, kita bisa membuka Sure di browser, menambah transaksi, mengisi deskripsi, amount, tanggal, dan kategori. Ada grafik net worth, spending, dan cash flow, serta pembagian dana per bank.
+Aku tertarik karena ingin memiliki sistem pencatatan keuangan pribadi yang bisa dikelola sendiri. Dengan aplikasi self-hosted, data keuangan dapat disimpan di server milik sendiri, sehingga aku memiliki kontrol lebih besar terhadap penyimpanannya.
 
-Yang lebih menarik adalah cara otomatisnya. Pyuragi tidak mau input manual, jadi dia menghubungkan Hermes Agent ke Sure lewat API. Alurnya: Hermes membaca email notifikasi transaksi dari bank, mengekstrak nominal dan tanggal, lalu memanggil API Sure untuk mencatat transaksi tersebut.
+Salah satu kemungkinan pengembangan yang ingin aku eksplorasi adalah menghubungkan Sure dengan otomasi melalui API atau MCP. Misalnya, sistem dapat membantu mengolah informasi transaksi yang masuk melalui email dan menyusunnya menjadi catatan keuangan.
 
-Ini menghilangkan pekerjaan berulang yang membosankan. Pyuragi menyebut ini salah satu penggunaan AI yang paling bermanfaat di servernya. Tapi dia juga mengingatkan bahwa logic skrip harus benar supaya transaksi tidak tercatat dua kali atau nominal salah baca.
-
-Ada beberapa tantangan teknis yang perlu disiapkan. Pertama, email bank punya format yang berbeda-beda, jadi skrip ekstraksi harus bisa menangani berbagai format. Kedua, ada risiko false positive: email promosi bank yang berisi nominal bisa disalahartikan sebagai transaksi. Ketiga, data keuangan sangat sensitif, jadi API key dan kredensial harus disimpan dengan aman.
-
-Catatan pribadi: Sure punya MCP server yang bisa dipakai AI agent untuk baca dan tulis transaksi. Ini jalur teknis yang lebih rapi daripada membuat skrip manual dari nol. Karena ini menyentuh data keuangan, jangan pakai API gratis untuk bagian ini.
+Namun, integrasi seperti ini membutuhkan perhatian khusus karena data keuangan termasuk data sensitif. Aku tidak ingin sembarangan mengirimkan informasi tersebut ke layanan API yang tidak jelas kebijakan privasi dan keamanannya.
 
 ![Sure Maybe Finance interface](https://raw.githubusercontent.com/we-promise/sure/main/docs/screenshots/dashboard-light.webp)
 
 ### AdGuard Home
 
-AdGuard Home adalah DNS server yang memblokir iklan di seluruh jaringan.
+Aku juga mempertimbangkan AdGuard Home sebagai layanan pemblokir iklan dan pelacak berbasis DNS. Aplikasi ini dapat dijalankan di jaringan rumah sehingga perangkat yang menggunakan DNS tersebut bisa mendapatkan perlindungan sesuai aturan pemblokiran yang dikonfigurasi.
 
-Cara kerjanya: AdGuard Home jalan di server, dan DNS device diarahkan ke IP server lewat Tailscale. Setiap kali device meminta alamat domain, AdGuard memeriksa daftar blokir. Kalau domain itu iklan atau tracker, permintaan ditolak.
+Hal ini menarik karena pengaturan dapat dilakukan secara terpusat. Jadi, aku tidak perlu memasang konfigurasi pemblokiran secara terpisah pada setiap perangkat.
 
-Kelebihan pendekatan DNS-based ini adalah cakupannya yang luas. Semua device di jaringan, termasuk HP yang tidak bisa instal ad blocker, tetap terlindungi. Kita juga bisa melihat statistik query: domain apa yang paling sering diblokir, device mana yang paling banyak request, dan sebagainya.
+Meski begitu, pemblokiran DNS memiliki keterbatasan. Salah satu contohnya adalah iklan YouTube yang berasal dari domain yang sama dengan konten videonya. Karena itu, AdGuard Home tidak bisa diandalkan untuk memblokir seluruh iklan YouTube.
 
-Batasan: karena berbasis DNS, AdGuard tidak bisa memblokir iklan yang disajikan dari domain yang sama dengan konten utama, misalnya iklan YouTube yang datang dari youtube.com sendiri. Jadi ini bukan solusi total. Untuk iklan YouTube, tetap butuh solusi di sisi browser seperti uBlock Origin.
-
-Pyuragi menyebut AdGuard Home sebagai "senjata makan tuan" karena dia mendapat penghasilan dari YouTube yang penuh iklan, tapi tetap memakai AdGuard untuk kenyamanan pribadi. Ini sedikit humor yang menunjukkan bahwa kadang keputusan teknis tidak selalu selaras dengan kepentingan bisnis.
+Untuk kebutuhan browser, ekstensi seperti uBlock Origin tetap lebih relevan. AdGuard Home lebih cocok diposisikan sebagai lapisan pemblokiran pada tingkat jaringan, bukan pengganti seluruh pemblokir iklan.
 
 ![AdGuard Home dashboard](https://camo.githubusercontent.com/de063867329de7272ec4f17e1a338a56a5e5913c6cb8a2f39b63f4f0eb2fb50d/68747470733a2f2f63646e2e6164746964792e6f72672f7075626c69632f416467756172642f436f6d6d6f6e2f616467756172645f686f6d652e676966)
 
@@ -180,116 +173,177 @@ Pyuragi menyebut AdGuard Home sebagai "senjata makan tuan" karena dia mendapat p
 
 ### Open WebUI
 
-Open WebUI adalah antarmuka chatbot mirip ChatGPT yang berjalan di browser sendiri.
+Aku ingin menjadikan personal server sebagai tempat untuk mengelola akses ke berbagai model AI. Salah satu aplikasi yang sedang aku pertimbangkan adalah Open WebUI.
 
-Open WebUI bukan model AI, hanya "wajah" untuk berinteraksi dengan model AI. Kita menghubungkannya ke penyedia model lewat API, lalu memilih model dan mulai chat. Pyuragi menghubungkannya ke Databyte, API temannya, yang menyediakan berbagai model seperti DeepSeek, MiniMax, Claude, dan Gemini.
+Open WebUI menyediakan antarmuka untuk berinteraksi dengan model AI melalui berbagai provider. Dengan pendekatan ini, aku bisa mengelola beberapa model dari satu tempat tanpa harus selalu berpindah ke aplikasi atau situs yang berbeda.
 
-Ini memberi kontrol penuh atas data chat. Berbeda dengan ChatGPT yang menyimpan percakapan di server OpenAI, Open WebUI menyimpan history di server sendiri. Pyuragi memakainya untuk eksperimen AI tanpa langganan bulanan.
+Ketertarikan ini juga muncul setelah melihat video Pyuragi yang membahas penggunaan AI melalui server pribadi. Dalam video tersebut, terdapat pembahasan mengenai penggunaan layanan seperti Databyte dan berbagai model AI, termasuk DeepSeek, MiniMax, Claude, dan Gemini.
 
-Fitur yang menarik dari Open WebUI antara lain: multiple model dalam satu antarmuka, riwayat chat yang bisa di-export, RAG untuk chat dengan dokumen sendiri, dan dukungan untuk berbagai provider API. Ini membuat Open WebUI fleksibel untuk eksperimen tanpa harus terikat pada satu vendor.
-
-Rencana pribadi: karena belum mau bayar API, saya akan menghubungkan Open WebUI ke router lokal gratis seperti freelm atau FreeLLMAPI yang menggabungkan API gratis dari Google AI Studio, Groq, dan sejenisnya.
+Dari situ, aku mulai mencari tahu bagaimana cara menghubungkan berbagai provider AI ke satu antarmuka. Aku ingin memanfaatkan API gratis terlebih dahulu selama masih tersedia, terutama untuk kebutuhan eksperimen dan otomasi yang belum terlalu penting.
 
 ![Open WebUI chat interface](https://developer.amd.com/playbooks/_astro/open-webui_chat_interface.D0IPvVer.png)
 
 ### Hermes Agent (Bot Telegram)
 
-Hermes adalah AI agent, bukan sekadar chatbot. Chatbot menunggu kita tanya baru jawab. Agent bisa diberi tugas dan menjalankannya sendiri: mencari jawaban, memakai tools, dan menjalankan instruksi secara mandiri.
+Bagian yang paling menarik dari rencana ini adalah kemungkinan menggunakan Hermes Agent sebagai agen AI yang terhubung dengan Telegram.
 
-Hermes jalan sebagai container di ZimaOS. Dia punya messaging gateway yang menghubungkannya ke Telegram, Discord, Slack, WhatsApp, atau Email. Jadi kita bisa chat dengan bot Telegram dan Hermes merespons, tapi di belakang layar Hermes bisa menjalankan tugas yang lebih kompleks.
+Gambaran yang aku inginkan adalah sebuah bot Telegram pribadi yang dapat digunakan untuk berinteraksi dengan server, menjalankan tugas tertentu, dan mengirimkan laporan secara otomatis. Dengan begitu, server tidak hanya menjadi tempat menjalankan aplikasi, tetapi juga dapat membantu beberapa pekerjaan rutin.
 
-Setup Telegram cukup sederhana. Buka Telegram, chat @BotFather, ketik `/newbot`, ikuti instruksinya. BotFather akan memberi bot token yang tinggal di-copy. Di Hermes, set `TELEGRAM_BOT_TOKEN` dengan token itu, lalu set `TELEGRAM_ALLOWED_USERS` dengan user ID sendiri supaya orang lain tidak bisa mengakses bot. Setelah gateway dijalankan, bot siap merespons pesan.
+Untuk menghubungkan bot Telegram, salah satu langkah awalnya adalah membuat bot melalui @BotFather menggunakan perintah "/newbot". Setelah itu, bot akan memperoleh token yang digunakan untuk menghubungkannya dengan aplikasi di server.
 
-Yang Pyuragi lakukan dengan Hermes terbagi jadi dua kelompok besar.
+Konfigurasi yang perlu disiapkan antara lain "TELEGRAM_BOT_TOKEN" dan "TELEGRAM_ALLOWED_USERS". Token tersebut perlu dijaga kerahasiaannya, sedangkan pembatasan pengguna diperlukan agar bot pribadi tidak bisa digunakan sembarang orang.
 
-Pertama, cron job terjadwal. Weekly content idea setiap Sabtu jam 09.00, Hermes mengirim email berisi ide konten berdasarkan tren teknologi seminggu terakhir. Ringkasan berita emas mingguan setiap Senin ke Telegram atau email. Clipping projects, Hermes scan folder untuk menghitung berapa video klip sudah dibuat adiknya, lalu melaporkan jumlahnya untuk keperluan pembayaran. Dan sponsor email, dua kali sehari jam 11.00 dan 17.30, Hermes scan email masuk untuk sponsor lalu mencatatnya di Obsidian.
+Beberapa ide otomasi yang ingin aku eksplorasi antara lain:
 
-Kedua, otomasi keuangan. Pyuragi punya email khusus banking yang terpisah dari email utama, tempat semua notifikasi transaksi dari BCA, blu, QRIS, dan e-wallet masuk. Dia memberi otorisasi ke skrip untuk mengakses Gmail via Google Cloud Console, menghasilkan kredensial OAuth yang aman. Hermes dijadwalkan memeriksa email setiap jam, mencari notifikasi transaksi, mengekstrak nominal dan merchant, lalu mengirim data ke API Sure sebagai expense atau income. Hasilnya, Sure otomatis terisi tanpa input manual.
+- Ide konten: Mengirimkan rangkuman ide konten setiap Sabtu pukul 09.00.
+- Berita emas: Mengirimkan rangkuman berita seputar emas setiap Senin.
+- Monitoring clipping: Memeriksa jumlah video yang sudah diproses dalam workflow clipping.
+- Email sponsor: Memeriksa email terkait sponsor pada pukul 11.00 dan 17.30.
+- Monitoring server: Mengirimkan informasi kondisi server dan status layanan.
+- Manajemen cron: Membantu memeriksa atau mengelola tugas terjadwal.
 
-Yang paling menarik: karena Hermes terhubung ke Telegram, Pyuragi bisa chat bot kapan saja untuk bertanya status server, meminta cron job baru, atau mengecek pengeluaran bulan ini. Telegram jadi remote control untuk server. Tidak perlu buka laptop, cukup chat bot.
+Selain itu, aku juga tertarik menghubungkan Hermes Agent dengan Gmail. Dari riset awal, integrasi ini dapat melibatkan OAuth melalui Google Cloud Console. Nantinya, agen dapat membaca informasi email tertentu sesuai izin yang diberikan.
 
-Contoh percakapan yang Pyuragi tunjukkan di video: dia chat bot "gimana status server?", bot merespons dengan ringkasan CPU, RAM, dan disk. Dia minta "buatkan cron job untuk kirim ringkasan berita setiap Senin jam 9 pagi", bot mengonfirmasi dan membuat jadwalnya. Ini menunjukkan fleksibilitas agent yang bisa dikonfigurasi lewat bahasa alami.
+Untuk kebutuhan keuangan, ada kemungkinan menghubungkan Hermes Agent dengan Sure API. Misalnya, informasi transaksi yang masuk melalui email dapat diolah menjadi data yang lebih terstruktur sebelum dicatat ke aplikasi keuangan.
 
-Catatan pribadi: ini bagian paling kompleks. Perlu API key yang stabil, setup OAuth Google Cloud Console, dan MCP server Sure untuk koneksi Hermes ke Sure. Pyuragi sendiri bilang ini mulai kompleks develop-nya. Saya akan mulai dari cron job sederhana seperti ringkasan berita dulu, baru ke keuangan setelah semuanya stabil.
+Namun, integrasi Gmail dan data keuangan bukan sesuatu yang ingin langsung aku aktifkan. Aku perlu memahami alur autentikasi, izin akses, dan keamanan datanya terlebih dahulu. Aku juga ingin memastikan bahwa informasi sensitif tidak dikirimkan ke API AI gratis yang tidak memiliki kebijakan penggunaan data yang jelas.
 
 ![Hermes interface local host](https://linuxbeast.com/wp-content/uploads/2026/05/Hermes_v0.16.0-1024x526.png)
 
 ## Sekunder: Minecraft Server
 
-Nanti, kalau server utama sudah stabil, saya ingin menjalankan server Minecraft untuk main bersama teman sebagai pengganti Aternos.
+Selain aplikasi produktivitas, aku juga ingin mencoba menjalankan Minecraft Server di perangkat yang sama. Ini bukan kebutuhan utama, tetapi cukup menarik sebagai salah satu eksperimen untuk memahami pengelolaan container dan pembagian resource.
 
-Caranya: jalankan Minecraft server sebagai container di ZimaOS dengan batas CPU 2 core dan RAM 2 sampai 3 GB supaya tidak mengganggu Photos dan Syncthing. Untuk akses dari luar tanpa IP publik, jalankan playit.gg sebagai container. Dia membuat tunnel dan memberi domain acak gratis seperti `xxx.playit.gg` yang bisa dibagikan ke teman.
+Rencananya, Minecraft Server akan dijalankan menggunakan container dengan alokasi sekitar 2 core CPU dan RAM 2–3 GB. Pengaturan resource ini perlu disesuaikan dengan kondisi server dan jumlah pemain yang terhubung.
 
-Pembatasan resource ini penting karena server Minecraft bisa sangat boros RAM dan CPU, terutama kalau ada banyak pemain atau mod. Dengan membatasi resource di level container, kita memastikan Minecraft tidak bisa "memakan" resource yang dibutuhkan aplikasi lain.
+Untuk akses dari luar jaringan rumah, aku sempat mempertimbangkan playit.gg. Layanan ini memungkinkan server diakses dari internet tanpa harus melakukan konfigurasi port forwarding secara langsung pada router.
 
-Rencana custom domain saya batalkan. Ternyata playit.gg custom domain adalah $1 per bulan sebagai langganan, bukan sekali bayar. Untuk hobi, gratisnya sudah cukup.
+Versi gratisnya menyediakan alamat domain acak dengan format seperti "xxx.playit.gg". Aku juga sempat mempertimbangkan penggunaan custom domain, tetapi opsi tersebut memerlukan biaya sekitar US$1 per bulan. Karena salah satu tujuan utama proyek ini adalah menghindari subscription, aku tidak melanjutkan rencana custom domain tersebut untuk sementara.
 
 ![Minecraft server playit.gg](https://playit.gg/support/post-img/select-https-tunnel-type.png)
 
 ## Strategi AI: Gratis Dulu, Resmi Nanti
 
-Rencana awal saya adalah membeli API per-request murah seperti Geraikita atau DeepSeek flat sekitar Rp19 sampai Rp25 per request.
+Untuk penggunaan AI, aku ingin memulai dari layanan API gratis terlebih dahulu. Tujuannya bukan untuk menggantungkan seluruh sistem pada layanan gratis, melainkan mengurangi biaya selama tahap eksplorasi.
 
-Kenyataannya, Geraikita punya sinyal risiko. Jadi jangan langsung isi banyak.
+Beberapa provider yang ingin aku pelajari antara lain:
 
-Strategi hematnya: daftar API key gratis dari Google AI Studio untuk Gemini, Groq, Cerebras, OpenRouter dengan tier `:free`, dan Mistral. Jalankan router lokal kompatibel OpenAI seperti freelm atau FreeLLMAPI. Arahkan Open WebUI dan Hermes ke router itu. Kalau sudah ada uang, baru pindah ke API resmi DeepSeek, Claude, atau ChatGPT.
+- Google AI Studio
+- Groq
+- Cerebras
+- OpenRouter dengan model bertanda ":free"
+- Mistral
+- Layanan API router seperti FreeLLMAPI atau freelm
 
-Aturan aman: skrip otomasi keuangan yang membaca email lalu menulis ke Sure jangan memakai tier gratis atau Geraikita. Tunggu API resmi yang stabil. Alasannya sederhana: kalau API gratis tiba-tiba down atau berubah kebijakan, otomasi keuangan bisa gagal di tengah jalan atau, lebih buruk, mencatat data yang salah.
+Aku ingin menghubungkan provider tersebut melalui Open WebUI maupun Hermes Agent, tergantung kebutuhan masing-masing aplikasi.
 
-Untuk eksperimen AI non-kritis seperti chat pribadi atau ringkasan berita, API gratis sudah lebih dari cukup. Yang penting adalah tidak memakainya untuk hal yang menyentuh data sensitif atau tugas yang tidak boleh gagal.
+Model yang digunakan nantinya bisa disesuaikan dengan jenis tugas. Untuk pekerjaan sederhana, model gratis dengan kemampuan yang cukup mungkin sudah memadai. Sementara itu, pekerjaan yang membutuhkan penalaran lebih kompleks bisa menggunakan provider lain jika memang diperlukan.
+
+Namun, layanan gratis tentu memiliki batasan, seperti kuota, rate limit, ketersediaan model, dan kemungkinan perubahan kebijakan. Karena itu, aku tidak ingin membuat sistem yang sepenuhnya bergantung pada satu provider gratis.
+
+Untuk penggunaan jangka panjang, aku lebih memilih menggunakan API resmi yang memiliki dokumentasi dan kebijakan penggunaan data yang jelas. Terutama untuk tugas yang melibatkan email, informasi pribadi, atau data keuangan.
 
 ![Free LLM API router](https://repository-images.githubusercontent.com/1297700154/7cf2b0f6-bc1e-4aa2-99cb-fbe27711c6f6)
 
 ## Urutan Praktis
 
-Supaya tidak kewalahan, saya menyusun urutan pengerjaan seperti ini:
+Dari berbagai aplikasi yang sudah aku riset, aku membayangkan pembangunan server dilakukan secara bertahap. Urutan ini masih berupa rencana awal dan bisa berubah setelah aku mulai menguji perangkat maupun aplikasinya.
 
-1. Hari 1: install ZimaOS, mount WD Red, aktifkan Photos, Files, dan Tailscale.
-2. Hari 2 sampai 3: Syncthing dan Obsidian, pastikan catatan tersinkron.
-3. Minggu 1: AdGuard Home, lalu Open WebUI dengan router AI gratis.
-4. Minggu 2 ke atas: Sure secara manual dulu, plus Uptime Kuma untuk monitoring uptime server.
-5. Setelah stabil: Hermes untuk cron job non-keuangan seperti ringkasan berita dan ide konten via Telegram.
-6. Terakhir: otomasi keuangan Hermes ke Sure, setelah API resmi siap.
-7. Nanti: Minecraft dengan playit.gg gratis, lalu Vaultwarden atau Jellyfin sesuai kebutuhan.
+Hari pertama: Sistem dasar
 
-Urutan ini disusun berdasarkan tingkat kepentingan dan tingkat kesulitan. Aplikasi inti seperti Photos dan Files harus jalan dulu karena itu fondasi. Aplikasi yang butuh konfigurasi kompleks seperti Hermes keuangan ditunda sampai semuanya stabil.
+Fokus awalnya adalah memasang ZimaOS, menyiapkan WD Red sebagai penyimpanan data, lalu mengonfigurasi Photos, Files, dan Tailscale. Tujuannya agar server memiliki fungsi dasar sebagai tempat penyimpanan dan dapat diakses dari perangkat lain.
 
-Ada satu prinsip yang saya pegang: satu aplikasi jalan sempurna lebih baik daripada lima aplikasi setengah jalan. Server yang stabil dengan tiga aplikasi lebih bermanfaat daripada server yang kacau dengan sepuluh aplikasi.
+Hari kedua sampai ketiga: Sinkronisasi dan catatan
+
+Setelah layanan dasar berjalan, aku ingin mulai mengeksplorasi sinkronisasi file dan integrasi Obsidian. Pada tahap ini, aku perlu menentukan apakah Syncthing atau pendekatan lain lebih sesuai dengan kebutuhan akses catatan lintas perangkat.
+
+Minggu pertama: Jaringan dan AI
+
+Berikutnya, aku ingin mencoba AdGuard Home dan Open WebUI. Untuk Open WebUI, aku akan mulai menggunakan provider API gratis agar bisa memahami alur integrasinya tanpa menambah biaya langganan.
+
+Minggu kedua: Keuangan dan monitoring
+
+Aku ingin mulai mengeksplorasi Sure untuk pencatatan keuangan secara manual. Selain itu, Uptime Kuma bisa dipertimbangkan untuk memantau ketersediaan layanan yang berjalan di server.
+
+Tahap berikutnya: Otomasi
+
+Jika layanan dasar sudah cukup stabil, aku ingin mencoba Hermes Agent untuk otomasi non-keuangan terlebih dahulu. Misalnya, mengirimkan ide konten, rangkuman berita, dan laporan monitoring server.
+
+Integrasi dengan Gmail maupun Sure baru akan dipertimbangkan setelah aku memahami alur autentikasi dan keamanan datanya.
+
+Tahap lanjutan: Eksperimen tambahan
+
+Setelah kebutuhan utama terpenuhi, barulah aku ingin mencoba Minecraft Server dan layanan tambahan seperti Vaultwarden atau Jellyfin. Keduanya bukan prioritas awal, tetapi bisa menjadi eksperimen menarik untuk memperluas fungsi server.
 
 ## Catatan dan Risiko
 
-Beberapa hal yang perlu diingat sebelum eksekusi:
+Ada beberapa hal yang masih perlu aku pertimbangkan sebelum benar-benar membeli dan merakit seluruh perangkat.
 
-- WD Red 2 TB (EFAX) memakai SMR. Aman untuk backup dan arsip, kurang ideal untuk tulis besar terus-menerus. Kalau nanti mau RAID atau ZFS multi-disk, pertimbangkan WD Red Plus yang CMR.
-- ZimaOS Plus ($29 lifetime) sebaiknya dibeli kalau memang butuh lebih dari 4 disk atau lebih dari 3 user. Untuk penggunaan pribadi, versi gratis sudah cukup.
-- Sure dan Hermes adalah dua aplikasi yang paling mungkin butuh custom Docker Compose, karena tidak selalu tersedia di App Store ZimaOS. Siapkan kemampuan dasar Docker.
-- ZVM bukan solusi virtualisasi berperforma tinggi. Kalau butuh VM serius, pertimbangkan Proxmox.
-- playit.gg custom domain adalah langganan bulanan, jadi dibatalkan.
-- Geraikita adalah opsi murah tapi belum terverifikasi. Coba nominal kecil dulu, jangan untuk data sensitif.
-- Hermes dengan Gmail OAuth adalah setup paling kompleks. Mulai dari cron job sederhana dulu, jangan langsung ke keuangan.
-- Keamanan bot Telegram: jangan pernah share bot token ke publik. Kalau token bocor, orang lain bisa mengendalikan bot dan, lewat bot, server.
-- Backup data: meskipun server menyala 24/7, HDD bisa rusak. Rencanakan backup eksternal, misalnya ke HDD kedua atau ke cloud gratis seperti Backblaze B2.
+### 1. HDD SMR dan CMR
+
+WD20EFAX yang aku incar menggunakan teknologi SMR (Shingled Magnetic Recording). Teknologi ini dapat memiliki keterbatasan performa pada pola penulisan tertentu, terutama ketika sering melakukan penulisan ulang dalam jumlah besar.
+
+Untuk kebutuhan penyimpanan biasa, karakteristik tersebut mungkin masih bisa diterima. Namun, jika suatu saat ingin menggunakan konfigurasi RAID atau ZFS dengan beban penulisan yang lebih berat, HDD CMR seperti WD Red Plus bisa menjadi pilihan yang lebih sesuai.
+
+### 2. Batasan ZimaOS
+
+Aku perlu memastikan apakah fitur gratis ZimaOS sudah mencukupi kebutuhan. Jika ternyata membutuhkan fitur yang hanya tersedia pada versi Plus, biaya lisensi perlu dimasukkan ke dalam perhitungan.
+
+### 3. Pengelolaan Docker Compose
+
+Tidak semua aplikasi mungkin tersedia sebagai aplikasi siap pasang di antarmuka ZimaOS. Beberapa layanan seperti Sure dan Hermes Agent bisa saja membutuhkan konfigurasi Docker Compose secara manual.
+
+Artinya, aku tetap perlu mempelajari dasar-dasar Docker dan konfigurasi container agar tidak sepenuhnya bergantung pada antarmuka grafis.
+
+### 4. ZVM atau Proxmox
+
+ZimaOS memiliki pendekatan yang lebih terintegrasi untuk kebutuhan penyimpanan dan aplikasi. Sementara itu, Proxmox lebih berorientasi pada virtualisasi. Aku masih perlu memahami apakah kebutuhan virtualisasi di masa depan cukup besar untuk membenarkan penggunaan sistem seperti Proxmox.
+
+### 5. Geraikita
+
+Ada juga hal terkait Geraikita yang perlu aku telusuri lebih lanjut sebelum menentukan apakah layanan tersebut relevan untuk ekosistem server yang ingin dibangun. Aku belum ingin memasukkannya sebagai komponen utama sebelum memahami fungsi dan kebutuhan penggunaannya.
+
+### 6. Gmail OAuth
+
+Integrasi Gmail membutuhkan konfigurasi OAuth melalui Google Cloud Console. Proses ini memiliki beberapa tahapan, termasuk pengaturan kredensial dan izin akses. Aku perlu mempelajari prosesnya agar tidak memberikan akses yang terlalu luas kepada aplikasi.
+
+### 7. Keamanan bot Telegram
+
+Token bot Telegram harus disimpan dengan aman dan tidak boleh dibagikan secara publik. Selain itu, akses bot perlu dibatasi hanya untuk akun yang diizinkan. Hal ini penting karena bot nantinya berpotensi memiliki akses untuk menjalankan perintah tertentu pada server.
+
+### 8. Backup data
+
+Memiliki server sendiri bukan berarti data otomatis aman. Jika HDD mengalami kerusakan, data yang tersimpan di dalamnya tetap bisa hilang.
+
+Karena itu, aku perlu menyiapkan mekanisme backup tambahan, misalnya menggunakan HDD eksternal lain atau layanan backup seperti Backblaze B2. Prinsipnya, data penting tidak boleh hanya memiliki satu salinan.
 
 ## Hal yang Dipelajari
 
-Menyusun wishlist ini membuat saya sadar bahwa membangun personal server bukan soal hardware terbaik, tapi soal memilih komponen dan aplikasi yang benar-benar sesuai kebutuhan.
+Dari proses riset ini, aku mulai memahami bahwa membangun personal home server bukan sekadar membeli mini PC dan memasang beberapa aplikasi. Ada banyak aspek yang perlu dipertimbangkan, mulai dari pemilihan hardware, sistem operasi, pengelolaan penyimpanan, jaringan, keamanan, sampai biaya operasional.
 
-Saya mulai memahami alur dasar homelab: memilih hardware hemat daya, memilih OS yang tepat, lalu menyusun aplikasi bertahap dari yang paling penting ke yang paling kompleks. Kombinasi ZimaOS, Tailscale, dan Syncthing ternyata bisa menggantikan beberapa layanan berbayar sekaligus.
+Aku juga mulai melihat bahwa aplikasi-aplikasi self-hosted bisa saling terhubung dan membentuk ekosistem yang cukup luas. Sebuah server kecil di rumah berpotensi menjalankan penyimpanan foto, pengelolaan dokumen, pencatatan keuangan, layanan AI, hingga otomasi melalui Telegram.
 
-Saya juga belajar bahwa tidak semua bagian harus langsung jalan. Otomasi keuangan, misalnya, sebaiknya menunggu API resmi yang stabil dan dimulai dari cron job sederhana. Pyuragi sendiri bilang bagian ini paling kompleks develop-nya.
+Namun, semakin banyak layanan yang dijalankan, semakin besar pula tanggung jawab untuk mengelola dan mengamankannya. Aku perlu memahami cara kerja setiap komponen, bukan hanya membuat semuanya berjalan.
 
-Dari video Pyuragi, saya menangkap satu hal yang tidak selalu eksplisit: server ini dibangun pelan-pelan, bukan sekaligus. Pyuragi mulai dari kebutuhan sederhana seperti backup foto, lalu bertahap menambah aplikasi sesuai kebutuhan yang muncul. Server tumbuh bersama penggunanya, bukan sebaliknya.
-
-Rencana ini masih berupa wishlist. Masih ada beberapa hal yang perlu dievaluasi, seperti kesiapan hardware, stabilitas API gratis, dan kompleksitas setup Hermes. Ke depannya, saya ingin benar-benar mengeksekusi urutan praktis di atas pelan-pelan, mulai dari Hari 1, bukan langsung ke bagian yang paling menarik.
+Untuk sekarang, proyek ini masih berada pada tahap perencanaan dan riset. Aku belum ingin terburu-buru membeli seluruh komponen sebelum benar-benar memahami kebutuhan dan konsekuensi dari setiap pilihan.
 
 ## Referensi
 
-- Video ide: Pyuragi — GIVEAWAY! Isi Personal Server Gw ([youtu.be/J7eXpQ2y9B4](https://youtu.be/J7eXpQ2y9B4))
-- Hermes Agent (PyPI): gateway untuk Telegram, Discord, Slack, WhatsApp, Email
-- Sure MCP: 21 tools untuk AI agent baca dan tulis transaksi
-- Sure API: endpoint `/api/v1/transactions` dengan `X-Api-Key`
-- Syncthing + Obsidian: sinkronisasi gratis tanpa cloud
-- ZimaOS: situs resmi IceWhale Technology
-- playit.gg: halaman pricing resmi ($1 per bulan per custom domain)
-- Router AI gratis: freelm, FreeLLMAPI
-- API gratis: Google AI Studio, Groq, Cerebras, OpenRouter, Mistral
+Referensi yang digunakan dalam proses riset ini mencakup dokumentasi resmi dan sumber pembelajaran terkait:
+
+- Video Pyuragi tentang personal home server dan pemanfaatan layanan self-hosted.
+- Dokumentasi resmi ZimaOS.
+- Dokumentasi resmi CasaOS.
+- Dokumentasi resmi Immich.
+- Dokumentasi resmi Tailscale.
+- Dokumentasi resmi Syncthing.
+- Dokumentasi resmi Obsidian.
+- Dokumentasi resmi Sure / Maybe Finance.
+- Dokumentasi resmi AdGuard Home.
+- Dokumentasi resmi Open WebUI.
+- Dokumentasi resmi Hermes Agent.
+- Dokumentasi resmi Telegram Bot API.
+- Dokumentasi resmi Google Cloud untuk OAuth.
+- Dokumentasi resmi playit.gg.
+- Dokumentasi resmi Uptime Kuma.
+- Dokumentasi resmi Backblaze B2.
